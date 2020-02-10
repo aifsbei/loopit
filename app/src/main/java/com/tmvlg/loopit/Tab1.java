@@ -2,15 +2,21 @@ package com.tmvlg.loopit;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
@@ -47,6 +53,7 @@ import android.widget.Toolbar;
 
 import com.sdsmdg.harjot.crollerTest.Croller;
 
+
 import static android.content.Intent.getIntent;
 
 
@@ -77,6 +84,8 @@ public class Tab1 extends Fragment {
     ImageButton recBtn6;
     ImageButton[] recBtns;
     int DIALOG_CROLLER = 1;
+    private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
+    private static int toolBarHeight = -1;
 
 
     // TODO: Rename and change types of parameters
@@ -202,63 +211,10 @@ public class Tab1 extends Fragment {
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public boolean onLongClick(View v) {
-            /*Animation anim = null;
-            anim = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_center_anim);
-//            ImageButton temp = new ImageButton(getActivity());
-
-            int[] point = new int[2];
-            v.getLocationInWindow(point);
-            int x = point[0];
-            int y = point[1];
-            int h = v.getHeight();
-            int w = v.getWidth();
-
-            Display display = getActivity().getWindowManager().getDefaultDisplay();
-            int width = display.getWidth();
-            int height = display.getHeight();  // deprecated
-
-            height -= rLayout.getHeight();
-
-//            x += w / 2;
-//            y += h / 2;
-            y -= height;
-
-
-
-//            Log.d("tagn1", "ViewPager's fckin h = " + vpsH[0]);
-//            y -= vpsH[0];
-//            int x = v.getLeft();0
-//            int y = v.getTop();
-//            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT); //WRAP_CONTENT param can be FILL_PARENT
-//            params.leftMargin = Math.round(x); //XCOORD
-//            params.topMargin = Math.round(y);; //YCOORD
-            moveViewToScreenCenter(v);
-
-
-//            String text = (String) getActivity().getIntent().getSerializableExtra("extra");
-            int text = getToolBarHeight(getActivity());
-            Log.d("tagn1", "v's X = " + x + "; v's Y = " + y + " vp's h = " + text + "hei = " + height);*/
-
-            //moveViewToScreenCenter(v);
-            /*AlertDialog.Builder adb = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
-            View dcView = getLayoutInflater().inflate(R.layout.croller_view, null);
-            Croller di_croller = dcView.findViewById(R.id.di_croller);
-            adb.setView(dcView);
-            AlertDialog adialog = adb.create();
-//            adialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-            adialog.setContentView(dcView);
-            adialog.getWindow().setLayout((int)(getActivity().getWindow().peekDecorView().getWidth()*0.75),(int) (getActivity().getWindow().peekDecorView().getHeight()*0.4));
-            adialog.show();*/
-
-
             final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
             //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
             d.requestWindowFeature(Window.FEATURE_NO_TITLE);
             d.setContentView(R.layout.dialog_croller);
-
-            WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE); // for activity use context instead of getActivity()
-
 
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(d.getWindow().getAttributes());
@@ -269,21 +225,9 @@ public class Tab1 extends Fragment {
             int height = (int) ((int)displaymetrics.heightPixels * 0.55);
             d.getWindow().setLayout(width,height);
             d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            d.set
+            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
 //            moveViewToScreenCenter(v);
             d.show();
-
-
-
-
-            /*Dialog customDialog;
-            LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
-            View customView = inflater.inflate(R.layout.dialog_croller, null);
-
-            customDialog = new Dialog(getActivity(), R.style.DialogStyle);
-            customDialog.setContentView(customView);
-            customDialog.show();*/
-
             return false;
         }
     };
@@ -314,25 +258,12 @@ public class Tab1 extends Fragment {
 
 
 
-    /*protected Dialog OnCreateDialog(int id){
-        if (id == DIALOG_CROLLER){
-            AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
-            View dcView = getLayoutInflater().inflate(R.layout.croller_view, null);
-            Croller di_croller = dcView.findViewById(R.id.di_croller);
-            adb.setView(dcView);
-            AlertDialog adialog = adb.create();
-            adialog.show();
-        }
-    }*/
 
 
 
 
 
 
-    private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
-
-    private static int toolBarHeight = -1;
 
     public static int getToolBarHeight(Context context) {
         if (toolBarHeight > 0) {
@@ -375,101 +306,14 @@ public class Tab1 extends Fragment {
         as.setFillAfter(false);
         as.setInterpolator(new LinearInterpolator());
         anim2.setDuration(400);
-//        anim2.setFillAfter(true);
-//        view.startAnimation(anim2);
         as.addAnimation(anim2);
         anim.setDuration(400);
-//        anim.setFillAfter( true );
-//        view.startAnimation(anim);
         as.addAnimation(anim);
         view.startAnimation(as);
-
-
-
-        /*croller = new Croller(getActivity());
-        croller.setIndicatorWidth(10);
-        croller.setBackCircleColor(Color.parseColor("#EDEDED"));
-        croller.setMainCircleColor(Color.WHITE);
-        croller.setMax(50);
-        croller.setStartOffset(45);
-        croller.setIsContinuous(false);
-        croller.setLabelColor(Color.BLACK);
-        croller.setProgressPrimaryColor(Color.parseColor("#0B3C49"));
-        croller.setIndicatorColor(Color.parseColor("#0B3C49"));
-        croller.setProgressSecondaryColor(Color.parseColor("#EEEEEE"));
-        croller.setX(xDest);
-        croller.setY(yDest);
-        rLayout.addView(croller);
-        Animation a = null;
-        a = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_center_anim);
-        croller.startAnimation(a);*/
-
-
-//        view.startAnimation(anim);
     }
 
 
 
-    private void showDiag(View fab) {
-
-        final View dialogView = View.inflate(getActivity(),R.layout.dialog_croller,null);
-
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(dialogView);
-
-        revealShow(dialogView, false, dialog, fab);
-
-
-
-
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-        dialog.show();
-    }
-
-
-
-
-    private void revealShow(View dialogView, boolean b, final Dialog dialog, View fab) {
-
-        final View view = dialogView.findViewById(R.id.drl);
-
-        int w = view.getWidth();
-        int h = view.getHeight();
-
-        int endRadius = (int) Math.hypot(w, h);
-
-        int cx = (int) (fab.getX() + (fab.getWidth()/2));
-        int cy = (int) (fab.getY())+ fab.getHeight() + 56;
-
-
-        if(b){
-            Animator revealAnimator = ViewAnimationUtils.createCircularReveal(view, cx,cy, 0, endRadius);
-
-            view.setVisibility(View.VISIBLE);
-            revealAnimator.setDuration(700);
-            revealAnimator.start();
-
-        } else {
-
-            Animator anim =
-                    ViewAnimationUtils.createCircularReveal(view, cx, cy, endRadius, 0);
-
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    dialog.dismiss();
-                    view.setVisibility(View.INVISIBLE);
-
-                }
-            });
-            anim.setDuration(700);
-            anim.start();
-        }
-
-    }
 
 
 }

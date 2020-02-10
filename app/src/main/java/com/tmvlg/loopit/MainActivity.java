@@ -64,15 +64,6 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-//        vpsHeight = vp.getHeight();
-//        Intent intent = new Intent(MainActivity.this, Tab1.class);
-//        intent.putExtra("extra", vpsHeight);
-//        startActivity(intent);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
