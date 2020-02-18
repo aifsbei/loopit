@@ -32,4 +32,7 @@ dependencies {
     implementation 'com.android.support:design:29.0.0'
     implementation 'com.sdsmdg.harjot:croller:1.0.7'
     implementation 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
+    implementation 'com.github.GoodieBag:CarouselPicker:v1.1'
+    implementation 'com.github.jorgecastilloprz:expandablepanel:1.0.4@aar'
+
 }

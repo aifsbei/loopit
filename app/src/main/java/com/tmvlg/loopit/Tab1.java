@@ -54,6 +54,11 @@ import android.widget.Toolbar;
 import com.sdsmdg.harjot.crollerTest.Croller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import in.goodiebag.carouselpicker.CarouselPicker;
+
 import static android.content.Intent.getIntent;
 
 
@@ -83,6 +88,9 @@ public class Tab1 extends Fragment {
     ImageButton recBtn5;
     ImageButton recBtn6;
     ImageButton[] recBtns;
+    Button measureButton;
+    CarouselPicker measureCarouselPicker1;
+    CarouselPicker measureCarouselPicker2;
     int DIALOG_CROLLER = 1;
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
@@ -140,12 +148,14 @@ public class Tab1 extends Fragment {
         recBtn4 = view.findViewById(R.id.imageButton10);
         recBtn5 = view.findViewById(R.id.imageButton11);
         recBtn6 = view.findViewById(R.id.imageButton12);
+        measureButton = view.findViewById(R.id.measureSize);
         recBtn1.setOnLongClickListener(recBtnLCL);
         recBtn2.setOnLongClickListener(recBtnLCL);
         recBtn3.setOnLongClickListener(recBtnLCL);
         recBtn4.setOnLongClickListener(recBtnLCL);
         recBtn5.setOnLongClickListener(recBtnLCL);
         recBtn6.setOnLongClickListener(recBtnLCL);
+        measureButton.setOnClickListener(measureButtonOC);
         recBtns = new ImageButton[6];
         recBtns[0] = recBtn1;
         recBtns[1] = recBtn2;
@@ -159,6 +169,7 @@ public class Tab1 extends Fragment {
         registerForContextMenu(recBtn4);
         registerForContextMenu(recBtn5);
         registerForContextMenu(recBtn6);
+
         return view;
     }
 
@@ -232,6 +243,40 @@ public class Tab1 extends Fragment {
         }
     };
 
+
+    View.OnClickListener measureButtonOC = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            final Dialog d = new Dialog(getActivity());
+
+            LayoutInflater li = LayoutInflater.from(getActivity());
+            View promptsView = li.inflate(R.layout.dialog_measure_carousel, null);
+            measureCarouselPicker1 = promptsView.findViewById(R.id.upper_carousel);
+            measureCarouselPicker2 = promptsView.findViewById(R.id.lower_carousel);
+            d.setContentView(promptsView);
+            List<CarouselPicker.PickerItem> textItems = new ArrayList<>();
+//20 here represents the textSize in dp, change it to the value you want.
+            textItems.add(new CarouselPicker.TextItem("1", 20));
+            textItems.add(new CarouselPicker.TextItem("2", 20));
+            textItems.add(new CarouselPicker.TextItem("3", 20));
+            textItems.add(new CarouselPicker.TextItem("4", 20));
+            textItems.add(new CarouselPicker.TextItem("5", 20));
+            textItems.add(new CarouselPicker.TextItem("6", 20));
+            textItems.add(new CarouselPicker.TextItem("7", 20));
+            textItems.add(new CarouselPicker.TextItem("8", 20));
+            textItems.add(new CarouselPicker.TextItem("9", 20));
+            textItems.add(new CarouselPicker.TextItem("10", 20));
+            textItems.add(new CarouselPicker.TextItem("11", 20));
+            textItems.add(new CarouselPicker.TextItem("12", 20));
+            CarouselPicker.CarouselViewAdapter textAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), textItems, 0);
+            measureCarouselPicker1.setAdapter(textAdapter);
+            measureCarouselPicker2.setAdapter(textAdapter);
+            measureCarouselPicker1.setBackgroundColor(Color.WHITE);
+            measureCarouselPicker2.setBackgroundColor(Color.WHITE);
+
+            d.show();
+        }
+    };
 
     /**
      * This interface must be implemented by activities that contain this
