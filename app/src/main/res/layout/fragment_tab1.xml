@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         expandablepanel:completionPercent="0.5"
-
+        expandablepanel:animableViewId="@+id/topll"
         android:scaleType="centerCrop">
 
         <LinearLayout

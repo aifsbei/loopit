@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
         <ImageView
             android:id="@+id/topLayout"
             android:layout_width="match_parent"
@@ -13,9 +14,11 @@
             android:scaleType="centerCrop"/>
 
         <ImageView
-            android:background="#953958"
+            android:background="#958474"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/topLayout"/>
+
+
 
 </RelativeLayout>
