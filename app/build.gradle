@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.tmvlg.loopit"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -34,5 +34,8 @@ dependencies {
     implementation 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
     implementation 'com.github.GoodieBag:CarouselPicker:v1.1'
     implementation 'com.github.jorgecastilloprz:expandablepanel:1.0.4@aar'
+    implementation 'com.github.mr-sarsarabi:lockableViewPager:1.0'
+
+
 
 }

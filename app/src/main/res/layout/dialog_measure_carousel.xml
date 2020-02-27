@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dmc_ll"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SET MEASURE:"
+        android:textSize="25sp"
+        android:layout_marginStart="15sp"
+        android:textColor="#FFFFFF"
+        />
 
     <in.goodiebag.carouselpicker.CarouselPicker
         android:id="@+id/upper_carousel"
@@ -11,17 +21,17 @@
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#CCC"
+        android:background="@color/topllColor"
         app:items_visible="three" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/just_line"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"/>
+        android:layout_marginEnd="150dp"
+        android:layout_marginRight="150dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginLeft="150dp"/>
 
 
     <in.goodiebag.carouselpicker.CarouselPicker
@@ -30,31 +40,26 @@
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#CCC"
+        android:background="@color/topllColor"
         app:items_visible="three" />
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="SET BPM:"
+        android:textSize="25sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="25sp"
+        android:textColor="#FFFFFF"
+        />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/dmc_cancel"
-            android:text="cancel"
-            android:layout_gravity="right"
-            android:layout_weight="1"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/dmc_submit"
-            android:text="submit"
-            android:layout_gravity="right"
-            android:layout_weight="1"/>
-
-
-
-    </LinearLayout>
+    <in.goodiebag.carouselpicker.CarouselPicker
+        android:id="@+id/bpm_carousel"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/topllColor"
+        app:items_visible="three" />
 
 </LinearLayout>

@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/topll"
             android:layout_alignParentTop="true"
-            android:background="#757575"
-            android:orientation="horizontal">
+            android:background="@color/topllColor"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/measureSize"
@@ -38,6 +38,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp" />
+
         </LinearLayout>
 
         <TableLayout

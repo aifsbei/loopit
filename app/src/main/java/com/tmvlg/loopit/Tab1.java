@@ -33,6 +33,7 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -48,9 +49,15 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.jorgecastilloprz.expandablepanel.ExpandablePanelView;
+import com.jorgecastilloprz.expandablepanel.listeners.ExpandableListener;
+import com.mr_sarsarabi.library.LockableViewPager;
 import com.sdsmdg.harjot.crollerTest.Croller;
 
 
@@ -70,7 +77,7 @@ import static android.content.Intent.getIntent;
  * Use the {@link Tab1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tab1 extends Fragment {
+public class Tab1 extends Fragment implements ExpandableListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,7 +87,7 @@ public class Tab1 extends Fragment {
     Croller croller;
     RelativeLayout rLayout;
     Toolbar tb;
-    ViewPager vp;
+    LockableViewPager vp;
     ImageButton recBtn1;
     ImageButton recBtn2;
     ImageButton recBtn3;
@@ -91,6 +98,10 @@ public class Tab1 extends Fragment {
     Button measureButton;
     CarouselPicker measureCarouselPicker1;
     CarouselPicker measureCarouselPicker2;
+    CarouselPicker BPMCarouselPicker;
+    LinearLayout topll;
+    LinearLayout dmcll;
+    ExpandablePanelView expandablePanelView;
     int DIALOG_CROLLER = 1;
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
@@ -140,7 +151,6 @@ public class Tab1 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tab1, container, false);
         rLayout = view.findViewById(R.id.RelativeLayout);
         tb = view.findViewById(R.id.toolbar);
-        vp = view.findViewById(R.id.pager);
 //        croller = view.findViewById(R.id.croller);
         recBtn1 = view.findViewById(R.id.imageButton7);
         recBtn2 = view.findViewById(R.id.imageButton8);
@@ -148,6 +158,7 @@ public class Tab1 extends Fragment {
         recBtn4 = view.findViewById(R.id.imageButton10);
         recBtn5 = view.findViewById(R.id.imageButton11);
         recBtn6 = view.findViewById(R.id.imageButton12);
+        topll = view.findViewById(R.id.topll);
         measureButton = view.findViewById(R.id.measureSize);
         recBtn1.setOnLongClickListener(recBtnLCL);
         recBtn2.setOnLongClickListener(recBtnLCL);
@@ -156,6 +167,7 @@ public class Tab1 extends Fragment {
         recBtn5.setOnLongClickListener(recBtnLCL);
         recBtn6.setOnLongClickListener(recBtnLCL);
         measureButton.setOnClickListener(measureButtonOC);
+        expandablePanelView = view.findViewById(R.id.EPV);
         recBtns = new ImageButton[6];
         recBtns[0] = recBtn1;
         recBtns[1] = recBtn2;
@@ -169,6 +181,7 @@ public class Tab1 extends Fragment {
         registerForContextMenu(recBtn4);
         registerForContextMenu(recBtn5);
         registerForContextMenu(recBtn6);
+        expandablePanelView.attachExpandableListener(this);
 
         return view;
     }
@@ -278,6 +291,106 @@ public class Tab1 extends Fragment {
         }
     };
 
+    @Override
+    public void onExpandingStarted() {
+        Toast.makeText(getActivity(), "seems like it rly works haha", Toast.LENGTH_LONG).show();
+
+        Log.d("tagn1", "why not works yet?");
+    }
+
+    @Override
+    public void onExpandingFinished() {
+//        LinearLayout vert = new LinearLayout(getActivity());
+//        vert.setOrientation(LinearLayout.VERTICAL);
+        ViewGroup.LayoutParams llparams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        topll.addView(vert, llparams);
+
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        View promptsView = li.inflate(R.layout.dialog_measure_carousel, null);
+
+        dmcll = promptsView.findViewById(R.id.dmc_ll);
+        topll.addView(dmcll, llparams);
+
+        LayoutInflater li2 = LayoutInflater.from(getActivity());
+        View promptsView2 = li.inflate(R.layout.activity_main, null);
+
+
+        List<CarouselPicker.PickerItem> measureTextItems = new ArrayList<>();
+//20 here represents the textSize in dp, change it to the value you want.
+        measureTextItems.add(new CarouselPicker.TextItem("2", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("2", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("3", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("4", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("5", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("6", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("7", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("8", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("9", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("10", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("11", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("12", 20));
+
+        CarouselPicker.CarouselViewAdapter measureTextAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), measureTextItems, 0);
+
+        List<CarouselPicker.PickerItem> bpmTextItems = new ArrayList<>();
+        bpmTextItems.add(new CarouselPicker.TextItem("60", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("70", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("80", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("90", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("100", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("110", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("120", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("130", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("140", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("150", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("160", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("170", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("180", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("190", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("200", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("210", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("220", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("230", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("240", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("250", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("260", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("270", 20));
+
+        CarouselPicker.CarouselViewAdapter bpmTextAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), bpmTextItems, 0);
+
+        measureCarouselPicker1 = promptsView.findViewById(R.id.lower_carousel);
+        measureCarouselPicker2 = promptsView.findViewById(R.id.upper_carousel);
+        BPMCarouselPicker = promptsView.findViewById(R.id.bpm_carousel);
+
+        measureTextAdapter.setTextColor(Color.WHITE);
+        bpmTextAdapter.setTextColor(Color.WHITE);
+
+        measureCarouselPicker1.setAdapter(measureTextAdapter);
+        measureCarouselPicker2.setAdapter(measureTextAdapter);
+        BPMCarouselPicker.setAdapter(bpmTextAdapter);
+
+        vp = promptsView2.findViewById(R.id.pager); ////not works
+        vp.setSwipeLocked(true);                    ////yet
+
+        Toast.makeText(getActivity(), "seems like it rly works haha", Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onShrinkStarted() {
+
+    }
+
+    @Override
+    public void onShrinkFinished() {
+        topll.removeView(dmcll);
+    }
+
+    @Override
+    public void onExpandingTouchEvent(MotionEvent motionEvent) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -326,6 +439,8 @@ public class Tab1 extends Fragment {
         float scale = context.getResources().getDisplayMetrics().density;
         return dp * scale + 0.5f;
     }
+
+
 
 
     private void moveViewToScreenCenter( View view )

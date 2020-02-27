@@ -20,9 +20,10 @@ import android.widget.Button;
 import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
+import com.mr_sarsarabi.library.LockableViewPager;
 
 public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener {
-    ViewPager vp;
+    LockableViewPager vp;
     int vpsHeight;
     boolean isVolumeEnabled;
 
@@ -37,11 +38,10 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
         tabLayout.addTab(tabLayout.newTab().setText("Pro"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final LockableViewPager viewPager = (LockableViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter((adapter));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout)); //maybe rename SET to ADD
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

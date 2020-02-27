@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#B42020</color>
     <color name="colorAccent">#D81B60</color>
     <color name="tabsScrollControl">#004D40</color>
+    <color name="topllColor">#111111</color>
 </resources>
