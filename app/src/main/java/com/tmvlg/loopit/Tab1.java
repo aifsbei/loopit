@@ -105,6 +105,9 @@ public class Tab1 extends Fragment implements ExpandableListener {
     CarouselPicker BPMCarouselPicker;
     LinearLayout topll;
     LinearLayout dmcll;
+    LinearLayout dotsll;
+    LinearLayout.LayoutParams small;
+    LinearLayout.LayoutParams large;
     ExpandablePanelView expandablePanelView;
     int topMeasureValue = 4;
     int bottomMeasureValue = 4;
@@ -112,6 +115,7 @@ public class Tab1 extends Fragment implements ExpandableListener {
     int DIALOG_CROLLER = 1;
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
+    boolean panelsScrolled[] = {false, false, false};
 
 
     // TODO: Rename and change types of parameters
@@ -167,6 +171,7 @@ public class Tab1 extends Fragment implements ExpandableListener {
         recBtn6 = view.findViewById(R.id.imageButton12);
         arrow_view = view.findViewById(R.id.arrow_view);
         topll = view.findViewById(R.id.topll);
+        dotsll = view.findViewById(R.id.dotsll);
         recBtn1.setOnLongClickListener(recBtnLCL);
         recBtn2.setOnLongClickListener(recBtnLCL);
         recBtn3.setOnLongClickListener(recBtnLCL);
@@ -188,6 +193,13 @@ public class Tab1 extends Fragment implements ExpandableListener {
         registerForContextMenu(recBtn5);
         registerForContextMenu(recBtn6);
         expandablePanelView.attachExpandableListener(this);
+        small = new LinearLayout.LayoutParams(20, 20);
+        large = new LinearLayout.LayoutParams(30, 30);
+        small.leftMargin=15;
+        small.rightMargin=15;
+        large.leftMargin=15;
+        large.rightMargin=15;
+        createDots(small, large, topMeasureValue, "13");
 
         return view;
     }
@@ -262,7 +274,6 @@ public class Tab1 extends Fragment implements ExpandableListener {
 
     @Override
     public void onExpandingStarted() {
-        Toast.makeText(getActivity(), "seems like it rly works haha", Toast.LENGTH_LONG).show();
         animationRotateCenter = AnimationUtils.loadAnimation(
                 this.getContext(), R.anim.myrotate);
         arrow_view.startAnimation(animationRotateCenter);
@@ -285,22 +296,23 @@ public class Tab1 extends Fragment implements ExpandableListener {
         View promptsView2 = li.inflate(R.layout.activity_main, null);
 
 
-        List<CarouselPicker.PickerItem> measureTextItems = new ArrayList<>();
+        List<CarouselPicker.PickerItem> measureTextItems1 = new ArrayList<>();
+        List<CarouselPicker.PickerItem> measureTextItems2 = new ArrayList<>();
 //20 here represents the textSize in dp, change it to the value you want.
-        measureTextItems.add(new CarouselPicker.TextItem("1", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("2", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("3", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("4", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("5", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("6", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("7", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("8", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("9", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("10", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("11", 20));
-        measureTextItems.add(new CarouselPicker.TextItem("12", 20));
+        measureTextItems1.add(new CarouselPicker.TextItem("2", 20));
+        measureTextItems1.add(new CarouselPicker.TextItem("3", 20));
+        measureTextItems1.add(new CarouselPicker.TextItem("4", 20));
+        measureTextItems1.add(new CarouselPicker.TextItem("6", 20));
+        measureTextItems1.add(new CarouselPicker.TextItem("9", 20));
+        measureTextItems1.add(new CarouselPicker.TextItem("12", 20));
 
-        CarouselPicker.CarouselViewAdapter measureTextAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), measureTextItems, 0);
+        measureTextItems2.add(new CarouselPicker.TextItem("2", 20));
+        measureTextItems2.add(new CarouselPicker.TextItem("4", 20));
+        measureTextItems2.add(new CarouselPicker.TextItem("8", 20));
+        measureTextItems2.add(new CarouselPicker.TextItem("16", 20));
+
+        CarouselPicker.CarouselViewAdapter measureTextAdapter1 = new CarouselPicker.CarouselViewAdapter(getActivity(), measureTextItems1, 0);
+        CarouselPicker.CarouselViewAdapter measureTextAdapter2 = new CarouselPicker.CarouselViewAdapter(getActivity(), measureTextItems2, 0);
 
         List<CarouselPicker.PickerItem> bpmTextItems = new ArrayList<>();
         bpmTextItems.add(new CarouselPicker.TextItem("60", 16));
@@ -332,15 +344,21 @@ public class Tab1 extends Fragment implements ExpandableListener {
         measureCarouselPicker2 = promptsView.findViewById(R.id.lower_carousel);
         BPMCarouselPicker = promptsView.findViewById(R.id.bpm_carousel);
 
-        measureTextAdapter.setTextColor(Color.WHITE);
+        measureTextAdapter1.setTextColor(Color.WHITE);
+        measureTextAdapter2.setTextColor(Color.WHITE);
         bpmTextAdapter.setTextColor(Color.WHITE);
 
-        measureCarouselPicker1.setAdapter(measureTextAdapter);
-        measureCarouselPicker2.setAdapter(measureTextAdapter);
+        measureCarouselPicker1.setAdapter(measureTextAdapter1);
+        measureCarouselPicker2.setAdapter(measureTextAdapter2);
         BPMCarouselPicker.setAdapter(bpmTextAdapter);
 
         vp = promptsView2.findViewById(R.id.pager); ////not works
         vp.setSwipeLocked(true);                    ////yet
+
+        for (boolean item : panelsScrolled)
+        {
+            item = false;
+        }
 
         measureCarouselPicker1.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -352,7 +370,27 @@ public class Tab1 extends Fragment implements ExpandableListener {
 
                 @Override
                 public void onPageSelected(int position) {
-                    topMeasureValue = position + 1;
+                    switch (position){
+                        case 0:
+                            topMeasureValue = 2;
+                            break;
+                        case 1:
+                            topMeasureValue = 3;
+                            break;
+                        case 2:
+                            topMeasureValue = 4;
+                            break;
+                        case 3:
+                            topMeasureValue = 6;
+                            break;
+                        case 4:
+                            topMeasureValue = 9;
+                            break;
+                        case 5:
+                            topMeasureValue = 12;
+                            break;
+                    }
+                    panelsScrolled[0] = true;
                 }
 
                 @Override
@@ -371,7 +409,21 @@ public class Tab1 extends Fragment implements ExpandableListener {
 
             @Override
             public void onPageSelected(int position) {
-                bottomMeasureValue = position + 1;
+                switch (position){
+                    case 0:
+                        bottomMeasureValue = 2;
+                        break;
+                    case 1:
+                        bottomMeasureValue = 4;
+                        break;
+                    case 2:
+                        bottomMeasureValue = 8;
+                        break;
+                    case 3:
+                        bottomMeasureValue = 16;
+                        break;
+                }
+                panelsScrolled[1] = true;
             }
 
             @Override
@@ -391,6 +443,7 @@ public class Tab1 extends Fragment implements ExpandableListener {
             @Override
             public void onPageSelected(int position) {
                 bpm = 60 + position * 10;
+                panelsScrolled[2] = true;
             }
 
             @Override
@@ -412,7 +465,41 @@ public class Tab1 extends Fragment implements ExpandableListener {
         animationRotateCenter = AnimationUtils.loadAnimation(
                 this.getContext(), R.anim.myreverserotate);
         arrow_view.startAnimation(animationRotateCenter);
+
+        if (!panelsScrolled[0])
+        {
+            topMeasureValue = 2;
+        }
+        if (!panelsScrolled[1])
+        {
+            bottomMeasureValue = 2;
+        }
+        if (!panelsScrolled[2])
+        {
+            bpm = 60;
+        }
+
+
         Toast.makeText(getActivity(), "tmv " + topMeasureValue + " bmv " + bottomMeasureValue + " bpm " + bpm, Toast.LENGTH_SHORT).show();
+        if (topMeasureValue == 2) {
+            createDots(small, large, topMeasureValue, "1");
+        }
+        if (topMeasureValue == 3) {
+            createDots(small, large, topMeasureValue, "1");
+        }
+        if (topMeasureValue == 4) {
+            createDots(small, large, topMeasureValue, "13");
+        }
+        if (topMeasureValue == 6) {
+            createDots(small, large, topMeasureValue, "14");
+        }
+        if (topMeasureValue == 9) {
+            createDots(small, large, topMeasureValue, "147");
+        }
+        if (topMeasureValue == 12) {
+            createDots(small, large, topMeasureValue, "14710");
+        }
+
     }
 
     @Override
@@ -483,6 +570,31 @@ public class Tab1 extends Fragment implements ExpandableListener {
         anim.setDuration(400);
         as.addAnimation(anim);
         view.startAnimation(as);
+    }
+
+    private void createDots(LinearLayout.LayoutParams small, LinearLayout.LayoutParams large, int numberOfDots, String larges)
+    {
+        ImageView dots[] = new ImageView[numberOfDots];
+
+        dotsll.removeAllViewsInLayout();
+        int count = 1;
+        for (ImageView dot : dots)
+        {
+            dot = new ImageView(getActivity());
+            dot.setElevation(1);
+            dot.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+            Log.d("tagn1", "works");
+            dot.setImageResource(R.drawable.oval_metronome_indicator);
+            if (larges.contains("" + count))
+            {
+                dotsll.addView(dot, large);
+            }
+            else {
+                dotsll.addView(dot, small);
+            }
+            count++;
+        }
     }
 
 
