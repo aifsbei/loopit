@@ -95,13 +95,15 @@ public class Tab1 extends Fragment implements ExpandableListener {
     ImageButton recBtn5;
     ImageButton recBtn6;
     ImageButton[] recBtns;
-    Button measureButton;
     CarouselPicker measureCarouselPicker1;
     CarouselPicker measureCarouselPicker2;
     CarouselPicker BPMCarouselPicker;
     LinearLayout topll;
     LinearLayout dmcll;
     ExpandablePanelView expandablePanelView;
+    int topMeasureValue = 4;
+    int bottomMeasureValue = 4;
+    int bpm = 120;
     int DIALOG_CROLLER = 1;
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
@@ -159,14 +161,12 @@ public class Tab1 extends Fragment implements ExpandableListener {
         recBtn5 = view.findViewById(R.id.imageButton11);
         recBtn6 = view.findViewById(R.id.imageButton12);
         topll = view.findViewById(R.id.topll);
-        measureButton = view.findViewById(R.id.measureSize);
         recBtn1.setOnLongClickListener(recBtnLCL);
         recBtn2.setOnLongClickListener(recBtnLCL);
         recBtn3.setOnLongClickListener(recBtnLCL);
         recBtn4.setOnLongClickListener(recBtnLCL);
         recBtn5.setOnLongClickListener(recBtnLCL);
         recBtn6.setOnLongClickListener(recBtnLCL);
-        measureButton.setOnClickListener(measureButtonOC);
         expandablePanelView = view.findViewById(R.id.EPV);
         recBtns = new ImageButton[6];
         recBtns[0] = recBtn1;
@@ -257,40 +257,6 @@ public class Tab1 extends Fragment implements ExpandableListener {
     };
 
 
-    View.OnClickListener measureButtonOC = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            final Dialog d = new Dialog(getActivity());
-
-            LayoutInflater li = LayoutInflater.from(getActivity());
-            View promptsView = li.inflate(R.layout.dialog_measure_carousel, null);
-            measureCarouselPicker1 = promptsView.findViewById(R.id.upper_carousel);
-            measureCarouselPicker2 = promptsView.findViewById(R.id.lower_carousel);
-            d.setContentView(promptsView);
-            List<CarouselPicker.PickerItem> textItems = new ArrayList<>();
-//20 here represents the textSize in dp, change it to the value you want.
-            textItems.add(new CarouselPicker.TextItem("1", 20));
-            textItems.add(new CarouselPicker.TextItem("2", 20));
-            textItems.add(new CarouselPicker.TextItem("3", 20));
-            textItems.add(new CarouselPicker.TextItem("4", 20));
-            textItems.add(new CarouselPicker.TextItem("5", 20));
-            textItems.add(new CarouselPicker.TextItem("6", 20));
-            textItems.add(new CarouselPicker.TextItem("7", 20));
-            textItems.add(new CarouselPicker.TextItem("8", 20));
-            textItems.add(new CarouselPicker.TextItem("9", 20));
-            textItems.add(new CarouselPicker.TextItem("10", 20));
-            textItems.add(new CarouselPicker.TextItem("11", 20));
-            textItems.add(new CarouselPicker.TextItem("12", 20));
-            CarouselPicker.CarouselViewAdapter textAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), textItems, 0);
-            measureCarouselPicker1.setAdapter(textAdapter);
-            measureCarouselPicker2.setAdapter(textAdapter);
-            measureCarouselPicker1.setBackgroundColor(Color.WHITE);
-            measureCarouselPicker2.setBackgroundColor(Color.WHITE);
-
-            d.show();
-        }
-    };
-
     @Override
     public void onExpandingStarted() {
         Toast.makeText(getActivity(), "seems like it rly works haha", Toast.LENGTH_LONG).show();
@@ -317,7 +283,7 @@ public class Tab1 extends Fragment implements ExpandableListener {
 
         List<CarouselPicker.PickerItem> measureTextItems = new ArrayList<>();
 //20 here represents the textSize in dp, change it to the value you want.
-        measureTextItems.add(new CarouselPicker.TextItem("2", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("1", 20));
         measureTextItems.add(new CarouselPicker.TextItem("2", 20));
         measureTextItems.add(new CarouselPicker.TextItem("3", 20));
         measureTextItems.add(new CarouselPicker.TextItem("4", 20));
@@ -333,33 +299,33 @@ public class Tab1 extends Fragment implements ExpandableListener {
         CarouselPicker.CarouselViewAdapter measureTextAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), measureTextItems, 0);
 
         List<CarouselPicker.PickerItem> bpmTextItems = new ArrayList<>();
-        bpmTextItems.add(new CarouselPicker.TextItem("60", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("70", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("80", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("90", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("100", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("110", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("120", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("130", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("140", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("150", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("160", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("170", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("180", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("190", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("200", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("210", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("220", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("230", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("240", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("250", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("260", 20));
-        bpmTextItems.add(new CarouselPicker.TextItem("270", 20));
+        bpmTextItems.add(new CarouselPicker.TextItem("60", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("70", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("80", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("90", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("100", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("110", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("120", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("130", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("140", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("150", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("160", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("170", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("180", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("190", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("200", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("210", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("220", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("230", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("240", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("250", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("260", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("270", 16));
 
         CarouselPicker.CarouselViewAdapter bpmTextAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), bpmTextItems, 0);
 
-        measureCarouselPicker1 = promptsView.findViewById(R.id.lower_carousel);
-        measureCarouselPicker2 = promptsView.findViewById(R.id.upper_carousel);
+        measureCarouselPicker1 = promptsView.findViewById(R.id.upper_carousel);
+        measureCarouselPicker2 = promptsView.findViewById(R.id.lower_carousel);
         BPMCarouselPicker = promptsView.findViewById(R.id.bpm_carousel);
 
         measureTextAdapter.setTextColor(Color.WHITE);
@@ -372,9 +338,64 @@ public class Tab1 extends Fragment implements ExpandableListener {
         vp = promptsView2.findViewById(R.id.pager); ////not works
         vp.setSwipeLocked(true);                    ////yet
 
-        Toast.makeText(getActivity(), "seems like it rly works haha", Toast.LENGTH_LONG).show();
+        measureCarouselPicker1.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-    }
+
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    topMeasureValue = position + 1;
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+
+        measureCarouselPicker2.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bottomMeasureValue = position + 1;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        BPMCarouselPicker.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bpm = 60 + position * 10;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        }
 
     @Override
     public void onShrinkStarted() {
@@ -384,6 +405,7 @@ public class Tab1 extends Fragment implements ExpandableListener {
     @Override
     public void onShrinkFinished() {
         topll.removeView(dmcll);
+        Toast.makeText(getActivity(), "tmv " + topMeasureValue + " bmv " + bottomMeasureValue + " bpm " + bpm, Toast.LENGTH_LONG).show();
     }
 
     @Override
