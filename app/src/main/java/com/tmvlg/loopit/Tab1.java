@@ -45,10 +45,12 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -82,6 +84,9 @@ public class Tab1 extends Fragment implements ExpandableListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    ImageView arrow_view;
+    Animation animationRotateCenter;
 
 
     Croller croller;
@@ -160,6 +165,7 @@ public class Tab1 extends Fragment implements ExpandableListener {
         recBtn4 = view.findViewById(R.id.imageButton10);
         recBtn5 = view.findViewById(R.id.imageButton11);
         recBtn6 = view.findViewById(R.id.imageButton12);
+        arrow_view = view.findViewById(R.id.arrow_view);
         topll = view.findViewById(R.id.topll);
         recBtn1.setOnLongClickListener(recBtnLCL);
         recBtn2.setOnLongClickListener(recBtnLCL);
@@ -185,9 +191,6 @@ public class Tab1 extends Fragment implements ExpandableListener {
 
         return view;
     }
-
-
-
 
 
     @Override
@@ -260,14 +263,15 @@ public class Tab1 extends Fragment implements ExpandableListener {
     @Override
     public void onExpandingStarted() {
         Toast.makeText(getActivity(), "seems like it rly works haha", Toast.LENGTH_LONG).show();
+        animationRotateCenter = AnimationUtils.loadAnimation(
+                this.getContext(), R.anim.myrotate);
+        arrow_view.startAnimation(animationRotateCenter);
 
         Log.d("tagn1", "why not works yet?");
     }
 
     @Override
     public void onExpandingFinished() {
-//        LinearLayout vert = new LinearLayout(getActivity());
-//        vert.setOrientation(LinearLayout.VERTICAL);
         ViewGroup.LayoutParams llparams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //        topll.addView(vert, llparams);
 
@@ -405,7 +409,10 @@ public class Tab1 extends Fragment implements ExpandableListener {
     @Override
     public void onShrinkFinished() {
         topll.removeView(dmcll);
-        Toast.makeText(getActivity(), "tmv " + topMeasureValue + " bmv " + bottomMeasureValue + " bpm " + bpm, Toast.LENGTH_LONG).show();
+        animationRotateCenter = AnimationUtils.loadAnimation(
+                this.getContext(), R.anim.myreverserotate);
+        arrow_view.startAnimation(animationRotateCenter);
+        Toast.makeText(getActivity(), "tmv " + topMeasureValue + " bmv " + bottomMeasureValue + " bpm " + bpm, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -427,22 +434,6 @@ public class Tab1 extends Fragment implements ExpandableListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static int getToolBarHeight(Context context) {

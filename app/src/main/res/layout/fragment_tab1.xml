@@ -37,7 +37,7 @@
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
                     android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="65dp"
                     android:src="@drawable/oval_metronome_indicator" />
 
                 <ImageView
@@ -64,7 +64,17 @@
                     android:scaleType="fitCenter"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
-                    android:background="@android:color/transparent"
+                    android:background="@android:color/transparent" />
+
+                <ImageView
+                    android:id="@+id/arrow_view"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="30dp"
+                    android:src="@drawable/arrow_down"
+
                     />
 
 
