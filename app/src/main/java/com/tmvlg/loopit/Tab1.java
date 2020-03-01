@@ -33,6 +33,7 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -44,15 +45,28 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.jorgecastilloprz.expandablepanel.ExpandablePanelView;
+import com.jorgecastilloprz.expandablepanel.listeners.ExpandableListener;
+import com.mr_sarsarabi.library.LockableViewPager;
 import com.sdsmdg.harjot.crollerTest.Croller;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+import in.goodiebag.carouselpicker.CarouselPicker;
 
 import static android.content.Intent.getIntent;
 
@@ -65,17 +79,20 @@ import static android.content.Intent.getIntent;
  * Use the {@link Tab1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tab1 extends Fragment {
+public class Tab1 extends Fragment implements ExpandableListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    ImageView arrow_view;
+    Animation animationRotateCenter;
+
 
     Croller croller;
     RelativeLayout rLayout;
     Toolbar tb;
-    ViewPager vp;
+    LockableViewPager vp;
     ImageButton recBtn1;
     ImageButton recBtn2;
     ImageButton recBtn3;
@@ -83,6 +100,15 @@ public class Tab1 extends Fragment {
     ImageButton recBtn5;
     ImageButton recBtn6;
     ImageButton[] recBtns;
+    CarouselPicker measureCarouselPicker1;
+    CarouselPicker measureCarouselPicker2;
+    CarouselPicker BPMCarouselPicker;
+    LinearLayout topll;
+    LinearLayout dmcll;
+    ExpandablePanelView expandablePanelView;
+    int topMeasureValue = 4;
+    int bottomMeasureValue = 4;
+    int bpm = 120;
     int DIALOG_CROLLER = 1;
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
@@ -132,7 +158,6 @@ public class Tab1 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tab1, container, false);
         rLayout = view.findViewById(R.id.RelativeLayout);
         tb = view.findViewById(R.id.toolbar);
-        vp = view.findViewById(R.id.pager);
 //        croller = view.findViewById(R.id.croller);
         recBtn1 = view.findViewById(R.id.imageButton7);
         recBtn2 = view.findViewById(R.id.imageButton8);
@@ -140,12 +165,15 @@ public class Tab1 extends Fragment {
         recBtn4 = view.findViewById(R.id.imageButton10);
         recBtn5 = view.findViewById(R.id.imageButton11);
         recBtn6 = view.findViewById(R.id.imageButton12);
+        arrow_view = view.findViewById(R.id.arrow_view);
+        topll = view.findViewById(R.id.topll);
         recBtn1.setOnLongClickListener(recBtnLCL);
         recBtn2.setOnLongClickListener(recBtnLCL);
         recBtn3.setOnLongClickListener(recBtnLCL);
         recBtn4.setOnLongClickListener(recBtnLCL);
         recBtn5.setOnLongClickListener(recBtnLCL);
         recBtn6.setOnLongClickListener(recBtnLCL);
+        expandablePanelView = view.findViewById(R.id.EPV);
         recBtns = new ImageButton[6];
         recBtns[0] = recBtn1;
         recBtns[1] = recBtn2;
@@ -159,11 +187,10 @@ public class Tab1 extends Fragment {
         registerForContextMenu(recBtn4);
         registerForContextMenu(recBtn5);
         registerForContextMenu(recBtn6);
+        expandablePanelView.attachExpandableListener(this);
+
         return view;
     }
-
-
-
 
 
     @Override
@@ -233,6 +260,166 @@ public class Tab1 extends Fragment {
     };
 
 
+    @Override
+    public void onExpandingStarted() {
+        Toast.makeText(getActivity(), "seems like it rly works haha", Toast.LENGTH_LONG).show();
+        animationRotateCenter = AnimationUtils.loadAnimation(
+                this.getContext(), R.anim.myrotate);
+        arrow_view.startAnimation(animationRotateCenter);
+
+        Log.d("tagn1", "why not works yet?");
+    }
+
+    @Override
+    public void onExpandingFinished() {
+        ViewGroup.LayoutParams llparams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        topll.addView(vert, llparams);
+
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        View promptsView = li.inflate(R.layout.dialog_measure_carousel, null);
+
+        dmcll = promptsView.findViewById(R.id.dmc_ll);
+        topll.addView(dmcll, llparams);
+
+        LayoutInflater li2 = LayoutInflater.from(getActivity());
+        View promptsView2 = li.inflate(R.layout.activity_main, null);
+
+
+        List<CarouselPicker.PickerItem> measureTextItems = new ArrayList<>();
+//20 here represents the textSize in dp, change it to the value you want.
+        measureTextItems.add(new CarouselPicker.TextItem("1", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("2", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("3", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("4", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("5", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("6", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("7", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("8", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("9", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("10", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("11", 20));
+        measureTextItems.add(new CarouselPicker.TextItem("12", 20));
+
+        CarouselPicker.CarouselViewAdapter measureTextAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), measureTextItems, 0);
+
+        List<CarouselPicker.PickerItem> bpmTextItems = new ArrayList<>();
+        bpmTextItems.add(new CarouselPicker.TextItem("60", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("70", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("80", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("90", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("100", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("110", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("120", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("130", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("140", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("150", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("160", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("170", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("180", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("190", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("200", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("210", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("220", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("230", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("240", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("250", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("260", 16));
+        bpmTextItems.add(new CarouselPicker.TextItem("270", 16));
+
+        CarouselPicker.CarouselViewAdapter bpmTextAdapter = new CarouselPicker.CarouselViewAdapter(getActivity(), bpmTextItems, 0);
+
+        measureCarouselPicker1 = promptsView.findViewById(R.id.upper_carousel);
+        measureCarouselPicker2 = promptsView.findViewById(R.id.lower_carousel);
+        BPMCarouselPicker = promptsView.findViewById(R.id.bpm_carousel);
+
+        measureTextAdapter.setTextColor(Color.WHITE);
+        bpmTextAdapter.setTextColor(Color.WHITE);
+
+        measureCarouselPicker1.setAdapter(measureTextAdapter);
+        measureCarouselPicker2.setAdapter(measureTextAdapter);
+        BPMCarouselPicker.setAdapter(bpmTextAdapter);
+
+        vp = promptsView2.findViewById(R.id.pager); ////not works
+        vp.setSwipeLocked(true);                    ////yet
+
+        measureCarouselPicker1.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    topMeasureValue = position + 1;
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+
+        measureCarouselPicker2.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bottomMeasureValue = position + 1;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        BPMCarouselPicker.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bpm = 60 + position * 10;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        }
+
+    @Override
+    public void onShrinkStarted() {
+
+    }
+
+    @Override
+    public void onShrinkFinished() {
+        topll.removeView(dmcll);
+        animationRotateCenter = AnimationUtils.loadAnimation(
+                this.getContext(), R.anim.myreverserotate);
+        arrow_view.startAnimation(animationRotateCenter);
+        Toast.makeText(getActivity(), "tmv " + topMeasureValue + " bmv " + bottomMeasureValue + " bpm " + bpm, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onExpandingTouchEvent(MotionEvent motionEvent) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -247,22 +434,6 @@ public class Tab1 extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static int getToolBarHeight(Context context) {
@@ -281,6 +452,8 @@ public class Tab1 extends Fragment {
         float scale = context.getResources().getDisplayMetrics().density;
         return dp * scale + 0.5f;
     }
+
+
 
 
     private void moveViewToScreenCenter( View view )

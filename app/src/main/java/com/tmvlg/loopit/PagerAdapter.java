@@ -7,6 +7,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
     int mNoOfTabs;
+    private boolean locked = false;
+    private int lockedIndex;
+
+    public void setLocked(boolean locked, int page) {
+        this.locked = locked;
+        lockedIndex = page;
+        notifyDataSetChanged();
+    }
 
     public PagerAdapter(FragmentManager fm, int NumberOfTabs){
         super(fm);
@@ -15,6 +23,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if (locked) position = lockedIndex;
         switch (position){
             case 0:
                 Tab1 tab1 = new Tab1();

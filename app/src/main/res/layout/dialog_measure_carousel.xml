@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dmc_ll"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SET MEASURE:"
+        android:textSize="25sp"
+        android:layout_marginStart="15sp"
+        android:textColor="#FFFFFF"
+        />
+
+    <in.goodiebag.carouselpicker.CarouselPicker
+        android:id="@+id/upper_carousel"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/topllColor"
+        app:items_visible="five" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/just_line"
+        android:layout_marginEnd="170dp"
+        android:layout_marginRight="170dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginLeft="170dp"/>
+
+
+    <in.goodiebag.carouselpicker.CarouselPicker
+        android:id="@+id/lower_carousel"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/topllColor"
+        app:items_visible="five" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SET BPM:"
+        android:textSize="25sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="25sp"
+        android:textColor="#FFFFFF"
+        />
+
+    <in.goodiebag.carouselpicker.CarouselPicker
+        android:id="@+id/bpm_carousel"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/topllColor"
+        app:items_visible="five" />
+
+</LinearLayout>

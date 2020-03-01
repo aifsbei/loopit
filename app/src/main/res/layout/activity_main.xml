@@ -36,12 +36,14 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <com.mr_sarsarabi.library.LockableViewPager
         android:id="@+id/pager"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_weight="1"
-        ></androidx.viewpager.widget.ViewPager>
+        app:lock_swipe="true"
+        ></com.mr_sarsarabi.library.LockableViewPager>
+
 
 
 </LinearLayout>
