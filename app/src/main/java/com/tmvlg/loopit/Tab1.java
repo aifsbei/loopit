@@ -56,6 +56,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
+import com.tmvlg.loopit.Rec;
+import com.tmvlg.loopit.MetronomeAsyncTask;
 
 import com.jorgecastilloprz.expandablepanel.ExpandablePanelView;
 import com.jorgecastilloprz.expandablepanel.listeners.ExpandableListener;
@@ -99,7 +101,7 @@ public class Tab1 extends Fragment implements ExpandableListener {
     ImageButton recBtn4;
     ImageButton recBtn5;
     ImageButton recBtn6;
-    ImageButton[] recBtns;
+    Rec[] recBtns;
     CarouselPicker measureCarouselPicker1;
     CarouselPicker measureCarouselPicker2;
     CarouselPicker BPMCarouselPicker;
@@ -109,6 +111,7 @@ public class Tab1 extends Fragment implements ExpandableListener {
     LinearLayout.LayoutParams small;
     LinearLayout.LayoutParams large;
     ExpandablePanelView expandablePanelView;
+    TextView timeTextView;
     int topMeasureValue = 4;
     int bottomMeasureValue = 4;
     int bpm = 120;
@@ -163,35 +166,42 @@ public class Tab1 extends Fragment implements ExpandableListener {
         rLayout = view.findViewById(R.id.RelativeLayout);
         tb = view.findViewById(R.id.toolbar);
 //        croller = view.findViewById(R.id.croller);
-        recBtn1 = view.findViewById(R.id.imageButton7);
-        recBtn2 = view.findViewById(R.id.imageButton8);
-        recBtn3 = view.findViewById(R.id.imageButton9);
-        recBtn4 = view.findViewById(R.id.imageButton10);
-        recBtn5 = view.findViewById(R.id.imageButton11);
-        recBtn6 = view.findViewById(R.id.imageButton12);
+        Rec recBtn1 = new Rec((ImageButton) view.findViewById(R.id.imageButton7));
+        Rec recBtn2 = new Rec((ImageButton) view.findViewById(R.id.imageButton8));
+        Rec recBtn3 = new Rec((ImageButton) view.findViewById(R.id.imageButton9));
+        Rec recBtn4 = new Rec((ImageButton) view.findViewById(R.id.imageButton10));
+        Rec recBtn5 = new Rec((ImageButton) view.findViewById(R.id.imageButton11));
+        Rec recBtn6 = new Rec((ImageButton) view.findViewById(R.id.imageButton12));
         arrow_view = view.findViewById(R.id.arrow_view);
         topll = view.findViewById(R.id.topll);
         dotsll = view.findViewById(R.id.dotsll);
-        recBtn1.setOnLongClickListener(recBtnLCL);
-        recBtn2.setOnLongClickListener(recBtnLCL);
-        recBtn3.setOnLongClickListener(recBtnLCL);
-        recBtn4.setOnLongClickListener(recBtnLCL);
-        recBtn5.setOnLongClickListener(recBtnLCL);
-        recBtn6.setOnLongClickListener(recBtnLCL);
+        recBtn1.btn.setOnLongClickListener(recBtnLCL);
+        recBtn2.btn.setOnLongClickListener(recBtnLCL);
+        recBtn3.btn.setOnLongClickListener(recBtnLCL);
+        recBtn4.btn.setOnLongClickListener(recBtnLCL);
+        recBtn5.btn.setOnLongClickListener(recBtnLCL);
+        recBtn6.btn.setOnLongClickListener(recBtnLCL);
+        recBtn1.btn.setOnClickListener(recBtnCL);
+        recBtn2.btn.setOnClickListener(recBtnCL);
+        recBtn3.btn.setOnClickListener(recBtnCL);
+        recBtn4.btn.setOnClickListener(recBtnCL);
+        recBtn5.btn.setOnClickListener(recBtnCL);
+        recBtn6.btn.setOnClickListener(recBtnCL);
         expandablePanelView = view.findViewById(R.id.EPV);
-        recBtns = new ImageButton[6];
+        timeTextView = view.findViewById(R.id.timeTextView);
+        recBtns = new Rec[6];
         recBtns[0] = recBtn1;
         recBtns[1] = recBtn2;
         recBtns[2] = recBtn3;
         recBtns[3] = recBtn4;
         recBtns[4] = recBtn5;
         recBtns[5] = recBtn6;
-        registerForContextMenu(recBtn1);
-        registerForContextMenu(recBtn2);
-        registerForContextMenu(recBtn3);
-        registerForContextMenu(recBtn4);
-        registerForContextMenu(recBtn5);
-        registerForContextMenu(recBtn6);
+        registerForContextMenu(recBtn1.btn);
+        registerForContextMenu(recBtn2.btn);
+        registerForContextMenu(recBtn3.btn);
+        registerForContextMenu(recBtn4.btn);
+        registerForContextMenu(recBtn5.btn);
+        registerForContextMenu(recBtn6.btn);
         expandablePanelView.attachExpandableListener(this);
         small = new LinearLayout.LayoutParams(20, 20);
         large = new LinearLayout.LayoutParams(30, 30);
@@ -268,6 +278,31 @@ public class Tab1 extends Fragment implements ExpandableListener {
 //            moveViewToScreenCenter(v);
             d.show();
             return false;
+        }
+    };
+
+    View.OnClickListener recBtnCL = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            if (!isAnyRecPressed()){
+                MetronomeAsyncTask metronomeAsyncTask = new MetronomeAsyncTask(timeTextView, 1);
+                metronomeAsyncTask.execute();
+            }
+            for (Rec button : recBtns){
+                if (button.btn.equals(v)){
+                    if (button.getStatus().equals("inactive")) {
+                        button.setStatus("pressed");
+
+
+                    }
+                    else if (button.getStatus().equals("inactive")){
+                        button.setStatus("inactive");
+
+                    }
+
+                }
+            }
         }
     };
 
@@ -597,7 +632,14 @@ public class Tab1 extends Fragment implements ExpandableListener {
         }
     }
 
-
+    private boolean isAnyRecPressed(){
+        boolean result = false;
+        for (Rec button : recBtns) {
+            if (button.getStatus().equals("pressed"))
+                result = true;
+        }
+        return result;
+    }
 
 
 
