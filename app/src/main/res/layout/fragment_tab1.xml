@@ -109,20 +109,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageButton
+                <pl.droidsonroids.gif.GifImageButton
                     android:id="@+id/imageButton7"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
+                    android:src="@drawable/brec2"
                     android:background="@android:color/transparent"/>
 
-                <ImageButton
+                <pl.droidsonroids.gif.GifImageButton
                     android:id="@+id/imageButton8"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
+                    android:src="@drawable/brec2"
                     android:background="@android:color/transparent"/>
             </TableRow>
 
@@ -131,20 +131,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageButton
+                <pl.droidsonroids.gif.GifImageButton
                     android:id="@+id/imageButton9"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
+                    android:src="@drawable/brec2"
                     android:background="@android:color/transparent"/>
 
-                <ImageButton
+                <pl.droidsonroids.gif.GifImageButton
                     android:id="@+id/imageButton10"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
+                    android:src="@drawable/brec2"
                     android:background="@android:color/transparent"/>
             </TableRow>
 
@@ -153,20 +153,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageButton
+                <pl.droidsonroids.gif.GifImageButton
                     android:id="@+id/imageButton11"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
+                    android:src="@drawable/brec2"
                     android:background="@android:color/transparent"/>
 
-                <ImageButton
+                <pl.droidsonroids.gif.GifImageButton
                     android:id="@+id/imageButton12"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
+                    android:src="@drawable/brec2"
                     android:background="@android:color/transparent"/>
             </TableRow>
 

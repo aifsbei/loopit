@@ -35,6 +35,7 @@ dependencies {
     implementation 'com.github.GoodieBag:CarouselPicker:v1.1'
     implementation 'com.github.jorgecastilloprz:expandablepanel:1.0.4@aar'
     implementation 'com.github.mr-sarsarabi:lockableViewPager:1.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
 
 

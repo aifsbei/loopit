@@ -2,6 +2,7 @@ package com.tmvlg.loopit;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -52,12 +53,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 import com.tmvlg.loopit.Rec;
 import com.tmvlg.loopit.MetronomeAsyncTask;
+import com.tmvlg.loopit.TimerAsyncTask;
 
 import com.jorgecastilloprz.expandablepanel.ExpandablePanelView;
 import com.jorgecastilloprz.expandablepanel.listeners.ExpandableListener;
@@ -67,8 +70,11 @@ import com.sdsmdg.harjot.crollerTest.Croller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import in.goodiebag.carouselpicker.CarouselPicker;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageButton;
 
 import static android.content.Intent.getIntent;
 
@@ -91,16 +97,20 @@ public class Tab1 extends Fragment implements ExpandableListener {
     Animation animationRotateCenter;
 
 
+    TimerAsyncTask timerAsyncTask;
+    MetronomeAsyncTask metronomeAsyncTask;
+    Thread timerThread;
+    Thread metronomeThread;
     Croller croller;
     RelativeLayout rLayout;
     Toolbar tb;
     LockableViewPager vp;
-    ImageButton recBtn1;
-    ImageButton recBtn2;
-    ImageButton recBtn3;
-    ImageButton recBtn4;
-    ImageButton recBtn5;
-    ImageButton recBtn6;
+    GifImageButton recBtn1;
+    GifImageButton recBtn2;
+    GifImageButton recBtn3;
+    GifImageButton recBtn4;
+    GifImageButton recBtn5;
+    GifImageButton recBtn6;
     Rec[] recBtns;
     CarouselPicker measureCarouselPicker1;
     CarouselPicker measureCarouselPicker2;
@@ -112,10 +122,18 @@ public class Tab1 extends Fragment implements ExpandableListener {
     LinearLayout.LayoutParams large;
     ExpandablePanelView expandablePanelView;
     TextView timeTextView;
+    static ImageView[] dots;
     int topMeasureValue = 4;
+    public static boolean stopTimer = true;
+    public static boolean stopMetronome = true;
     int bottomMeasureValue = 4;
     int bpm = 120;
+    int min = 0;
+    int sec = 0;
+    public int numberOfDot = 0;
     int DIALOG_CROLLER = 1;
+    int screen_width;
+    int screen_height;
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
     boolean panelsScrolled[] = {false, false, false};
@@ -166,12 +184,27 @@ public class Tab1 extends Fragment implements ExpandableListener {
         rLayout = view.findViewById(R.id.RelativeLayout);
         tb = view.findViewById(R.id.toolbar);
 //        croller = view.findViewById(R.id.croller);
-        Rec recBtn1 = new Rec((ImageButton) view.findViewById(R.id.imageButton7));
-        Rec recBtn2 = new Rec((ImageButton) view.findViewById(R.id.imageButton8));
-        Rec recBtn3 = new Rec((ImageButton) view.findViewById(R.id.imageButton9));
-        Rec recBtn4 = new Rec((ImageButton) view.findViewById(R.id.imageButton10));
-        Rec recBtn5 = new Rec((ImageButton) view.findViewById(R.id.imageButton11));
-        Rec recBtn6 = new Rec((ImageButton) view.findViewById(R.id.imageButton12));
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        screen_width = size.x;
+        screen_height = size.y;
+
+        Log.d("tagn1", "x=" + screen_width + " h=" + screen_height);
+
+        Rec recBtn1 = new Rec((GifImageButton) view.findViewById(R.id.imageButton7));
+        Rec recBtn2 = new Rec((GifImageButton) view.findViewById(R.id.imageButton8));
+        Rec recBtn3 = new Rec((GifImageButton) view.findViewById(R.id.imageButton9));
+        Rec recBtn4 = new Rec((GifImageButton) view.findViewById(R.id.imageButton10));
+        Rec recBtn5 = new Rec((GifImageButton) view.findViewById(R.id.imageButton11));
+        Rec recBtn6 = new Rec((GifImageButton) view.findViewById(R.id.imageButton12));
+        recBtn1.btn.setFreezesAnimation(true);
+        recBtn2.btn.setFreezesAnimation(true);
+        recBtn3.btn.setFreezesAnimation(true);
+        recBtn4.btn.setFreezesAnimation(true);
+        recBtn5.btn.setFreezesAnimation(true);
+        recBtn6.btn.setFreezesAnimation(true);
         arrow_view = view.findViewById(R.id.arrow_view);
         topll = view.findViewById(R.id.topll);
         dotsll = view.findViewById(R.id.dotsll);
@@ -203,13 +236,13 @@ public class Tab1 extends Fragment implements ExpandableListener {
         registerForContextMenu(recBtn5.btn);
         registerForContextMenu(recBtn6.btn);
         expandablePanelView.attachExpandableListener(this);
-        small = new LinearLayout.LayoutParams(20, 20);
-        large = new LinearLayout.LayoutParams(30, 30);
-        small.leftMargin=15;
-        small.rightMargin=15;
-        large.leftMargin=15;
-        large.rightMargin=15;
-        createDots(small, large, topMeasureValue, "13");
+        small = new LinearLayout.LayoutParams(screen_width/54, screen_width/54);
+        large = new LinearLayout.LayoutParams(screen_width/36, screen_width/36);
+        small.leftMargin=screen_width/72;
+        small.rightMargin=screen_width/72;
+        large.leftMargin=screen_width/72;
+        large.rightMargin=screen_width/72;
+        dots = createDots(small, large, topMeasureValue, "13");
 
         return view;
     }
@@ -286,22 +319,40 @@ public class Tab1 extends Fragment implements ExpandableListener {
         @Override
         public void onClick(View v) {
             if (!isAnyRecPressed()){
-                MetronomeAsyncTask metronomeAsyncTask = new MetronomeAsyncTask(timeTextView, 1);
-                metronomeAsyncTask.execute();
+                //timerAsyncTask = new TimerAsyncTask(timeTextView);
+                //timerAsyncTask.execute();
+                Log.d("tagn1", "dots length=" + dots.length);
+                //metronomeAsyncTask = new MetronomeAsyncTask(dots, bpm/bottomMeasureValue, getActivity());
+                //metronomeAsyncTask.execute();
+                timerThread = new Thread(timerRunnable);
+                stopTimer = false;
+                timerThread.start();
+                metronomeThread = new Thread(metronomeRunnable);
+                stopMetronome = false;
+                metronomeThread.start();
+
             }
             for (Rec button : recBtns){
                 if (button.btn.equals(v)){
                     if (button.getStatus().equals("inactive")) {
                         button.setStatus("pressed");
-
+                        button.btn.setImageResource(R.drawable.brecgif3start_to_stop);
 
                     }
-                    else if (button.getStatus().equals("inactive")){
+                    else if (button.getStatus().equals("pressed")){
                         button.setStatus("inactive");
+                        button.btn.setImageResource(R.drawable.brecgif3stop_to_start);
 
                     }
 
                 }
+            }
+            if (!isAnyRecPressed()){
+                //timerAsyncTask.cancel(false);
+                stopTimer = true;
+                stopMetronome = true;
+                //metronomeAsyncTask.cancel(false);
+                Log.d("tagn1", "all threads r stopped");
             }
         }
     };
@@ -517,22 +568,22 @@ public class Tab1 extends Fragment implements ExpandableListener {
 
         Toast.makeText(getActivity(), "tmv " + topMeasureValue + " bmv " + bottomMeasureValue + " bpm " + bpm, Toast.LENGTH_SHORT).show();
         if (topMeasureValue == 2) {
-            createDots(small, large, topMeasureValue, "1");
+            dots = createDots(small, large, topMeasureValue, "1");
         }
         if (topMeasureValue == 3) {
-            createDots(small, large, topMeasureValue, "1");
+            dots = createDots(small, large, topMeasureValue, "1");
         }
         if (topMeasureValue == 4) {
-            createDots(small, large, topMeasureValue, "13");
+            dots = createDots(small, large, topMeasureValue, "13");
         }
         if (topMeasureValue == 6) {
-            createDots(small, large, topMeasureValue, "14");
+            dots = createDots(small, large, topMeasureValue, "14");
         }
         if (topMeasureValue == 9) {
-            createDots(small, large, topMeasureValue, "147");
+            dots = createDots(small, large, topMeasureValue, "147");
         }
         if (topMeasureValue == 12) {
-            createDots(small, large, topMeasureValue, "14710");
+            dots = createDots(small, large, topMeasureValue, "14710");
         }
 
     }
@@ -607,29 +658,33 @@ public class Tab1 extends Fragment implements ExpandableListener {
         view.startAnimation(as);
     }
 
-    private void createDots(LinearLayout.LayoutParams small, LinearLayout.LayoutParams large, int numberOfDots, String larges)
+    private ImageView[] createDots(LinearLayout.LayoutParams small, LinearLayout.LayoutParams large, int numberOfDots, String larges)
     {
-        ImageView dots[] = new ImageView[numberOfDots];
+        ImageView dotsTemp[] = new ImageView[numberOfDots];
+
 
         dotsll.removeAllViewsInLayout();
         int count = 1;
-        for (ImageView dot : dots)
+        for (int i = 0; i < dotsTemp.length; i++)
         {
-            dot = new ImageView(getActivity());
-            dot.setElevation(1);
-            dot.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            dotsTemp[i] = new ImageView(getActivity());
+            dotsTemp[i].setElevation(1);
+            dotsTemp[i].setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             Log.d("tagn1", "works");
-            dot.setImageResource(R.drawable.oval_metronome_indicator);
+            dotsTemp[i].setImageResource(R.drawable.oval_metronome_indicator);
             if (larges.contains("" + count))
             {
-                dotsll.addView(dot, large);
+                dotsll.addView(dotsTemp[i], large);
             }
             else {
-                dotsll.addView(dot, small);
+                dotsll.addView(dotsTemp[i], small);
             }
             count++;
         }
+        Log.d("tagn1", "dot class:"+dotsTemp[0]);
+        Log.d("tagn1", "arrow class:"+arrow_view);
+        return dotsTemp;
     }
 
     private boolean isAnyRecPressed(){
@@ -641,6 +696,73 @@ public class Tab1 extends Fragment implements ExpandableListener {
         return result;
     }
 
+    Runnable timerRunnable = new Runnable() {
+        public void run() {
+            min = 0;
+            sec = 0;
+            while (!stopTimer) {
+                try {
+                    getActivity().runOnUiThread(settingTimeView);
+                    TimeUnit.SECONDS.sleep(1);
+                    if (sec == 59)
+                    {
+                        min++;
+                        sec = -1;
+                    }
+                    sec++;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
+    Runnable settingTimeView = new Runnable() {
+        @Override
+        public void run() {
+            if (sec < 10)
+                timeTextView.setText("" + min + ":0" + sec);
+            else {
+                timeTextView.setText("" + min + ":" + sec);
+            }
+        }
+    };
+
+    Runnable metronomeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            while (!stopMetronome) {
+                Log.d("tagn1", "GO!");
+                for (numberOfDot = 0; numberOfDot < dots.length;) {
+                    getActivity().runOnUiThread(makeDotsAlive);
+                    try {
+                        TimeUnit.MILLISECONDS.sleep((long) 60000 / (bpm * bottomMeasureValue / 4));
+                        numberOfDot++;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+    };
+
+    Runnable makeDotsAlive = new Runnable() {
+        @Override
+        public void run() {
+            AnimationSet as = new AnimationSet(true);
+            Animation onime = null;
+            onime = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce);
+            onime.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
+            as.addAnimation(onime);
+            Animation onime_reversed = null;
+            onime_reversed = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce_reversed);
+            onime_reversed.setStartOffset((long) 30000 / (bpm * bottomMeasureValue / 4));
+            onime_reversed.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
+            as.addAnimation(onime_reversed);
+            Log.d("tagn1", "dot number #" + numberOfDot);
+            dots[numberOfDot].startAnimation(as);
+        }
+    };
 
 }

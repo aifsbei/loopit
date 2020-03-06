@@ -1,55 +1,78 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:expandablepanel="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".testMain">
 
-    <com.jorgecastilloprz.expandablepanel.ExpandablePanelView
-        android:id="@+id/expandablePanelView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
-        expandablepanel:completionPercent="0.9">
 
-        <ImageView
-            android:id="@+id/topLayout"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="#848464"
-            android:scaleType="centerCrop" />
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/ll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/topLayout"
-            android:orientation="vertical"
-            android:background="#FF2425">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#747477" />
-
-            <LinearLayout
-                android:background="#585FFF"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/userDetails"
-                    android:textColor="@android:color/white"
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="user_details" />
+                    android:layout_height="wrap_content" >
 
-            </LinearLayout>
+                        <pl.droidsonroids.gif.GifImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitStart"
+                            android:src="@drawable/brecgif1" />
 
-        </LinearLayout>
+                        <pl.droidsonroids.gif.GifImageView
+                            android:id="@+id/gifImageView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitStart"
+                            android:src="@drawable/brecgif1" />
+                </TableRow>
 
-    </com.jorgecastilloprz.expandablepanel.ExpandablePanelView>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                        <pl.droidsonroids.gif.GifImageView
+                            android:id="@+id/gifImageView2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitStart"
+                            android:src="@drawable/brecgif1" />
+
+                        <pl.droidsonroids.gif.GifImageView
+                            android:id="@+id/gifImageView3"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitStart"
+                            android:src="@drawable/brecgif1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                        <pl.droidsonroids.gif.GifImageView
+                            android:id="@+id/gifImageView4"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitStart"
+                            android:src="@drawable/brecgif1" />
+
+                        <pl.droidsonroids.gif.GifImageView
+                            android:id="@+id/gifImageView5"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitStart"
+                            android:src="@drawable/brecgif1" />
+                </TableRow>
+
+        </TableLayout>
 
 
-
-</RelativeLayout>
+</FrameLayout>

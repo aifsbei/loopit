@@ -3,11 +3,13 @@ package com.tmvlg.loopit;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import pl.droidsonroids.gif.GifImageButton;
+
 public class Rec {
-    public ImageButton btn;
+    public GifImageButton btn;
     private String status;
 
-    public Rec(ImageButton button){
+    public Rec(GifImageButton button){
         this.btn = button;
         status = "inactive";
     }
