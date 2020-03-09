@@ -31,6 +31,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -50,17 +51,17 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-import com.tmvlg.loopit.Rec;
-import com.tmvlg.loopit.MetronomeAsyncTask;
-import com.tmvlg.loopit.TimerAsyncTask;
+
 
 import com.jorgecastilloprz.expandablepanel.ExpandablePanelView;
 import com.jorgecastilloprz.expandablepanel.listeners.ExpandableListener;
@@ -68,6 +69,7 @@ import com.mr_sarsarabi.library.LockableViewPager;
 import com.sdsmdg.harjot.crollerTest.Croller;
 
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -75,6 +77,8 @@ import java.util.concurrent.TimeUnit;
 import in.goodiebag.carouselpicker.CarouselPicker;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageButton;
+import android.view.View.OnTouchListener;
+
 
 import static android.content.Intent.getIntent;
 
@@ -87,7 +91,7 @@ import static android.content.Intent.getIntent;
  * Use the {@link Tab1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tab1 extends Fragment implements ExpandableListener {
+public class Tab1 extends Fragment implements ExpandableListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -95,7 +99,18 @@ public class Tab1 extends Fragment implements ExpandableListener {
 
     ImageView arrow_view;
     Animation animationRotateCenter;
+    Animation animationAppearCenter;
+    Animation animationDisappearCenter;
 
+    Rec recBtn1;
+    Rec recBtn2;
+    Rec recBtn3;
+    Rec recBtn4;
+    Rec recBtn5;
+    Rec recBtn6;
+    FrameLayout frameLayout1;
+    FrameLayout frameLayout2;
+    TableRow tableRow;
 
     TimerAsyncTask timerAsyncTask;
     MetronomeAsyncTask metronomeAsyncTask;
@@ -105,12 +120,12 @@ public class Tab1 extends Fragment implements ExpandableListener {
     RelativeLayout rLayout;
     Toolbar tb;
     LockableViewPager vp;
-    GifImageButton recBtn1;
-    GifImageButton recBtn2;
-    GifImageButton recBtn3;
-    GifImageButton recBtn4;
-    GifImageButton recBtn5;
-    GifImageButton recBtn6;
+    GifImageButton recGifBtn1;
+    GifImageButton recGifBtn2;
+    GifImageButton recGifBtn3;
+    GifImageButton recGifBtn4;
+    GifImageButton recGifBtn5;
+    GifImageButton recGifBtn6;
     Rec[] recBtns;
     CarouselPicker measureCarouselPicker1;
     CarouselPicker measureCarouselPicker2;
@@ -193,12 +208,15 @@ public class Tab1 extends Fragment implements ExpandableListener {
 
         Log.d("tagn1", "x=" + screen_width + " h=" + screen_height);
 
-        Rec recBtn1 = new Rec((GifImageButton) view.findViewById(R.id.imageButton7));
-        Rec recBtn2 = new Rec((GifImageButton) view.findViewById(R.id.imageButton8));
-        Rec recBtn3 = new Rec((GifImageButton) view.findViewById(R.id.imageButton9));
-        Rec recBtn4 = new Rec((GifImageButton) view.findViewById(R.id.imageButton10));
-        Rec recBtn5 = new Rec((GifImageButton) view.findViewById(R.id.imageButton11));
-        Rec recBtn6 = new Rec((GifImageButton) view.findViewById(R.id.imageButton12));
+        frameLayout1 = view.findViewById(R.id.frameLayout1);
+        frameLayout2 = view.findViewById(R.id.frameLayout2);
+        tableRow = view.findViewById(R.id.tableRow1);
+        recBtn1 = new Rec((GifImageButton) view.findViewById(R.id.imageButton7));
+        recBtn2 = new Rec((GifImageButton) view.findViewById(R.id.imageButton8));
+        recBtn3 = new Rec((GifImageButton) view.findViewById(R.id.imageButton9));
+        recBtn4 = new Rec((GifImageButton) view.findViewById(R.id.imageButton10));
+        recBtn5 = new Rec((GifImageButton) view.findViewById(R.id.imageButton11));
+        recBtn6 = new Rec((GifImageButton) view.findViewById(R.id.imageButton12));
         recBtn1.btn.setFreezesAnimation(true);
         recBtn2.btn.setFreezesAnimation(true);
         recBtn3.btn.setFreezesAnimation(true);
@@ -208,18 +226,19 @@ public class Tab1 extends Fragment implements ExpandableListener {
         arrow_view = view.findViewById(R.id.arrow_view);
         topll = view.findViewById(R.id.topll);
         dotsll = view.findViewById(R.id.dotsll);
-        recBtn1.btn.setOnLongClickListener(recBtnLCL);
-        recBtn2.btn.setOnLongClickListener(recBtnLCL);
-        recBtn3.btn.setOnLongClickListener(recBtnLCL);
-        recBtn4.btn.setOnLongClickListener(recBtnLCL);
-        recBtn5.btn.setOnLongClickListener(recBtnLCL);
-        recBtn6.btn.setOnLongClickListener(recBtnLCL);
+        recBtn1.btn.setOnLongClickListener(recBtnLCL1);
+        recBtn2.btn.setOnLongClickListener(recBtnLCL2);
+        recBtn3.btn.setOnLongClickListener(recBtnLCL3);
+        recBtn4.btn.setOnLongClickListener(recBtnLCL4);
+        recBtn5.btn.setOnLongClickListener(recBtnLCL5);
+        recBtn6.btn.setOnLongClickListener(recBtnLCL6);
         recBtn1.btn.setOnClickListener(recBtnCL);
         recBtn2.btn.setOnClickListener(recBtnCL);
         recBtn3.btn.setOnClickListener(recBtnCL);
         recBtn4.btn.setOnClickListener(recBtnCL);
         recBtn5.btn.setOnClickListener(recBtnCL);
         recBtn6.btn.setOnClickListener(recBtnCL);
+
         expandablePanelView = view.findViewById(R.id.EPV);
         timeTextView = view.findViewById(R.id.timeTextView);
         recBtns = new Rec[6];
@@ -289,26 +308,218 @@ public class Tab1 extends Fragment implements ExpandableListener {
         mListener = null;
     }
 
-    View.OnLongClickListener recBtnLCL = new View.OnLongClickListener() {
+
+    View.OnLongClickListener recBtnLCL1 = new View.OnLongClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public boolean onLongClick(View v) {
+            animationDisappearCenter = AnimationUtils.loadAnimation(
+                        v.getContext(), R.anim.disappearing);
+                recBtn1.btn.startAnimation(animationDisappearCenter);
+                recBtn1.btn.setVisibility(v.GONE);
+                recBtn1.btn.setVisibility(v.VISIBLE);
+
             final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
             //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
+            Window window = d.getWindow();
+            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
+            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
+            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+            layoutParams.x = (int)frameLayout1.getX();
+            layoutParams.y = tableRow.getHeight();
+
             d.requestWindowFeature(Window.FEATURE_NO_TITLE);
             d.setContentView(R.layout.dialog_croller);
 
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(d.getWindow().getAttributes());
+            d.getWindow().setAttributes(layoutParams);
 
             DisplayMetrics displaymetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int width = (int) ((int)displaymetrics.widthPixels * 0.75);
-            int height = (int) ((int)displaymetrics.heightPixels * 0.55);
+            int width = frameLayout1.getWidth();
+            int height = frameLayout1.getHeight();
             d.getWindow().setLayout(width,height);
             d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
-//            moveViewToScreenCenter(v);
+            d.show();
+            return false;
+        }
+    };
+
+    View.OnLongClickListener recBtnLCL2 = new View.OnLongClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public boolean onLongClick(View v) {
+            animationDisappearCenter = AnimationUtils.loadAnimation(
+                    v.getContext(), R.anim.disappearing);
+            recBtn2.btn.startAnimation(animationDisappearCenter);
+            recBtn2.btn.setVisibility(v.GONE);
+            recBtn2.btn.setVisibility(v.VISIBLE);
+
+            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
+            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
+            Window window = d.getWindow();
+            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
+            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
+            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+            layoutParams.x = (int)frameLayout2.getX();
+            layoutParams.y = tableRow.getHeight();
+
+            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            d.setContentView(R.layout.dialog_croller);
+
+            d.getWindow().setAttributes(layoutParams);
+
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int width = frameLayout2.getWidth();
+            int height = frameLayout2.getHeight();
+            d.getWindow().setLayout(width,height);
+            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+            d.show();
+            return false;
+        }
+    };
+
+    View.OnLongClickListener recBtnLCL3 = new View.OnLongClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public boolean onLongClick(View v) {
+            animationDisappearCenter = AnimationUtils.loadAnimation(
+                    v.getContext(), R.anim.disappearing);
+            recBtn3.btn.startAnimation(animationDisappearCenter);
+            recBtn3.btn.setVisibility(v.GONE);
+            recBtn3.btn.setVisibility(v.VISIBLE);
+
+            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
+            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
+            Window window = d.getWindow();
+            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
+            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
+            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+            layoutParams.x = (int)frameLayout1.getX();
+            layoutParams.y = 2*(tableRow.getHeight());
+
+            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            d.setContentView(R.layout.dialog_croller);
+
+            d.getWindow().setAttributes(layoutParams);
+
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int width = frameLayout2.getWidth();
+            int height = frameLayout2.getHeight();
+            d.getWindow().setLayout(width,height);
+            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+            d.show();
+            return false;
+        }
+    };
+
+    View.OnLongClickListener recBtnLCL4 = new View.OnLongClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public boolean onLongClick(View v) {
+            animationDisappearCenter = AnimationUtils.loadAnimation(
+                    v.getContext(), R.anim.disappearing);
+            recBtn4.btn.startAnimation(animationDisappearCenter);
+            recBtn4.btn.setVisibility(v.GONE);
+            recBtn4.btn.setVisibility(v.VISIBLE);
+
+            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
+            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
+            Window window = d.getWindow();
+            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
+            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
+            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+            layoutParams.x = (int)frameLayout2.getX();
+            layoutParams.y = 2*(tableRow.getHeight());
+
+            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            d.setContentView(R.layout.dialog_croller);
+
+            d.getWindow().setAttributes(layoutParams);
+
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int width = frameLayout2.getWidth();
+            int height = frameLayout2.getHeight();
+            d.getWindow().setLayout(width,height);
+            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+            d.show();
+            return false;
+        }
+    };
+
+    View.OnLongClickListener recBtnLCL5 = new View.OnLongClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public boolean onLongClick(View v) {
+            animationDisappearCenter = AnimationUtils.loadAnimation(
+                    v.getContext(), R.anim.disappearing);
+            recBtn5.btn.startAnimation(animationDisappearCenter);
+            recBtn5.btn.setVisibility(v.GONE);
+            recBtn5.btn.setVisibility(v.VISIBLE);
+
+            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
+            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
+            Window window = d.getWindow();
+            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
+            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
+            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+            layoutParams.x = (int)frameLayout1.getX();
+            layoutParams.y = 3*(tableRow.getHeight());
+
+            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            d.setContentView(R.layout.dialog_croller);
+
+            d.getWindow().setAttributes(layoutParams);
+
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int width = frameLayout2.getWidth();
+            int height = frameLayout2.getHeight();
+            d.getWindow().setLayout(width,height);
+            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+            d.show();
+            return false;
+        }
+    };
+
+    View.OnLongClickListener recBtnLCL6 = new View.OnLongClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public boolean onLongClick(View v) {
+            animationDisappearCenter = AnimationUtils.loadAnimation(
+                    v.getContext(), R.anim.disappearing);
+            recBtn6.btn.startAnimation(animationDisappearCenter);
+            recBtn6.btn.setVisibility(v.GONE);
+            recBtn6.btn.setVisibility(v.VISIBLE);
+
+            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
+            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
+            Window window = d.getWindow();
+            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
+            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
+            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+            layoutParams.x = (int)frameLayout2.getX();
+            layoutParams.y = 3*(tableRow.getHeight());
+
+            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            d.setContentView(R.layout.dialog_croller);
+
+            d.getWindow().setAttributes(layoutParams);
+
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int width = frameLayout2.getWidth();
+            int height = frameLayout2.getHeight();
+            d.getWindow().setLayout(width,height);
+            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
             d.show();
             return false;
         }
@@ -592,6 +803,8 @@ public class Tab1 extends Fragment implements ExpandableListener {
     public void onExpandingTouchEvent(MotionEvent motionEvent) {
 
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

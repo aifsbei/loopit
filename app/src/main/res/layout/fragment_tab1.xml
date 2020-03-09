@@ -107,23 +107,64 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:id="@+id/tableRow1">
 
-                <pl.droidsonroids.gif.GifImageButton
-                    android:id="@+id/imageButton7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec2"
-                    android:background="@android:color/transparent"/>
+                <FrameLayout
+                    android:id="@+id/frameLayout1">
+                    <com.sdsmdg.harjot.crollerTest.Croller
+                        android:visibility="gone"
+                        android:id="@+id/di_croller1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        app:back_circle_color="#EDEDED"
+                        app:indicator_color="#0B3C49"
+                        app:indicator_width="10"
+                        app:is_continuous="true"
+                        app:label=""
+                        app:label_color="#000000"
+                        app:main_circle_color="#FFFFFF"
+                        app:max="1000"
+                        app:progress_primary_color="#0B3C49"
+                        app:progress_secondary_color="#EEEEEE"
+                        app:start_offset="45" />
+                    <pl.droidsonroids.gif.GifImageButton
+                        android:id="@+id/imageButton7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/brec2"
+                        android:background="@android:color/transparent"/>
+                </FrameLayout>
 
-                <pl.droidsonroids.gif.GifImageButton
-                    android:id="@+id/imageButton8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec2"
-                    android:background="@android:color/transparent"/>
+                <FrameLayout
+                    android:id="@+id/frameLayout2">
+                    <com.sdsmdg.harjot.crollerTest.Croller
+                        android:visibility="gone"
+                        android:id="@+id/di_croller2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        app:back_circle_color="#EDEDED"
+                        app:indicator_color="#0B3C49"
+                        app:indicator_width="10"
+                        app:is_continuous="true"
+                        app:label=""
+                        app:label_color="#000000"
+                        app:main_circle_color="#FFFFFF"
+                        app:max="1000"
+                        app:progress_primary_color="#0B3C49"
+                        app:progress_secondary_color="#EEEEEE"
+                        app:start_offset="45" />
+                    <pl.droidsonroids.gif.GifImageButton
+                        android:id="@+id/imageButton8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/brec2"
+                        android:background="@android:color/transparent"/>
+                </FrameLayout>
             </TableRow>
 
             <TableRow
@@ -131,21 +172,61 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <pl.droidsonroids.gif.GifImageButton
-                    android:id="@+id/imageButton9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec2"
-                    android:background="@android:color/transparent"/>
+                <FrameLayout>
+                    <com.sdsmdg.harjot.crollerTest.Croller
+                        android:visibility="gone"
+                        android:id="@+id/di_croller3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        app:back_circle_color="#EDEDED"
+                        app:indicator_color="#0B3C49"
+                        app:indicator_width="10"
+                        app:is_continuous="true"
+                        app:label=""
+                        app:label_color="#000000"
+                        app:main_circle_color="#FFFFFF"
+                        app:max="1000"
+                        app:progress_primary_color="#0B3C49"
+                        app:progress_secondary_color="#EEEEEE"
+                        app:start_offset="45" />
 
-                <pl.droidsonroids.gif.GifImageButton
-                    android:id="@+id/imageButton10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec2"
-                    android:background="@android:color/transparent"/>
+                    <pl.droidsonroids.gif.GifImageButton
+                        android:id="@+id/imageButton9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/brec2"
+                        android:background="@android:color/transparent"/>
+                </FrameLayout>
+
+                <FrameLayout>
+                    <com.sdsmdg.harjot.crollerTest.Croller
+                        android:visibility="gone"
+                        android:id="@+id/di_croller4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        app:back_circle_color="#EDEDED"
+                        app:indicator_color="#0B3C49"
+                        app:indicator_width="10"
+                        app:is_continuous="true"
+                        app:label=""
+                        app:label_color="#000000"
+                        app:main_circle_color="#FFFFFF"
+                        app:max="1000"
+                        app:progress_primary_color="#0B3C49"
+                        app:progress_secondary_color="#EEEEEE"
+                        app:start_offset="45" />
+
+                    <pl.droidsonroids.gif.GifImageButton
+                        android:id="@+id/imageButton10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/brec2"
+                        android:background="@android:color/transparent"/>
+                </FrameLayout>
             </TableRow>
 
             <TableRow
@@ -153,21 +234,60 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <pl.droidsonroids.gif.GifImageButton
-                    android:id="@+id/imageButton11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec2"
-                    android:background="@android:color/transparent"/>
+                <FrameLayout>
+                    <com.sdsmdg.harjot.crollerTest.Croller
+                        android:visibility="gone"
+                        android:id="@+id/di_croller5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        app:back_circle_color="#EDEDED"
+                        app:indicator_color="#0B3C49"
+                        app:indicator_width="10"
+                        app:is_continuous="true"
+                        app:label=""
+                        app:label_color="#000000"
+                        app:main_circle_color="#FFFFFF"
+                        app:max="1000"
+                        app:progress_primary_color="#0B3C49"
+                        app:progress_secondary_color="#EEEEEE"
+                        app:start_offset="45" />
 
-                <pl.droidsonroids.gif.GifImageButton
-                    android:id="@+id/imageButton12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec2"
-                    android:background="@android:color/transparent"/>
+                    <pl.droidsonroids.gif.GifImageButton
+                        android:id="@+id/imageButton11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/brec2"
+                        android:background="@android:color/transparent"/>
+                </FrameLayout>
+
+                <FrameLayout>
+                    <com.sdsmdg.harjot.crollerTest.Croller
+                        android:visibility="gone"
+                        android:id="@+id/di_croller6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        app:back_circle_color="#EDEDED"
+                        app:indicator_color="#0B3C49"
+                        app:indicator_width="10"
+                        app:is_continuous="true"
+                        app:label=""
+                        app:label_color="#000000"
+                        app:main_circle_color="#FFFFFF"
+                        app:max="1000"
+                        app:progress_primary_color="#0B3C49"
+                        app:progress_secondary_color="#EEEEEE"
+                        app:start_offset="45" />
+                    <pl.droidsonroids.gif.GifImageButton
+                        android:id="@+id/imageButton12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/brec2"
+                        android:background="@android:color/transparent"/>
+                </FrameLayout>
             </TableRow>
 
         </TableLayout>
