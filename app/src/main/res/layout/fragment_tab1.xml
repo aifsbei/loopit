@@ -128,6 +128,7 @@
                         app:max="1000"
                         app:progress_primary_color="#0B3C49"
                         app:progress_secondary_color="#EEEEEE"
+                        android:scaleType="fitCenter"
                         app:start_offset="45" />
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton7"
@@ -156,6 +157,7 @@
                         app:max="1000"
                         app:progress_primary_color="#0B3C49"
                         app:progress_secondary_color="#EEEEEE"
+                        android:scaleType="fitCenter"
                         app:start_offset="45" />
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton8"
@@ -189,6 +191,7 @@
                         app:max="1000"
                         app:progress_primary_color="#0B3C49"
                         app:progress_secondary_color="#EEEEEE"
+                        android:scaleType="fitCenter"
                         app:start_offset="45" />
 
                     <pl.droidsonroids.gif.GifImageButton
@@ -217,6 +220,7 @@
                         app:max="1000"
                         app:progress_primary_color="#0B3C49"
                         app:progress_secondary_color="#EEEEEE"
+                        android:scaleType="fitCenter"
                         app:start_offset="45" />
 
                     <pl.droidsonroids.gif.GifImageButton
@@ -251,6 +255,7 @@
                         app:max="1000"
                         app:progress_primary_color="#0B3C49"
                         app:progress_secondary_color="#EEEEEE"
+                        android:scaleType="fitCenter"
                         app:start_offset="45" />
 
                     <pl.droidsonroids.gif.GifImageButton
@@ -279,6 +284,7 @@
                         app:max="1000"
                         app:progress_primary_color="#0B3C49"
                         app:progress_secondary_color="#EEEEEE"
+                        android:scaleType="fitCenter"
                         app:start_offset="45" />
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton12"

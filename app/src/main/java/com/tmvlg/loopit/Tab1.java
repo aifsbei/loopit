@@ -226,12 +226,12 @@ public class Tab1 extends Fragment implements ExpandableListener{
         arrow_view = view.findViewById(R.id.arrow_view);
         topll = view.findViewById(R.id.topll);
         dotsll = view.findViewById(R.id.dotsll);
-        recBtn1.btn.setOnLongClickListener(recBtnLCL1);
-        recBtn2.btn.setOnLongClickListener(recBtnLCL2);
-        recBtn3.btn.setOnLongClickListener(recBtnLCL3);
-        recBtn4.btn.setOnLongClickListener(recBtnLCL4);
-        recBtn5.btn.setOnLongClickListener(recBtnLCL5);
-        recBtn6.btn.setOnLongClickListener(recBtnLCL6);
+        recBtn1.btn.setOnLongClickListener(recBtnLCL);
+        recBtn2.btn.setOnLongClickListener(recBtnLCL);
+        recBtn3.btn.setOnLongClickListener(recBtnLCL);
+        recBtn4.btn.setOnLongClickListener(recBtnLCL);
+        recBtn5.btn.setOnLongClickListener(recBtnLCL);
+        recBtn6.btn.setOnLongClickListener(recBtnLCL);
         recBtn1.btn.setOnClickListener(recBtnCL);
         recBtn2.btn.setOnClickListener(recBtnCL);
         recBtn3.btn.setOnClickListener(recBtnCL);
@@ -291,6 +291,12 @@ public class Tab1 extends Fragment implements ExpandableListener{
         }
     }
 
+    public void rr(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -309,221 +315,103 @@ public class Tab1 extends Fragment implements ExpandableListener{
     }
 
 
-    View.OnLongClickListener recBtnLCL1 = new View.OnLongClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        public boolean onLongClick(View v) {
-            animationDisappearCenter = AnimationUtils.loadAnimation(
-                        v.getContext(), R.anim.disappearing);
-                recBtn1.btn.startAnimation(animationDisappearCenter);
-                recBtn1.btn.setVisibility(v.GONE);
-                recBtn1.btn.setVisibility(v.VISIBLE);
-
-            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
-            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
-            Window window = d.getWindow();
-            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
-            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
-            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
-            layoutParams.x = (int)frameLayout1.getX();
-            layoutParams.y = tableRow.getHeight();
-
-            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            d.setContentView(R.layout.dialog_croller);
-
-            d.getWindow().setAttributes(layoutParams);
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int width = frameLayout1.getWidth();
-            int height = frameLayout1.getHeight();
-            d.getWindow().setLayout(width,height);
-            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
-            d.show();
-            return false;
-        }
-    };
-
-    View.OnLongClickListener recBtnLCL2 = new View.OnLongClickListener() {
+    View.OnLongClickListener recBtnLCL = new View.OnLongClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public boolean onLongClick(View v) {
             animationDisappearCenter = AnimationUtils.loadAnimation(
                     v.getContext(), R.anim.disappearing);
-            recBtn2.btn.startAnimation(animationDisappearCenter);
-            recBtn2.btn.setVisibility(v.GONE);
-            recBtn2.btn.setVisibility(v.VISIBLE);
-
             final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
             //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
             Window window = d.getWindow();
-            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
+            window.setGravity(Gravity.AXIS_X_SHIFT & Gravity.AXIS_Y_SHIFT);
             WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
             layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
-            layoutParams.x = (int)frameLayout2.getX();
-            layoutParams.y = tableRow.getHeight();
-
             d.requestWindowFeature(Window.FEATURE_NO_TITLE);
             d.setContentView(R.layout.dialog_croller);
-
             d.getWindow().setAttributes(layoutParams);
-
             DisplayMetrics displaymetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
             int width = frameLayout2.getWidth();
             int height = frameLayout2.getHeight();
-            d.getWindow().setLayout(width,height);
-            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
-            d.show();
+            switch (v.getId()) {
+                case R.id.imageButton7: {
+                    recBtn1.btn.startAnimation(animationDisappearCenter);
+                    recBtn1.btn.setVisibility(v.GONE);
+                    recBtn1.btn.setVisibility(v.VISIBLE);
+                    layoutParams.x = (int) frameLayout1.getX();
+                    layoutParams.y = tableRow.getHeight();
+                    d.getWindow().setLayout(width, height);
+                    d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+                    d.show();
+                    break;
+                }
+                case R.id.imageButton8: {
+                    recBtn2.btn.startAnimation(animationDisappearCenter);
+                    recBtn2.btn.setVisibility(v.GONE);
+                    recBtn2.btn.setVisibility(v.VISIBLE);
+                    layoutParams.x = (int) frameLayout2.getX();
+                    layoutParams.y = tableRow.getHeight();
+                    d.getWindow().setLayout(width, height);
+                    d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+                    d.show();
+                    break;
+                }
+                case R.id.imageButton9: {
+                    recBtn3.btn.startAnimation(animationDisappearCenter);
+                    recBtn3.btn.setVisibility(v.GONE);
+                    recBtn3.btn.setVisibility(v.VISIBLE);
+                    layoutParams.x = (int) frameLayout1.getX();
+                    layoutParams.y = 2*tableRow.getHeight();
+                    d.getWindow().setLayout(width, height);
+                    d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+                    d.show();
+                    break;
+                }
+                case R.id.imageButton10: {
+                    recBtn4.btn.startAnimation(animationDisappearCenter);
+                    recBtn4.btn.setVisibility(v.GONE);
+                    recBtn4.btn.setVisibility(v.VISIBLE);
+                    layoutParams.x = (int) frameLayout2.getX();
+                    layoutParams.y = 2*tableRow.getHeight();
+                    d.getWindow().setLayout(width, height);
+                    d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+                    d.show();
+                    break;
+                }
+                case R.id.imageButton11: {
+                    recBtn5.btn.startAnimation(animationDisappearCenter);
+                    recBtn5.btn.setVisibility(v.GONE);
+                    recBtn5.btn.setVisibility(v.VISIBLE);
+                    layoutParams.x = (int) frameLayout1.getX();
+                    layoutParams.y = 3*tableRow.getHeight();
+                    d.getWindow().setLayout(width, height);
+                    d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+                    d.show();
+                    break;
+                }
+                case R.id.imageButton12: {
+                    recBtn6.btn.startAnimation(animationDisappearCenter);
+                    recBtn6.btn.setVisibility(v.GONE);
+                    recBtn6.btn.setVisibility(v.VISIBLE);
+                    layoutParams.x = (int) frameLayout2.getX();
+                    layoutParams.y = 3*tableRow.getHeight();
+                    d.getWindow().setLayout(width, height);
+                    d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
+                    d.show();
+                    break;
+                }
+            }
             return false;
         }
     };
 
-    View.OnLongClickListener recBtnLCL3 = new View.OnLongClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        public boolean onLongClick(View v) {
-            animationDisappearCenter = AnimationUtils.loadAnimation(
-                    v.getContext(), R.anim.disappearing);
-            recBtn3.btn.startAnimation(animationDisappearCenter);
-            recBtn3.btn.setVisibility(v.GONE);
-            recBtn3.btn.setVisibility(v.VISIBLE);
-
-            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
-            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
-            Window window = d.getWindow();
-            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
-            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
-            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
-            layoutParams.x = (int)frameLayout1.getX();
-            layoutParams.y = 2*(tableRow.getHeight());
-
-            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            d.setContentView(R.layout.dialog_croller);
-
-            d.getWindow().setAttributes(layoutParams);
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int width = frameLayout2.getWidth();
-            int height = frameLayout2.getHeight();
-            d.getWindow().setLayout(width,height);
-            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
-            d.show();
-            return false;
-        }
-    };
-
-    View.OnLongClickListener recBtnLCL4 = new View.OnLongClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        public boolean onLongClick(View v) {
-            animationDisappearCenter = AnimationUtils.loadAnimation(
-                    v.getContext(), R.anim.disappearing);
-            recBtn4.btn.startAnimation(animationDisappearCenter);
-            recBtn4.btn.setVisibility(v.GONE);
-            recBtn4.btn.setVisibility(v.VISIBLE);
-
-            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
-            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
-            Window window = d.getWindow();
-            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
-            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
-            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
-            layoutParams.x = (int)frameLayout2.getX();
-            layoutParams.y = 2*(tableRow.getHeight());
-
-            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            d.setContentView(R.layout.dialog_croller);
-
-            d.getWindow().setAttributes(layoutParams);
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int width = frameLayout2.getWidth();
-            int height = frameLayout2.getHeight();
-            d.getWindow().setLayout(width,height);
-            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
-            d.show();
-            return false;
-        }
-    };
-
-    View.OnLongClickListener recBtnLCL5 = new View.OnLongClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        public boolean onLongClick(View v) {
-            animationDisappearCenter = AnimationUtils.loadAnimation(
-                    v.getContext(), R.anim.disappearing);
-            recBtn5.btn.startAnimation(animationDisappearCenter);
-            recBtn5.btn.setVisibility(v.GONE);
-            recBtn5.btn.setVisibility(v.VISIBLE);
-
-            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
-            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
-            Window window = d.getWindow();
-            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
-            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
-            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
-            layoutParams.x = (int)frameLayout1.getX();
-            layoutParams.y = 3*(tableRow.getHeight());
-
-            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            d.setContentView(R.layout.dialog_croller);
-
-            d.getWindow().setAttributes(layoutParams);
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int width = frameLayout2.getWidth();
-            int height = frameLayout2.getHeight();
-            d.getWindow().setLayout(width,height);
-            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
-            d.show();
-            return false;
-        }
-    };
-
-    View.OnLongClickListener recBtnLCL6 = new View.OnLongClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        public boolean onLongClick(View v) {
-            animationDisappearCenter = AnimationUtils.loadAnimation(
-                    v.getContext(), R.anim.disappearing);
-            recBtn6.btn.startAnimation(animationDisappearCenter);
-            recBtn6.btn.setVisibility(v.GONE);
-            recBtn6.btn.setVisibility(v.VISIBLE);
-
-            final Dialog d = new Dialog(getActivity(), R.style.PauseDialog);
-            //  d.getWindow().setBackgroundDrawable(R.color.action_bar_bg);
-            Window window = d.getWindow();
-            window.setGravity(Gravity.AXIS_X_SHIFT  & Gravity.AXIS_Y_SHIFT);
-            WindowManager.LayoutParams layoutParams = d.getWindow().getAttributes();
-            layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
-            layoutParams.x = (int)frameLayout2.getX();
-            layoutParams.y = 3*(tableRow.getHeight());
-
-            d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            d.setContentView(R.layout.dialog_croller);
-
-            d.getWindow().setAttributes(layoutParams);
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int width = frameLayout2.getWidth();
-            int height = frameLayout2.getHeight();
-            d.getWindow().setLayout(width,height);
-            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
-            d.show();
-            return false;
-        }
-    };
 
     View.OnClickListener recBtnCL = new View.OnClickListener() {
 
