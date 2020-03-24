@@ -3,6 +3,7 @@ package com.tmvlg.loopit;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -191,6 +192,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -238,6 +240,12 @@ public class Tab1 extends Fragment implements ExpandableListener{
         recBtn4.btn.setOnClickListener(recBtnCL);
         recBtn5.btn.setOnClickListener(recBtnCL);
         recBtn6.btn.setOnClickListener(recBtnCL);
+        /*recBtn1.btn.setOnTouchListener(new recBtnTL());
+        recBtn2.btn.setOnTouchListener(new recBtnTL());
+        recBtn3.btn.setOnTouchListener(new recBtnTL());
+        recBtn4.btn.setOnTouchListener(new recBtnTL());
+        recBtn5.btn.setOnTouchListener(new recBtnTL());
+        recBtn6.btn.setOnTouchListener(new recBtnTL());*/
 
         expandablePanelView = view.findViewById(R.id.EPV);
         timeTextView = view.findViewById(R.id.timeTextView);
@@ -413,6 +421,44 @@ public class Tab1 extends Fragment implements ExpandableListener{
     };
 
 
+    private final class recBtnTL implements OnTouchListener {
+
+        float mPreviousX = 0;
+        float mPreviousY = 0;
+        boolean mIsDown = false;
+
+        public boolean onTouch(View v, MotionEvent e) {
+            // MotionEvent reports input details from the touch screen
+            // and other input controls. In this case, you are only
+            // interested in events where the touch position changed.
+
+            float x = e.getX();
+            float y = e.getY();
+
+            switch (e.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    mIsDown = true;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+
+                    float dx = x - mPreviousX;
+                    float dy = y - mPreviousY;
+
+                    // Here you can try to detect the swipe. It will be necessary to
+                    // store more than the previous value to check that the user move constantly in the same direction
+
+                case MotionEvent.ACTION_UP:
+                    mIsDown = false;
+                    break;
+            }
+
+            mPreviousX = x;
+            mPreviousY = y;
+            return true;
+        }
+    };
+
+
     View.OnClickListener recBtnCL = new View.OnClickListener() {
 
         @Override
@@ -433,14 +479,24 @@ public class Tab1 extends Fragment implements ExpandableListener{
             }
             for (Rec button : recBtns){
                 if (button.btn.equals(v)){
-                    if (button.getStatus().equals("inactive")) {
-                        button.setStatus("pressed");
-                        button.btn.setImageResource(R.drawable.brecgif3start_to_stop);
+                    if (button.getStatus().equals("start")) {
+                        button.setStatus("stop");
+                        button.btn.setImageResource(R.drawable.start_to_stop);
 
                     }
-                    else if (button.getStatus().equals("pressed")){
-                        button.setStatus("inactive");
-                        button.btn.setImageResource(R.drawable.brecgif3stop_to_start);
+                    else if (button.getStatus().equals("stop")){
+                        button.setStatus("pause");
+                        button.btn.setImageResource(R.drawable.stop_to_pause);
+
+                    }
+                    else if (button.getStatus().equals("pause")){
+                        button.setStatus("play");
+                        button.btn.setImageResource(R.drawable.pause_to_play);
+
+                    }
+                    else if (button.getStatus().equals("play")){
+                        button.setStatus("pause");
+                        button.btn.setImageResource(R.drawable.play_to_pause);
 
                     }
 
@@ -791,7 +847,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private boolean isAnyRecPressed(){
         boolean result = false;
         for (Rec button : recBtns) {
-            if (button.getStatus().equals("pressed"))
+            if (!button.getStatus().equals("start"))
                 result = true;
         }
         return result;

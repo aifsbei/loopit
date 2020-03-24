@@ -11,7 +11,7 @@ public class Rec {
 
     public Rec(GifImageButton button){
         this.btn = button;
-        status = "inactive";
+        status = "start";
     }
 
     public String getStatus(){

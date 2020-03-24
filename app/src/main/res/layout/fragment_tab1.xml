@@ -5,7 +5,7 @@
     xmlns:expandablepanel="http://schemas.android.com/apk/res-auto"
     android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
-    android:background="@drawable/black_grid"
+    android:background="@color/colorPrimaryDark"
     android:layout_height="match_parent">
 
     <ImageView
@@ -90,8 +90,8 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="35dp"
             android:shrinkColumns="*"
             android:stretchColumns="*"
             android:id="@+id/tl"
