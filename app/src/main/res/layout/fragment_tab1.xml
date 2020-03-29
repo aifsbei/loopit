@@ -5,7 +5,7 @@
     xmlns:expandablepanel="http://schemas.android.com/apk/res-auto"
     android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="#121212"
     android:layout_height="match_parent">
 
     <ImageView
@@ -14,7 +14,8 @@
         android:layout_height="25dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="12dp"
-        android:elevation="1dp"
+        android:elevation="4dp"
+        android:padding="4dp"
         android:layout_marginEnd="15dp"
         android:scaleType="fitCenter"
         android:src="@drawable/arrow3" />
@@ -99,6 +100,8 @@
             android:layout_below="@+id/topll"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +138,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/brec2"
+                        android:src="@drawable/brectry1"
+                        android:elevation="4dp"
+                        android:padding="4dp"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
 
@@ -164,7 +169,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/brec2"
+                        android:src="@drawable/brectry1"
+                        android:elevation="4dp"
+                        android:padding="4dp"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
             </TableRow>
@@ -199,7 +206,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/brec2"
+                        android:src="@drawable/brectry1"
+                        android:elevation="4dp"
+                        android:padding="4dp"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
 
@@ -228,7 +237,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/brec2"
+                        android:src="@drawable/brectry1"
+                        android:elevation="4dp"
+                        android:padding="4dp"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
             </TableRow>
@@ -263,7 +274,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/brec2"
+                        android:src="@drawable/brectry1"
+                        android:elevation="4dp"
+                        android:padding="4dp"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
 
@@ -291,7 +304,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/brec2"
+                        android:src="@drawable/brectry1"
+                        android:elevation="4dp"
+                        android:padding="4dp"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
             </TableRow>
