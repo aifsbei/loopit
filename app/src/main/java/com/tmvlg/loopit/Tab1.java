@@ -58,6 +58,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +71,11 @@ import com.mr_sarsarabi.library.LockableViewPager;
 import com.sdsmdg.harjot.crollerTest.Croller;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.SequenceInputStream;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,9 +115,12 @@ public class Tab1 extends Fragment implements ExpandableListener{
     Rec recBtn4;
     Rec recBtn5;
     Rec recBtn6;
+
     FrameLayout frameLayout1;
     FrameLayout frameLayout2;
-    TableRow tableRow;
+    LinearLayout linearLayout;
+    TableLayout tableLayout;
+//    ExpandablePanelView expandablePanelView;
 
     TimerAsyncTask timerAsyncTask;
     MetronomeAsyncTask metronomeAsyncTask;
@@ -212,7 +221,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
 
         frameLayout1 = view.findViewById(R.id.frameLayout1);
         frameLayout2 = view.findViewById(R.id.frameLayout2);
-        tableRow = view.findViewById(R.id.tableRow1);
+        linearLayout = view.findViewById(R.id.dotsll);
+        tableLayout = view.findViewById(R.id.tl);
         recBtn1 = new Rec((GifImageButton) view.findViewById(R.id.imageButton7));
         recBtn2 = new Rec((GifImageButton) view.findViewById(R.id.imageButton8));
         recBtn3 = new Rec((GifImageButton) view.findViewById(R.id.imageButton9));
@@ -271,6 +281,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
         large.rightMargin=screen_width/72;
         dots = createDots(small, large, topMeasureValue, "13");
 
+
+
         return view;
     }
 
@@ -281,6 +293,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
             case R.id.imageButton7:
         }
     }
+
+
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -340,15 +354,16 @@ public class Tab1 extends Fragment implements ExpandableListener{
             d.getWindow().setAttributes(layoutParams);
             DisplayMetrics displaymetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int width = frameLayout2.getWidth();
-            int height = frameLayout2.getHeight();
+            int width = frameLayout1.getWidth();
+            int height = frameLayout1.getHeight();
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)tableLayout.getLayoutParams();
             switch (v.getId()) {
                 case R.id.imageButton7: {
                     recBtn1.btn.startAnimation(animationDisappearCenter);
                     recBtn1.btn.setVisibility(v.GONE);
                     recBtn1.btn.setVisibility(v.VISIBLE);
-                    layoutParams.x = (int) frameLayout1.getX();
-                    layoutParams.y = tableRow.getHeight();
+                    layoutParams.x = lp.leftMargin;
+                    layoutParams.y = linearLayout.getHeight() + frameLayout1.getHeight() - 100;
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -359,8 +374,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     recBtn2.btn.startAnimation(animationDisappearCenter);
                     recBtn2.btn.setVisibility(v.GONE);
                     recBtn2.btn.setVisibility(v.VISIBLE);
-                    layoutParams.x = (int) frameLayout2.getX();
-                    layoutParams.y = tableRow.getHeight();
+                    layoutParams.x = lp.leftMargin + (int) frameLayout2.getX();
+                    layoutParams.y = linearLayout.getHeight() + frameLayout1.getHeight() - 100;;
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -371,8 +386,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     recBtn3.btn.startAnimation(animationDisappearCenter);
                     recBtn3.btn.setVisibility(v.GONE);
                     recBtn3.btn.setVisibility(v.VISIBLE);
-                    layoutParams.x = (int) frameLayout1.getX();
-                    layoutParams.y = 2*tableRow.getHeight();
+                    layoutParams.x = lp.leftMargin;
+                    layoutParams.y = linearLayout.getHeight() + 2*frameLayout1.getHeight() - 100;
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -383,8 +398,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     recBtn4.btn.startAnimation(animationDisappearCenter);
                     recBtn4.btn.setVisibility(v.GONE);
                     recBtn4.btn.setVisibility(v.VISIBLE);
-                    layoutParams.x = (int) frameLayout2.getX();
-                    layoutParams.y = 2*tableRow.getHeight();
+                    layoutParams.x = lp.leftMargin + (int) frameLayout2.getX();
+                    layoutParams.y = linearLayout.getHeight() + 2*frameLayout1.getHeight() - 100;
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -395,8 +410,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     recBtn5.btn.startAnimation(animationDisappearCenter);
                     recBtn5.btn.setVisibility(v.GONE);
                     recBtn5.btn.setVisibility(v.VISIBLE);
-                    layoutParams.x = (int) frameLayout1.getX();
-                    layoutParams.y = 3*tableRow.getHeight();
+                    layoutParams.x = lp.leftMargin;
+                    layoutParams.y = linearLayout.getHeight() + 3*frameLayout1.getHeight() - 100;
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -407,8 +422,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     recBtn6.btn.startAnimation(animationDisappearCenter);
                     recBtn6.btn.setVisibility(v.GONE);
                     recBtn6.btn.setVisibility(v.VISIBLE);
-                    layoutParams.x = (int) frameLayout2.getX();
-                    layoutParams.y = 3*tableRow.getHeight();
+                    layoutParams.x = lp.leftMargin + (int) frameLayout2.getX();
+                    layoutParams.y = linearLayout.getHeight() + 3*frameLayout1.getHeight() - 100;
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz

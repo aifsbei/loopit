@@ -1,78 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".testMain">
-
-
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                        <pl.droidsonroids.gif.GifImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitStart"
-                            android:src="@drawable/brecgif1" />
-
-                        <pl.droidsonroids.gif.GifImageView
-                            android:id="@+id/gifImageView"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitStart"
-                            android:src="@drawable/brecgif1" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                        <pl.droidsonroids.gif.GifImageView
-                            android:id="@+id/gifImageView2"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitStart"
-                            android:src="@drawable/brecgif1" />
-
-                        <pl.droidsonroids.gif.GifImageView
-                            android:id="@+id/gifImageView3"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitStart"
-                            android:src="@drawable/brecgif1" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                        <pl.droidsonroids.gif.GifImageView
-                            android:id="@+id/gifImageView4"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitStart"
-                            android:src="@drawable/brecgif1" />
-
-                        <pl.droidsonroids.gif.GifImageView
-                            android:id="@+id/gifImageView5"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitStart"
-                            android:src="@drawable/brecgif1" />
-                </TableRow>
-
-        </TableLayout>
-
-
-</FrameLayout>
+            android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="start">
+                </Button>
+                <Button
+                    android:id="@+id/btnStop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="stop">
+                </Button>
+        </LinearLayout>
+</LinearLayout>

@@ -115,24 +115,7 @@
 
                 <FrameLayout
                     android:id="@+id/frameLayout1">
-                    <com.sdsmdg.harjot.crollerTest.Croller
-                        android:visibility="gone"
-                        android:id="@+id/di_croller1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        app:back_circle_color="#EDEDED"
-                        app:indicator_color="#0B3C49"
-                        app:indicator_width="10"
-                        app:is_continuous="true"
-                        app:label=""
-                        app:label_color="#000000"
-                        app:main_circle_color="#FFFFFF"
-                        app:max="1000"
-                        app:progress_primary_color="#0B3C49"
-                        app:progress_secondary_color="#EEEEEE"
-                        android:scaleType="fitCenter"
-                        app:start_offset="45" />
+
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton7"
                         android:layout_width="wrap_content"
@@ -142,28 +125,12 @@
                         android:elevation="4dp"
                         android:padding="4dp"
                         android:background="@android:color/transparent"/>
+
                 </FrameLayout>
 
                 <FrameLayout
                     android:id="@+id/frameLayout2">
-                    <com.sdsmdg.harjot.crollerTest.Croller
-                        android:visibility="gone"
-                        android:id="@+id/di_croller2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        app:back_circle_color="#EDEDED"
-                        app:indicator_color="#0B3C49"
-                        app:indicator_width="10"
-                        app:is_continuous="true"
-                        app:label=""
-                        app:label_color="#000000"
-                        app:main_circle_color="#FFFFFF"
-                        app:max="1000"
-                        app:progress_primary_color="#0B3C49"
-                        app:progress_secondary_color="#EEEEEE"
-                        android:scaleType="fitCenter"
-                        app:start_offset="45" />
+
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton8"
                         android:layout_width="wrap_content"
@@ -181,56 +148,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <FrameLayout>
-                    <com.sdsmdg.harjot.crollerTest.Croller
-                        android:visibility="gone"
-                        android:id="@+id/di_croller3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        app:back_circle_color="#EDEDED"
-                        app:indicator_color="#0B3C49"
-                        app:indicator_width="10"
-                        app:is_continuous="true"
-                        app:label=""
-                        app:label_color="#000000"
-                        app:main_circle_color="#FFFFFF"
-                        app:max="1000"
-                        app:progress_primary_color="#0B3C49"
-                        app:progress_secondary_color="#EEEEEE"
-                        android:scaleType="fitCenter"
-                        app:start_offset="45" />
+                <FrameLayout android:id="@+id/frameLayout3">
 
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton9"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/brectry1"
+                        android:background="@android:color/transparent"
                         android:elevation="4dp"
                         android:padding="4dp"
-                        android:background="@android:color/transparent"/>
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/brectry1" />
                 </FrameLayout>
 
                 <FrameLayout>
-                    <com.sdsmdg.harjot.crollerTest.Croller
-                        android:visibility="gone"
-                        android:id="@+id/di_croller4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        app:back_circle_color="#EDEDED"
-                        app:indicator_color="#0B3C49"
-                        app:indicator_width="10"
-                        app:is_continuous="true"
-                        app:label=""
-                        app:label_color="#000000"
-                        app:main_circle_color="#FFFFFF"
-                        app:max="1000"
-                        app:progress_primary_color="#0B3C49"
-                        app:progress_secondary_color="#EEEEEE"
-                        android:scaleType="fitCenter"
-                        app:start_offset="45" />
 
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton10"
@@ -250,24 +181,6 @@
                 android:layout_weight="1">
 
                 <FrameLayout>
-                    <com.sdsmdg.harjot.crollerTest.Croller
-                        android:visibility="gone"
-                        android:id="@+id/di_croller5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        app:back_circle_color="#EDEDED"
-                        app:indicator_color="#0B3C49"
-                        app:indicator_width="10"
-                        app:is_continuous="true"
-                        app:label=""
-                        app:label_color="#000000"
-                        app:main_circle_color="#FFFFFF"
-                        app:max="1000"
-                        app:progress_primary_color="#0B3C49"
-                        app:progress_secondary_color="#EEEEEE"
-                        android:scaleType="fitCenter"
-                        app:start_offset="45" />
 
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton11"
@@ -281,24 +194,7 @@
                 </FrameLayout>
 
                 <FrameLayout>
-                    <com.sdsmdg.harjot.crollerTest.Croller
-                        android:visibility="gone"
-                        android:id="@+id/di_croller6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        app:back_circle_color="#EDEDED"
-                        app:indicator_color="#0B3C49"
-                        app:indicator_width="10"
-                        app:is_continuous="true"
-                        app:label=""
-                        app:label_color="#000000"
-                        app:main_circle_color="#FFFFFF"
-                        app:max="1000"
-                        app:progress_primary_color="#0B3C49"
-                        app:progress_secondary_color="#EEEEEE"
-                        android:scaleType="fitCenter"
-                        app:start_offset="45" />
+
                     <pl.droidsonroids.gif.GifImageButton
                         android:id="@+id/imageButton12"
                         android:layout_width="wrap_content"
