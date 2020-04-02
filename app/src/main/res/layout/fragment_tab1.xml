@@ -116,14 +116,16 @@
                 <FrameLayout
                     android:id="@+id/frameLayout1">
 
-                    <pl.droidsonroids.gif.GifImageButton
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/imageButton7"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/brectry1"
-                        android:elevation="4dp"
-                        android:padding="4dp"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
 
                 </FrameLayout>
@@ -131,14 +133,16 @@
                 <FrameLayout
                     android:id="@+id/frameLayout2">
 
-                    <pl.droidsonroids.gif.GifImageButton
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/imageButton8"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/brectry1"
-                        android:elevation="4dp"
-                        android:padding="4dp"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
             </TableRow>
@@ -150,27 +154,31 @@
 
                 <FrameLayout android:id="@+id/frameLayout3">
 
-                    <pl.droidsonroids.gif.GifImageButton
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/imageButton9"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:elevation="4dp"
-                        android:padding="4dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/brectry1" />
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
+                        android:background="@android:color/transparent"/>
                 </FrameLayout>
 
                 <FrameLayout>
 
-                    <pl.droidsonroids.gif.GifImageButton
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/imageButton10"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/brectry1"
-                        android:elevation="4dp"
-                        android:padding="4dp"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
             </TableRow>
@@ -182,27 +190,31 @@
 
                 <FrameLayout>
 
-                    <pl.droidsonroids.gif.GifImageButton
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/imageButton11"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/brectry1"
-                        android:elevation="4dp"
-                        android:padding="4dp"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
 
                 <FrameLayout>
 
-                    <pl.droidsonroids.gif.GifImageButton
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/imageButton12"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/brectry1"
-                        android:elevation="4dp"
-                        android:padding="4dp"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
                 </FrameLayout>
             </TableRow>

@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.github.jorgecastilloprz:expandablepanel:1.0.4@aar'
     implementation 'com.github.mr-sarsarabi:lockableViewPager:1.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+    implementation "com.airbnb.android:lottie:3.4.0"
 
 
 

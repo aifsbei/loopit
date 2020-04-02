@@ -65,6 +65,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.jorgecastilloprz.expandablepanel.ExpandablePanelView;
 import com.jorgecastilloprz.expandablepanel.listeners.ExpandableListener;
 import com.mr_sarsarabi.library.LockableViewPager;
@@ -223,18 +224,18 @@ public class Tab1 extends Fragment implements ExpandableListener{
         frameLayout2 = view.findViewById(R.id.frameLayout2);
         linearLayout = view.findViewById(R.id.dotsll);
         tableLayout = view.findViewById(R.id.tl);
-        recBtn1 = new Rec((GifImageButton) view.findViewById(R.id.imageButton7));
-        recBtn2 = new Rec((GifImageButton) view.findViewById(R.id.imageButton8));
-        recBtn3 = new Rec((GifImageButton) view.findViewById(R.id.imageButton9));
-        recBtn4 = new Rec((GifImageButton) view.findViewById(R.id.imageButton10));
-        recBtn5 = new Rec((GifImageButton) view.findViewById(R.id.imageButton11));
-        recBtn6 = new Rec((GifImageButton) view.findViewById(R.id.imageButton12));
-        recBtn1.btn.setFreezesAnimation(true);
+        recBtn1 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton7));
+        recBtn2 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton8));
+        recBtn3 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton9));
+        recBtn4 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton10));
+        recBtn5 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton11));
+        recBtn6 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton12));
+        /*recBtn1.btn.setFreezesAnimation(true);
         recBtn2.btn.setFreezesAnimation(true);
         recBtn3.btn.setFreezesAnimation(true);
         recBtn4.btn.setFreezesAnimation(true);
         recBtn5.btn.setFreezesAnimation(true);
-        recBtn6.btn.setFreezesAnimation(true);
+        recBtn6.btn.setFreezesAnimation(true);*/
         arrow_view = view.findViewById(R.id.arrow_view);
         topll = view.findViewById(R.id.topll);
         dotsll = view.findViewById(R.id.dotsll);
@@ -496,22 +497,23 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 if (button.btn.equals(v)){
                     if (button.getStatus().equals("start")) {
                         button.setStatus("stop");
-                        button.btn.setImageResource(R.drawable.start_to_stop);
-
+                        button.btn.playAnimation();
                     }
                     else if (button.getStatus().equals("stop")){
                         button.setStatus("pause");
-                        button.btn.setImageResource(R.drawable.stop_to_pause);
-
+                        button.btn.setAnimation("LottieBrecStopToPause.json");
+                        button.btn.playAnimation();
                     }
                     else if (button.getStatus().equals("pause")){
                         button.setStatus("play");
-                        button.btn.setImageResource(R.drawable.pause_to_play);
-
+                        button.btn.setAnimation("LottieBrecPauseToPlay.json");
+                        button.btn.playAnimation();
                     }
                     else if (button.getStatus().equals("play")){
                         button.setStatus("pause");
-                        button.btn.setImageResource(R.drawable.play_to_pause);
+                        button.btn.setAnimation("LottieBrecPlayToPause.json");
+                        button.btn.playAnimation();
+                        // button.btn.setImageResource(R.drawable.play_to_pause);
 
                     }
 

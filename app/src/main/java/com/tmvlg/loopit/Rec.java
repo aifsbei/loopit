@@ -3,13 +3,15 @@ package com.tmvlg.loopit;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import pl.droidsonroids.gif.GifImageButton;
 
 public class Rec {
-    public GifImageButton btn;
+    public LottieAnimationView btn;
     private String status;
 
-    public Rec(GifImageButton button){
+    public Rec(LottieAnimationView button){
         this.btn = button;
         status = "start";
     }
