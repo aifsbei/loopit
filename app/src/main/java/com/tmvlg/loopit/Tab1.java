@@ -1,25 +1,11 @@
 package com.tmvlg.loopit;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,33 +19,24 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -72,23 +49,13 @@ import com.mr_sarsarabi.library.LockableViewPager;
 import com.sdsmdg.harjot.crollerTest.Croller;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.SequenceInputStream;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import in.goodiebag.carouselpicker.CarouselPicker;
-import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageButton;
 import android.view.View.OnTouchListener;
-
-
-import static android.content.Intent.getIntent;
 
 
 /**
@@ -230,6 +197,12 @@ public class Tab1 extends Fragment implements ExpandableListener{
         recBtn4 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton10));
         recBtn5 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton11));
         recBtn6 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton12));
+        recBtn1.image = view.findViewById(R.id.staticImageButton7);
+        recBtn2.image = view.findViewById(R.id.staticImageButton8);
+        recBtn3.image = view.findViewById(R.id.staticImageButton9);
+        recBtn4.image = view.findViewById(R.id.staticImageButton10);
+        recBtn5.image = view.findViewById(R.id.staticImageButton11);
+        recBtn6.image = view.findViewById(R.id.staticImageButton12);
         /*recBtn1.btn.setFreezesAnimation(true);
         recBtn2.btn.setFreezesAnimation(true);
         recBtn3.btn.setFreezesAnimation(true);
@@ -501,16 +474,22 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     }
                     else if (button.getStatus().equals("stop")){
                         button.setStatus("pause");
+                        //button.btn.setImageResource(R.drawable.stop_static);
+                        button.setImage(R.drawable.stop_static);
                         button.btn.setAnimation("LottieBrecStopToPause.json");
                         button.btn.playAnimation();
                     }
                     else if (button.getStatus().equals("pause")){
                         button.setStatus("play");
+                        //button.btn.setImageResource(R.drawable.pause_static);
+                        button.setImage(R.drawable.pause_static);
                         button.btn.setAnimation("LottieBrecPauseToPlay.json");
                         button.btn.playAnimation();
                     }
                     else if (button.getStatus().equals("play")){
                         button.setStatus("pause");
+                        //button.btn.setImageResource(R.drawable.play_static);
+                        button.setImage(R.drawable.play_static);
                         button.btn.setAnimation("LottieBrecPlayToPause.json");
                         button.btn.playAnimation();
                         // button.btn.setImageResource(R.drawable.play_to_pause);

@@ -128,6 +128,15 @@
                         app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
 
+                    <ImageView
+                        android:id="@+id/staticImageButton7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/start_static"/>
+
+
+
                 </FrameLayout>
 
                 <FrameLayout
@@ -144,6 +153,15 @@
                         app:lottie_loop="false"
                         app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
                 </FrameLayout>
             </TableRow>
 
@@ -165,6 +183,16 @@
                         app:lottie_loop="false"
                         app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
+
                 </FrameLayout>
 
                 <FrameLayout>
@@ -180,6 +208,16 @@
                         app:lottie_loop="false"
                         app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
+
                 </FrameLayout>
             </TableRow>
 
@@ -201,6 +239,16 @@
                         app:lottie_loop="false"
                         app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
+
                 </FrameLayout>
 
                 <FrameLayout>
@@ -216,6 +264,16 @@
                         app:lottie_loop="false"
                         app:lottie_autoPlay="false"
                         android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
+
                 </FrameLayout>
             </TableRow>
 
