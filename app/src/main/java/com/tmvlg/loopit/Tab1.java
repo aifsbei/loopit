@@ -1,19 +1,25 @@
 package com.tmvlg.loopit;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -32,6 +38,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,13 +56,20 @@ import com.mr_sarsarabi.library.LockableViewPager;
 import com.sdsmdg.harjot.crollerTest.Croller;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import in.goodiebag.carouselpicker.CarouselPicker;
 import pl.droidsonroids.gif.GifImageButton;
 import android.view.View.OnTouchListener;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -84,10 +98,24 @@ public class Tab1 extends Fragment implements ExpandableListener{
     Rec recBtn5;
     Rec recBtn6;
 
+    private MediaRecorder mediaRecorder;
+    private File audioFile;
+    private String audioName;
+    private boolean stopFlag = false;
+    private ArrayDeque<Rec> arrPressedBtns;
+    private int dequeLength = 0;
+
     FrameLayout frameLayout1;
     FrameLayout frameLayout2;
     LinearLayout linearLayout;
     TableLayout tableLayout;
+    private String[] PERMISSIONS = {
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO
+    };
+    private boolean isWork;
+    private static final int REQUEST_CODE_PERMISSION = 100;
+
 //    ExpandablePanelView expandablePanelView;
 
     TimerAsyncTask timerAsyncTask;
@@ -168,6 +196,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -254,10 +284,39 @@ public class Tab1 extends Fragment implements ExpandableListener{
         large.leftMargin=screen_width/72;
         large.rightMargin=screen_width/72;
         dots = createDots(small, large, topMeasureValue, "13");
+        arrPressedBtns = new ArrayDeque<>();
 
+        isWork = hasPermissions(this.getActivity(), PERMISSIONS);
+        if (!isWork) {
+            ActivityCompat.requestPermissions(this.getActivity(), PERMISSIONS,
+                    REQUEST_CODE_PERMISSION);
+        }
 
-
+//        recBtns[5].btn.setVisibility(View.GONE);
+//        recBtn6.btn.setVisibility(View.GONE);
         return view;
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
+            int[] grantResults) {
+        if (requestCode == REQUEST_CODE_PERMISSION) {
+// permission granted
+            isWork = grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        }
     }
 
 
@@ -466,18 +525,20 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 metronomeThread.start();
 
             }
-            for (Rec button : recBtns){
+            for (final Rec button : recBtns){
                 if (button.btn.equals(v)){
                     if (button.getStatus().equals("start")) {
+                        arrPressedBtns.addLast(button);
+                        dequeLength++;
                         button.setStatus("stop");
-                        button.btn.playAnimation();
                     }
                     else if (button.getStatus().equals("stop")){
                         button.setStatus("pause");
                         //button.btn.setImageResource(R.drawable.stop_static);
-                        button.setImage(R.drawable.stop_static);
-                        button.btn.setAnimation("LottieBrecStopToPause.json");
-                        button.btn.playAnimation();
+//                        button.setImage(R.drawable.stop_static);
+//                        button.btn.setAnimation("LottieBrecStopToPause.json");
+//                        button.btn.playAnimation();
+                        stopRecording();
                     }
                     else if (button.getStatus().equals("pause")){
                         button.setStatus("play");
@@ -505,8 +566,90 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 //metronomeAsyncTask.cancel(false);
                 Log.d("tagn1", "all threads r stopped");
             }
+//            btnDisable();
         }
     };
+
+
+    private void startRecording(final int audioNumber) throws IOException {
+        Runnable startRec = new Runnable() {
+            @Override
+            public void run() {
+                audioName = "audio" + audioNumber + ".wav";
+
+// проверка доступности sd - карты
+                mediaRecorder = new MediaRecorder();
+                String state = Environment.getExternalStorageState();
+                if (Environment.MEDIA_MOUNTED.equals(state) ||
+                        Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+                    Log.d(TAG, "sd-card success");
+// выбор источника звука
+                    mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+// выбор формата данных
+                    mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+// выбор кодека
+                    mediaRecorder.setAudioChannels(2);
+                    mediaRecorder.setAudioEncodingBitRate(128000);
+                    mediaRecorder.setAudioSamplingRate(44100);
+                    mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+
+// создание файла
+                    audioFile = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC), audioName);
+                    mediaRecorder.setOutputFile(audioFile.getAbsolutePath());
+                    try {
+                        mediaRecorder.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    mediaRecorder.start();
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Log.d("rec ", "recording button " + audioNumber);
+                            Toast.makeText(getContext(), "Recording started!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        };
+        Thread thread = new Thread(startRec);
+        thread.start();
+    }
+
+
+
+    private void stopRecording() {
+        final Rec currentBtn;
+        currentBtn = arrPressedBtns.pollFirst();
+        dequeLength--;
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                currentBtn.setImage(R.drawable.stop_static);
+                currentBtn.btn.setAnimation("LottieBrecStopToPause.json");
+                currentBtn.btn.playAnimation();
+            }
+        });
+        currentBtn.setStatus("pause");
+
+        Runnable stopRec = new Runnable() {
+            @Override
+            public void run() {
+                mediaRecorder.stop();
+                mediaRecorder.release();
+                mediaRecorder = null;
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        Log.d("rec", "btn stopRec was pressed");
+                        Toast.makeText(getContext(), "You are not recording right now!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+        Thread thread = new Thread(stopRec);
+        thread.start();
+        stopFlag = false;
+
+    }
 
 
     @Override
@@ -881,6 +1024,50 @@ public class Tab1 extends Fragment implements ExpandableListener{
         }
     };
 
+
+    private void preStartRec(){
+        int audioNumber = 0;
+        final Rec currentBtn;
+        currentBtn = arrPressedBtns.peekFirst();
+        switch (currentBtn.btn.getId()){
+            case R.id.imageButton7: {
+                audioNumber = 1;
+                break;
+            }
+            case R.id.imageButton8: {
+                audioNumber = 2;
+                break;
+            }
+            case R.id.imageButton9: {
+                audioNumber = 3;
+                break;
+            }
+            case R.id.imageButton10: {
+                audioNumber = 4;
+                break;
+            }
+            case R.id.imageButton11: {
+                audioNumber = 5;
+                break;
+            }
+            case R.id.imageButton12: {
+                audioNumber = 6;
+                break;
+            }
+        }
+        final int num = audioNumber;
+
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                currentBtn.btn.playAnimation();
+            }
+        });
+        try {startRecording(num);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     Runnable metronomeRunnable = new Runnable() {
         @Override
         public void run() {
@@ -888,6 +1075,16 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 Log.d("tagn1", "GO!");
                 for (numberOfDot = 0; numberOfDot < dots.length;) {
                     getActivity().runOnUiThread(makeDotsAlive);
+                    if (dequeLength == 1)
+                        if (numberOfDot == 0 && !stopFlag){
+                            stopFlag = true;
+                            preStartRec();
+                        }
+                    if (dequeLength == 2)
+                        if (numberOfDot == dots.length-1){
+                            stopRecording();
+//                            btnDisable();
+                        }
                     try {
                         TimeUnit.MILLISECONDS.sleep((long) 60000 / (bpm * bottomMeasureValue / 4));
                         numberOfDot++;
@@ -899,6 +1096,25 @@ public class Tab1 extends Fragment implements ExpandableListener{
         }
 
     };
+
+    private void btnDisable(){
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                if (dequeLength == 2)
+                    for (Rec button : recBtns) {
+                        if (button != arrPressedBtns.peekFirst() && button != arrPressedBtns.peekLast()) {
+                            button.btn.setClickable(false);
+                        }
+                    }
+                if (dequeLength == 1)
+                    for (Rec button : recBtns) {
+                        if (button != arrPressedBtns.peekFirst()) {
+                            button.btn.setClickable(true);
+                        }
+                    }
+            }
+        });
+    }
 
     Runnable makeDotsAlive = new Runnable() {
         @Override
@@ -914,6 +1130,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
             onime_reversed.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
             as.addAnimation(onime_reversed);
             Log.d("tagn1", "dot number #" + numberOfDot);
+            Log.d("tagn9", "speed " + (long) 30000 / (bpm * bottomMeasureValue / 4));
             dots[numberOfDot].startAnimation(as);
         }
     };
