@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.tmvlg.test"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -34,5 +34,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.github.jorgecastilloprz:expandablepanel:1.0.4@aar'
     implementation 'com.google.android.material:material:1.2.0-alpha04'
+    implementation 'com.airbnb.android:lottie:3.4.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
+    implementation 'com.github.roiacult:BackdropLayout:1.0'
+
 
 }

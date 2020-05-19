@@ -1,55 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:expandablepanel="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".testMain">
-
-    <com.jorgecastilloprz.expandablepanel.ExpandablePanelView
-        android:id="@+id/expandablePanelView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
-        expandablepanel:completionPercent="0.9">
-
-        <ImageView
-            android:id="@+id/topLayout"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="#848464"
-            android:scaleType="centerCrop" />
-
         <LinearLayout
-            android:id="@+id/ll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/topLayout"
-            android:orientation="vertical"
-            android:background="#FF2425">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#747477" />
-
-            <LinearLayout
-                android:background="#585FFF"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/userDetails"
-                    android:textColor="@android:color/white"
-                    android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnStart"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="user_details" />
-
-            </LinearLayout>
-
+                    android:text="start">
+                </Button>
+                <Button
+                    android:id="@+id/btnStop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="stop">
+                </Button>
         </LinearLayout>
-
-    </com.jorgecastilloprz.expandablepanel.ExpandablePanelView>
-
-
-
-</RelativeLayout>
+</LinearLayout>

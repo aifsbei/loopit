@@ -5,8 +5,22 @@
     xmlns:expandablepanel="http://schemas.android.com/apk/res-auto"
     android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
-    android:background="@drawable/black_grid"
+    android:background="@color/colorPrimaryDark"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/arrow_view"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:elevation="4dp"
+        android:padding="4dp"
+        android:layout_marginEnd="15dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/arrow3" />
+
+
 
     <com.jorgecastilloprz.expandablepanel.ExpandablePanelView
         android:id="@+id/EPV"
@@ -25,57 +39,49 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/dotsll"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/topllColor"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="65dp"
-                    android:src="@drawable/oval_metronome_indicator" />
+<!--                <ImageView-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:background="@android:color/transparent"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    android:layout_marginLeft="65dp"-->
+<!--                    android:src="@drawable/oval_metronome_indicator" />-->
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/oval_metronome_indicator" />
+<!--                <ImageView-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="15dp"-->
+<!--                    android:background="@android:color/transparent"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:src="@drawable/oval_metronome_indicator" />-->
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/oval_metronome_indicator" />
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/oval_metronome_indicator"
-                    android:scaleType="fitCenter"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:background="@android:color/transparent" />
+<!--                <ImageView-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="15dp"-->
+<!--                    android:background="@android:color/transparent"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:src="@drawable/oval_metronome_indicator" />-->
+<!--                <ImageView-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="15dp"-->
+<!--                    android:src="@drawable/oval_metronome_indicator"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:background="@android:color/transparent" />-->
 
-                <ImageView
-                    android:id="@+id/arrow_view"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:scaleType="fitCenter"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="30dp"
-                    android:src="@drawable/arrow_down"
 
-                    />
 
 
             </LinearLayout>
@@ -85,8 +91,8 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="35dp"
             android:shrinkColumns="*"
             android:stretchColumns="*"
             android:id="@+id/tl"
@@ -94,6 +100,8 @@
             android:layout_below="@+id/topll"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,23 +110,59 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:id="@+id/tableRow1">
 
-                <ImageButton
-                    android:id="@+id/imageButton7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
-                    android:background="@android:color/transparent"/>
+                <FrameLayout
+                    android:id="@+id/frameLayout1">
 
-                <ImageButton
-                    android:id="@+id/imageButton8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
-                    android:background="@android:color/transparent"/>
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/imageButton7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
+                        android:background="@android:color/transparent"/>
+
+                    <ImageView
+                        android:id="@+id/staticImageButton7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/start_static" />
+
+
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frameLayout2">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/imageButton8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
+                        android:background="@android:color/transparent"/>
+
+                    <ImageView
+                        android:id="@+id/staticImageButton8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/start_static" />
+
+
+                </FrameLayout>
             </TableRow>
 
             <TableRow
@@ -126,21 +170,55 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageButton
-                    android:id="@+id/imageButton9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
-                    android:background="@android:color/transparent"/>
+                <FrameLayout android:id="@+id/frameLayout3">
 
-                <ImageButton
-                    android:id="@+id/imageButton10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
-                    android:background="@android:color/transparent"/>
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/imageButton9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
+                        android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
+
+                </FrameLayout>
+
+                <FrameLayout>
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/imageButton10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
+                        android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
+
+                </FrameLayout>
             </TableRow>
 
             <TableRow
@@ -148,21 +226,55 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageButton
-                    android:id="@+id/imageButton11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
-                    android:background="@android:color/transparent"/>
+                <FrameLayout>
 
-                <ImageButton
-                    android:id="@+id/imageButton12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/brec1"
-                    android:background="@android:color/transparent"/>
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/imageButton11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
+                        android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
+
+                </FrameLayout>
+
+                <FrameLayout>
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/imageButton12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:elevation="6dp"
+                        android:padding="6dp"
+                        app:lottie_fileName="LottieBrecStartToStop.json"
+                        app:lottie_loop="false"
+                        app:lottie_autoPlay="false"
+                        android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/staticImageButton12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/start_static"/>
+
+
+
+                </FrameLayout>
             </TableRow>
 
         </TableLayout>
@@ -200,7 +312,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/timeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
