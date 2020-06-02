@@ -117,6 +117,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private File audioFile;
     private String audioName;
     private boolean stopFlag = false;
+    private boolean stopRec = false;
     private ArrayDeque<Rec> arrPressedBtns;
     private HashSet<MediaPlayer> playList;
     private int dequeLength = 0;
@@ -628,7 +629,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
 //                        button.setImage(R.drawable.stop_static);
 //                        button.btn.setAnimation("LottieBrecStopToPause.json");
 //                        button.btn.playAnimation();
-                        stopRecording();
+//                        stopRecording();
+                        stopRec = true;
                     }
                     else if (button.getStatus().equals("pause")){
                         switch (v.getId()) {
@@ -829,6 +831,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
     }
 
     private void stopRecording() {
+        stopRec = false;
         final Rec currentBtn;
         currentBtn = arrPressedBtns.pollFirst();
         dequeLength--;
@@ -1351,26 +1354,9 @@ public class Tab1 extends Fragment implements ExpandableListener{
                                 onPlayStart(mediaPlayer6, "/audio6.wav", 0);
                             }
                         }
-//                        for (MediaPlayer mediaPlayer: playList){
-//                            if (mediaPlayer == mediaPlayer1){
-//                                onPlayStart(mediaPlayer1, "/audio1.wav", 0);
-//                            }
-//                            else if (mediaPlayer == mediaPlayer2){
-//                                onPlayStart(mediaPlayer2, "/audio2.wav", 0);
-//                            }
-//                            else if (mediaPlayer == mediaPlayer3){
-//                                onPlayStart(mediaPlayer3, "/audio3.wav", 0);
-//                            }
-//                            else if (mediaPlayer == mediaPlayer4){
-//                                onPlayStart(mediaPlayer4, "/audio4.wav", 0);
-//                            }
-//                            else if (mediaPlayer == mediaPlayer5){
-//                                onPlayStart(mediaPlayer5, "/audio5.wav", 0);
-//                            }
-//                            else if (mediaPlayer == mediaPlayer6){
-//                                onPlayStart(mediaPlayer6, "/audio6.wav", 0);
-//                            }
-//                        }
+                    }
+                    if (numberOfDot == dots.length-1 && stopRec == true){
+                        stopRecording();
                     }
                     if (dequeLength == 1)
                         if (numberOfDot == 0 && !stopFlag){
