@@ -833,13 +833,13 @@ public class Tab1 extends Fragment implements ExpandableListener{
         final Rec currentBtn;
         currentBtn = arrPressedBtns.pollFirst();
         dequeLength--;
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                currentBtn.setImage(R.drawable.stop_static);
-                currentBtn.btn.setAnimation("LottieBrecStopToPause.json");
-                currentBtn.btn.playAnimation();
-            }
-        });
+//        getActivity().runOnUiThread(new Runnable() {
+//            public void run() {
+//                currentBtn.setImage(R.drawable.stop_static);
+//                currentBtn.btn.setAnimation("LottieBrecStopToPause.json");
+//                currentBtn.btn.playAnimation();
+//            }
+//        });
         currentBtn.setStatus("pause");
 
         switch (currentBtn.btn.getId()) {
@@ -895,6 +895,9 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 mediaRecorder = null;
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
+                        currentBtn.setImage(R.drawable.stop_static);
+                        currentBtn.btn.setAnimation("LottieBrecStopToPause.json");
+                        currentBtn.btn.playAnimation();
                         Toast.makeText(getContext(), "Recording stopped!", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -1386,8 +1389,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
                             preStartRec();
                         }
 
-                    Thread thread1 = new Thread(makeDotsAlive);
-                    thread1.start();
+                    makeDotsAlive();
                     if (dequeLength == 2)
                         if (numberOfDot == dots.length-1){
                             stopRecording();
@@ -1412,24 +1414,25 @@ public class Tab1 extends Fragment implements ExpandableListener{
 
     };
 
-    Runnable makeDotsAlive = new Runnable() {
-        @Override
-        public void run() {
-            AnimationSet as = new AnimationSet(true);
-            Animation onime = null;
-            onime = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce);
-            onime.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
-            as.addAnimation(onime);
-            Animation onime_reversed = null;
-            onime_reversed = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce_reversed);
-            onime_reversed.setStartOffset((long) 30000 / (bpm * bottomMeasureValue / 4));
-            onime_reversed.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
-            as.addAnimation(onime_reversed);
-            Log.d("tagn1", "dot number #" + numberOfDot);
-            Log.d("tagn9", "speed " + (long) 30000 / (bpm * bottomMeasureValue / 4));
-            dots[numberOfDot].startAnimation(as);
-        }
-    };
+    public void makeDotsAlive() {
+        final AnimationSet as = new AnimationSet(true);
+        Animation onime = null;
+        onime = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce);
+        onime.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
+        as.addAnimation(onime);
+        Animation onime_reversed = null;
+        onime_reversed = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce_reversed);
+        onime_reversed.setStartOffset((long) 30000 / (bpm * bottomMeasureValue / 4));
+        onime_reversed.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
+        as.addAnimation(onime_reversed);
+        Log.d("tagn1", "dot number #" + numberOfDot);
+        Log.d("tagn9", "speed " + (long) 30000 / (bpm * bottomMeasureValue / 4));
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                dots[numberOfDot].startAnimation(as);
+            }
+        });
+    }
 
     private void btnDisable(){
         getActivity().runOnUiThread(new Runnable() {
