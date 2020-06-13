@@ -885,7 +885,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
             @Override
             public void run() {
                 try {
-                    TimeUnit.MILLISECONDS.sleep((long)(0.72*(60000 / (bpm * bottomMeasureValue / 4))));
+                    TimeUnit.MILLISECONDS.sleep((long)(0.71*(60000 / (bpm * bottomMeasureValue / 4))));
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -1385,8 +1385,9 @@ public class Tab1 extends Fragment implements ExpandableListener{
                             stopFlag = true;
                             preStartRec();
                         }
-                    makeDotsAlive();
 
+                    Thread thread1 = new Thread(makeDotsAlive);
+                    thread1.start();
                     if (dequeLength == 2)
                         if (numberOfDot == dots.length-1){
                             stopRecording();
@@ -1411,21 +1412,24 @@ public class Tab1 extends Fragment implements ExpandableListener{
 
     };
 
-    public void makeDotsAlive() {
-        AnimationSet as = new AnimationSet(true);
-        Animation onime = null;
-        onime = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce);
-        onime.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
-        as.addAnimation(onime);
-        Animation onime_reversed = null;
-        onime_reversed = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce_reversed);
-        onime_reversed.setStartOffset((long) 30000 / (bpm * bottomMeasureValue / 4));
-        onime_reversed.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
-        as.addAnimation(onime_reversed);
-        Log.d("tagn1", "dot number #" + numberOfDot);
-        Log.d("tagn9", "speed " + (long) 30000 / (bpm * bottomMeasureValue / 4));
-        dots[numberOfDot].startAnimation(as);
-    }
+    Runnable makeDotsAlive = new Runnable() {
+        @Override
+        public void run() {
+            AnimationSet as = new AnimationSet(true);
+            Animation onime = null;
+            onime = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce);
+            onime.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
+            as.addAnimation(onime);
+            Animation onime_reversed = null;
+            onime_reversed = AnimationUtils.loadAnimation(getActivity(), R.anim.bounce_reversed);
+            onime_reversed.setStartOffset((long) 30000 / (bpm * bottomMeasureValue / 4));
+            onime_reversed.setDuration((long) 30000 / (bpm * bottomMeasureValue / 4));
+            as.addAnimation(onime_reversed);
+            Log.d("tagn1", "dot number #" + numberOfDot);
+            Log.d("tagn9", "speed " + (long) 30000 / (bpm * bottomMeasureValue / 4));
+            dots[numberOfDot].startAnimation(as);
+        }
+    };
 
     private void btnDisable(){
         getActivity().runOnUiThread(new Runnable() {
