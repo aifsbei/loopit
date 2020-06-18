@@ -867,12 +867,12 @@ public class Tab1 extends Fragment implements ExpandableListener{
         Runnable stopRec = new Runnable() {
             @Override
             public void run() {
-//                try {
-//                    TimeUnit.MILLISECONDS.sleep((long)(0.71*(60000 / (bpm * bottomMeasureValue / 4))));
-//
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    TimeUnit.MILLISECONDS.sleep((long)(60000 / (bpm * bottomMeasureValue / 4)));
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 recorder.stop();
                 recorder.release();
                 recorder = null;
