@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.media.AudioFormat;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -182,6 +183,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
     private boolean panelsScrolled[] = {false, false, false};
+
+   private RehearsalAudioRecorder recorder;
 
 
     // TODO: Rename and change types of parameters
@@ -793,31 +796,11 @@ public class Tab1 extends Fragment implements ExpandableListener{
         @Override
         public void run() {
             audioName = "audio" + audioNumber + ".wav";
-
-// проверка доступности sd - карты
-            mediaRecorder = new MediaRecorder();
-            String state = Environment.getExternalStorageState();
-
-// выбор источника звука
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-// выбор формата данных
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-// выбор кодека
-            mediaRecorder.setAudioChannels(1);
-            mediaRecorder.setAudioEncodingBitRate(128000);
-            mediaRecorder.setAudioSamplingRate(44100);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-
-// создание файла
-            audioFile = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC), audioName);
-            mediaRecorder.setOutputFile(audioFile.getAbsolutePath());
-            try {
-                mediaRecorder.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            mediaRecorder.start();
+            audioName = "audio" + audioNumber + ".wav";
+            recorder = new RehearsalAudioRecorder(RehearsalAudioRecorder.RECORDING_UNCOMPRESSED, MediaRecorder.AudioSource.MIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_STEREO, AudioFormat.ENCODING_PCM_16BIT);
+            recorder.setOutputFile(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + "/" + audioName);
+            recorder.prepare();
+            recorder.start();
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     Log.d("rec ", "recording button " + audioNumber);
@@ -884,15 +867,15 @@ public class Tab1 extends Fragment implements ExpandableListener{
         Runnable stopRec = new Runnable() {
             @Override
             public void run() {
-                try {
-                    TimeUnit.MILLISECONDS.sleep((long)(0.71*(60000 / (bpm * bottomMeasureValue / 4))));
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                mediaRecorder.stop();
-                mediaRecorder.release();
-                mediaRecorder = null;
+//                try {
+//                    TimeUnit.MILLISECONDS.sleep((long)(0.71*(60000 / (bpm * bottomMeasureValue / 4))));
+//
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                recorder.stop();
+                recorder.release();
+                recorder = null;
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         currentBtn.setImage(R.drawable.stop_static);
