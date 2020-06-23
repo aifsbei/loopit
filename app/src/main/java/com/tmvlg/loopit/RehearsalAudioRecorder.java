@@ -206,7 +206,7 @@ public class RehearsalAudioRecorder
                 mRecorder = new MediaRecorder();
                 mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                 mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
             }
             cAmplitude = 0;
             gain = 1.0;

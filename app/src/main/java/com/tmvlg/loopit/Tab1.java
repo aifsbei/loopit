@@ -1234,7 +1234,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     currentBtn.btn.playAnimation();
                 }
             });
-            recorder = new RehearsalAudioRecorder(RehearsalAudioRecorder.RECORDING_UNCOMPRESSED, MediaRecorder.AudioSource.MIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_STEREO, AudioFormat.ENCODING_PCM_16BIT);
+            recorder = new RehearsalAudioRecorder(RehearsalAudioRecorder.RECORDING_UNCOMPRESSED, MediaRecorder.AudioSource.MIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_STEREO, 0);
             recorder.setOutputFile(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + audioName);
             recorder.prepare();
             recorder.start();
