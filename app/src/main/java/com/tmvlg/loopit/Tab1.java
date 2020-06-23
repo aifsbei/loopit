@@ -65,9 +65,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -111,15 +113,10 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private MediaPlayer mediaPlayer4;
     private MediaPlayer mediaPlayer5;
     private MediaPlayer mediaPlayer6;
-    private MediaPlayer arrMp[];
-    private int msec = 0;
     private MediaPlayer tempMediaPlayer;
     private MediaPlayer tempStopMediaPlayer;
-    private MediaRecorder mediaRecorder;
-    private File audioFile;
     private String audioName;
     private boolean stopFlag = false;
-    private boolean stopRecFlag = false;
     private ArrayDeque<Rec> arrPressedBtns;
     private HashSet<MediaPlayer> playList;
     private int dequeLength = 0;
@@ -128,6 +125,10 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private long endTime;
     private int elapsedMilliSeconds;
     private int tempBtn = 0;
+    private boolean stopRecFlag = false;
+    private RehearsalAudioRecorder recorder;
+    private Rec currentBtn;
+    private boolean flagPreSet = false;
     private int audioNumber = 0;
 
     private FrameLayout frameLayout1;
@@ -183,8 +184,6 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
     private boolean panelsScrolled[] = {false, false, false};
-
-   private RehearsalAudioRecorder recorder;
 
 
     // TODO: Rename and change types of parameters
@@ -322,19 +321,6 @@ public class Tab1 extends Fragment implements ExpandableListener{
         mediaPlayer4 = new MediaPlayer();
         mediaPlayer5 = new MediaPlayer();
         mediaPlayer6 = new MediaPlayer();
-        mediaPlayer1.setOnCompletionListener(mpEnd);
-        mediaPlayer2.setOnCompletionListener(mpEnd);
-        mediaPlayer3.setOnCompletionListener(mpEnd);
-        mediaPlayer4.setOnCompletionListener(mpEnd);
-        mediaPlayer5.setOnCompletionListener(mpEnd);
-        mediaPlayer6.setOnCompletionListener(mpEnd);
-        arrMp = new MediaPlayer[6];
-        arrMp[0] = mediaPlayer1;
-        arrMp[1] = mediaPlayer2;
-        arrMp[2] = mediaPlayer3;
-        arrMp[3] = mediaPlayer4;
-        arrMp[4] = mediaPlayer5;
-        arrMp[5] = mediaPlayer6;
 
         isWork = hasPermissions(this.getActivity(), PERMISSIONS);
         if (!isWork) {
@@ -630,12 +616,9 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     }
                     else if (button.getStatus().equals("stop")){
                         button.setStatus("pause");
-                        //button.btn.setImageResource(R.drawable.stop_static);
-//                        button.setImage(R.drawable.stop_static);
-//                        button.btn.setAnimation("LottieBrecStopToPause.json");
-//                        button.btn.playAnimation();
-//                        stopRecording();
                         stopRecFlag = true;
+                        Thread thread = new Thread(preSet);
+                        thread.start();
                     }
                     else if (button.getStatus().equals("pause")){
                         switch (v.getId()) {
@@ -677,38 +660,36 @@ public class Tab1 extends Fragment implements ExpandableListener{
                         switch (v.getId()) {
                             case R.id.imageButton7: {
                                 tempMediaPlayer = mediaPlayer1;
-                                temptAudioName = "/audio1.wav";
+                                temptAudioName = "/"+mediaPlayer1.hashCode()+".wav";
                                 break;
                             }
                             case R.id.imageButton8: {
                                 tempMediaPlayer = mediaPlayer2;
-                                temptAudioName = "/audio2.wav";
+                                temptAudioName = "/"+mediaPlayer2.hashCode()+".wav";
                                 break;
                             }
                             case R.id.imageButton9: {
                                 tempMediaPlayer = mediaPlayer3;
-                                temptAudioName = "/audio3.wav";
+                                temptAudioName = "/"+mediaPlayer3.hashCode()+".wav";
                                 break;
                             }
                             case R.id.imageButton10: {
                                 tempMediaPlayer = mediaPlayer4;
-                                temptAudioName = "/audio4.wav";
+                                temptAudioName = "/"+mediaPlayer4.hashCode()+".wav";
                                 break;
                             }
                             case R.id.imageButton11: {
                                 tempMediaPlayer = mediaPlayer5;
-                                temptAudioName = "/audio5.wav";
+                                temptAudioName = "/"+mediaPlayer5.hashCode()+".wav";
                                 break;
                             }
                             case R.id.imageButton12: {
                                 tempMediaPlayer = mediaPlayer6;
-                                temptAudioName = "/audio6.wav";
+                                temptAudioName = "/"+mediaPlayer6.hashCode()+".wav";
                                 break;
                             }
                         }
-                        msec = elapsedMilliSeconds;
-                        Thread thread = new Thread(onPlayStart);
-                        thread.start();
+                        onPlayStart(tempMediaPlayer, temptAudioName, elapsedMilliSeconds);
                         button.setStatus("pause");
                         //button.btn.setImageResource(R.drawable.play_static);
                         button.setImage(R.drawable.play_static);
@@ -732,167 +713,115 @@ public class Tab1 extends Fragment implements ExpandableListener{
     };
 
 
-
-
-    Runnable onPlayStart = new Runnable() {
-        @Override
-        public void run() {
-            playList.remove(tempMediaPlayer);
-            if (tempMediaPlayer != null) {
-                tempMediaPlayer.reset();
-            }
-            try {
-                tempMediaPlayer.setDataSource(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + temptAudioName);
-                tempMediaPlayer.prepare();
-                Log.d("tagMed", "yes");
-                tempMediaPlayer.start();
-                tempMediaPlayer.seekTo(msec);
+    public void onPlayStart(final MediaPlayer mediaPlayer, final String audioName, final int msec) {
+        Runnable runnable = new Runnable() {
+            public void run() {
+                playList.add(mediaPlayer);
+//                playList.remove(mediaPlayer);
+                if (mediaPlayer != null) {
+                    mediaPlayer.reset();
+                }
+                try {
+                    mediaPlayer.setDataSource(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + audioName);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                    mediaPlayer.seekTo(msec);
 //                    Log.d("tempor", "audio added");
 
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-    MediaPlayer.OnCompletionListener mpEnd = new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mp) {
-            for (MediaPlayer mediaPlayer: arrMp){
-                if (mediaPlayer == mp){
-                    playList.add(mediaPlayer);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }
-        }
-    };
-
-    public void onPlayStop(final MediaPlayer mediaPlayer) {
-        Runnable runnable = new Runnable() {
-                public void run() {
-                    if (mediaPlayer != null) {
-                        mediaPlayer.stop();
-                        mediaPlayer.reset();
-                    }
-                    Iterator<MediaPlayer> iterator = playList.iterator();
-                    while(iterator.hasNext()) {
-                        MediaPlayer setElement = iterator.next();
-                        if(setElement==mediaPlayer) {
-                            iterator.remove();
-                        }
-                    }
-//                    for (MediaPlayer mp: playList){
-//                        if (mediaPlayer == mp){
-//                            playList.remove(mp);
-//                        }
-//                    }
             }
         };
         Thread thread = new Thread(runnable);
         thread.start();
     }
 
-    Runnable startRecording = new Runnable() {
+
+    public void onPlayStop(final MediaPlayer mediaPlayer) {
+        Runnable runnable = new Runnable() {
+            public void run() {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.reset();
+                }
+                Iterator<MediaPlayer> iterator = playList.iterator();
+                while(iterator.hasNext()) {
+                    MediaPlayer setElement = iterator.next();
+                    if(setElement==mediaPlayer) {
+                        iterator.remove();
+                    }
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+
+    Runnable preSet = new Runnable() {
         @Override
         public void run() {
-            audioName = "audio" + audioNumber + ".wav";
-            audioName = "audio" + audioNumber + ".wav";
-            recorder = new RehearsalAudioRecorder(RehearsalAudioRecorder.RECORDING_UNCOMPRESSED, MediaRecorder.AudioSource.MIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_STEREO, AudioFormat.ENCODING_PCM_16BIT);
-            recorder.setOutputFile(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + "/" + audioName);
-            recorder.prepare();
-            recorder.start();
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    Log.d("rec ", "recording button " + audioNumber);
-                    Toast.makeText(getContext(), "Recording started!", Toast.LENGTH_SHORT).show();
+            currentBtn = arrPressedBtns.pollFirst();
+            switch (currentBtn.btn.getId()) {
+                case R.id.imageButton7: {
+                    tempMediaPlayer = mediaPlayer1;
+                    temptAudioName = "/"+mediaPlayer1.hashCode()+".wav";
+                    playList.add(mediaPlayer1);
+                    break;
                 }
-            });
+                case R.id.imageButton8: {
+                    tempMediaPlayer = mediaPlayer2;
+                    temptAudioName = "/"+mediaPlayer2.hashCode()+".wav";
+                    playList.add(mediaPlayer2);
+                    break;
+                }
+                case R.id.imageButton9: {
+                    tempMediaPlayer = mediaPlayer3;
+                    temptAudioName = "/"+mediaPlayer3.hashCode()+".wav";
+                    playList.add(mediaPlayer3);
+                    break;
+                }
+                case R.id.imageButton10: {
+                    tempMediaPlayer = mediaPlayer4;
+                    temptAudioName = "/"+mediaPlayer4.hashCode()+".wav";
+                    playList.add(mediaPlayer4);
+                    break;
+                }
+                case R.id.imageButton11: {
+                    tempMediaPlayer = mediaPlayer5;
+                    temptAudioName = "/"+mediaPlayer5.hashCode()+".wav";
+                    playList.add(mediaPlayer5);
+                    break;
+                }
+                case R.id.imageButton12: {
+                    tempMediaPlayer = mediaPlayer6;
+                    temptAudioName = "/"+mediaPlayer6.hashCode()+".wav";
+                    playList.add(mediaPlayer6);
+                    break;
+                }
+            }
         }
     };
 
 
+
     private void stopRecording() {
-        stopRecFlag = false;
-        final Rec currentBtn;
-        currentBtn = arrPressedBtns.pollFirst();
-        dequeLength--;
-//        getActivity().runOnUiThread(new Runnable() {
-//            public void run() {
-//                currentBtn.setImage(R.drawable.stop_static);
-//                currentBtn.btn.setAnimation("LottieBrecStopToPause.json");
-//                currentBtn.btn.playAnimation();
-//            }
-//        });
-        currentBtn.setStatus("pause");
+        try {
+            TimeUnit.MILLISECONDS.sleep((long)(60000 / (bpm * bottomMeasureValue / 4)));
 
-        switch (currentBtn.btn.getId()) {
-            case R.id.imageButton7: {
-                tempMediaPlayer = mediaPlayer1;
-                temptAudioName = "/audio1.wav";
-                playList.add(mediaPlayer1);
-                break;
-            }
-            case R.id.imageButton8: {
-                tempMediaPlayer = mediaPlayer2;
-                temptAudioName = "/audio2.wav";
-                playList.add(mediaPlayer2);
-                break;
-            }
-            case R.id.imageButton9: {
-                tempMediaPlayer = mediaPlayer3;
-                temptAudioName = "/audio3.wav";
-                playList.add(mediaPlayer3);
-                break;
-            }
-            case R.id.imageButton10: {
-                tempMediaPlayer = mediaPlayer4;
-                temptAudioName = "/audio4.wav";
-                playList.add(mediaPlayer4);
-                break;
-            }
-            case R.id.imageButton11: {
-                tempMediaPlayer = mediaPlayer5;
-                temptAudioName = "/audio5.wav";
-                playList.add(mediaPlayer5);
-                break;
-            }
-            case R.id.imageButton12: {
-                tempMediaPlayer = mediaPlayer6;
-                temptAudioName = "/audio6.wav";
-                playList.add(mediaPlayer6);
-                break;
-            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
-        Runnable stopRec = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    TimeUnit.MILLISECONDS.sleep((long)(60000 / (bpm * bottomMeasureValue / 4)));
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                recorder.stop();
-                recorder.release();
-                recorder = null;
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        currentBtn.setImage(R.drawable.stop_static);
-                        currentBtn.btn.setAnimation("LottieBrecStopToPause.json");
-                        currentBtn.btn.playAnimation();
-                        Toast.makeText(getContext(), "Recording stopped!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-//                onPlayStart(tempMediaPlayer, temptAudioName, 0);
-            }
-        };
-        Thread thread = new Thread(stopRec);
-        thread.start();
+        recorder.stop();
+        recorder.release();
+        stopRecFlag = false;
+        flagPreSet = false;
+        dequeLength--;
+        currentBtn.setStatus("pause");
         stopFlag = false;
-
+        recorder = null;
     }
 
 
@@ -987,41 +916,41 @@ public class Tab1 extends Fragment implements ExpandableListener{
         measureCarouselPicker1.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        topMeasureValue = 2;
+                        break;
+                    case 1:
+                        topMeasureValue = 3;
+                        break;
+                    case 2:
+                        topMeasureValue = 4;
+                        break;
+                    case 3:
+                        topMeasureValue = 6;
+                        break;
+                    case 4:
+                        topMeasureValue = 9;
+                        break;
+                    case 5:
+                        topMeasureValue = 12;
+                        break;
                 }
+                panelsScrolled[0] = true;
+            }
 
-                @Override
-                public void onPageSelected(int position) {
-                    switch (position){
-                        case 0:
-                            topMeasureValue = 2;
-                            break;
-                        case 1:
-                            topMeasureValue = 3;
-                            break;
-                        case 2:
-                            topMeasureValue = 4;
-                            break;
-                        case 3:
-                            topMeasureValue = 6;
-                            break;
-                        case 4:
-                            topMeasureValue = 9;
-                            break;
-                        case 5:
-                            topMeasureValue = 12;
-                            break;
-                    }
-                    panelsScrolled[0] = true;
-                }
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
-                }
-            });
+            }
+        });
 
         measureCarouselPicker2.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -1076,7 +1005,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
             }
         });
 
-        }
+    }
 
     @Override
     public void onShrinkStarted() {
@@ -1269,133 +1198,142 @@ public class Tab1 extends Fragment implements ExpandableListener{
     };
 
 
-    private void preStartRec(){
-        final Rec currentBtn;
-        currentBtn = arrPressedBtns.peekFirst();
-        switch (currentBtn.btn.getId()){
-            case R.id.imageButton7: {
-                audioNumber = 1;
-                break;
+    Runnable startRec = new Runnable() {
+        @Override
+        public void run() {
+            currentBtn = arrPressedBtns.peekFirst(); //достает но не удаляет
+            switch (currentBtn.btn.getId()) {
+                case R.id.imageButton7: {
+                    audioName = "/"+mediaPlayer1.hashCode()+".wav";
+                    break;
+                }
+                case R.id.imageButton8: {
+                    audioName = "/"+mediaPlayer2.hashCode()+".wav";
+                    break;
+                }
+                case R.id.imageButton9: {
+                    audioName = "/"+mediaPlayer3.hashCode()+".wav";
+                    break;
+                }
+                case R.id.imageButton10: {
+                    audioName = "/"+mediaPlayer4.hashCode()+".wav";
+                    break;
+                }
+                case R.id.imageButton11: {
+                    audioName = "/"+mediaPlayer5.hashCode()+".wav";
+                    break;
+                }
+                case R.id.imageButton12: {
+                    audioName = "/"+mediaPlayer6.hashCode()+".wav";
+                    break;
+                }
             }
-            case R.id.imageButton8: {
-                audioNumber = 2;
-                break;
-            }
-            case R.id.imageButton9: {
-                audioNumber = 3;
-                break;
-            }
-            case R.id.imageButton10: {
-                audioNumber = 4;
-                break;
-            }
-            case R.id.imageButton11: {
-                audioNumber = 5;
-                break;
-            }
-            case R.id.imageButton12: {
-                audioNumber = 6;
-                break;
-            }
+
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    currentBtn.btn.playAnimation();
+                }
+            });
+            recorder = new RehearsalAudioRecorder(RehearsalAudioRecorder.RECORDING_UNCOMPRESSED, MediaRecorder.AudioSource.MIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_STEREO, AudioFormat.ENCODING_PCM_16BIT);
+            recorder.setOutputFile(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + audioName);
+            recorder.prepare();
+            recorder.start();
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    Log.d("rec ", "recording button " + audioNumber);
+                    Toast.makeText(getContext(), "Recording started!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
-        Thread thread = new Thread(startRecording);
-        thread.start();
-
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                currentBtn.btn.playAnimation();
-            }
-        });
-
-    }
+    };
 
     Runnable metronomeRunnable = new Runnable() {
         @Override
         public void run() {
             while (!stopMetronome) {
                 Log.d("tagn1", "GO!");
-                for (numberOfDot = 0; numberOfDot < dots.length; numberOfDot++) {
+                for (numberOfDot = 0; numberOfDot < dots.length;) {
                     if (numberOfDot == 0) {
                         startTime = SystemClock.elapsedRealtime();
-                        Iterator<MediaPlayer> iterator = playList.iterator();
-                        while(iterator.hasNext()) {
-                            MediaPlayer setElement = iterator.next();
-                            if (setElement == mediaPlayer1){
-                                tempMediaPlayer = mediaPlayer1;
-                                temptAudioName = "/audio1.wav";
-                                msec = 0;
-                                Thread thread = new Thread(onPlayStart);
-                                Log.d("tagMed", "yesssss");
-                                thread.start();
-                            }
-                            else if (setElement == mediaPlayer2){
-                                tempMediaPlayer = mediaPlayer2;
-                                temptAudioName = "/audio2.wav";
-                                msec = 0;
-                                Thread thread = new Thread(onPlayStart);
-                                thread.start();
-                            }
-                            else if (setElement == mediaPlayer3){
-                                tempMediaPlayer = mediaPlayer3;
-                                temptAudioName = "/audio3.wav";
-                                msec = 0;
-                                Thread thread = new Thread(onPlayStart);
-                                thread.start();
-                            }
-                            else if (setElement == mediaPlayer4){
-                                tempMediaPlayer = mediaPlayer4;
-                                temptAudioName = "/audio4.wav";
-                                msec = 0;
-                                Thread thread = new Thread(onPlayStart);
-                                thread.start();
-                            }
-                            else if (setElement == mediaPlayer5){
-                                tempMediaPlayer = mediaPlayer5;
-                                temptAudioName = "/audio5.wav";
-                                msec = 0;
-                                Thread thread = new Thread(onPlayStart);
-                                thread.start();
-                            }
-                            else if (setElement == mediaPlayer6){
-                                tempMediaPlayer = mediaPlayer6;
-                                temptAudioName = "/audio6.wav";
-                                msec = 0;
-                                Thread thread = new Thread(onPlayStart);
-                                thread.start();
+                        if (playList.size() != 0) {
+                            Iterator<MediaPlayer> iterator = playList.iterator();
+                            while(iterator.hasNext()) {
+                                MediaPlayer setElement = iterator.next();
+                                if (setElement.getCurrentPosition() == 0 || setElement.getDuration()-setElement.getCurrentPosition()<200)
+                                    onPlayStart(setElement, "/"+setElement.hashCode()+".wav",0);
                             }
                         }
-                    }
 
+                    }
                     if (dequeLength == 1)
                         if (numberOfDot == 0 && !stopFlag){
                             stopFlag = true;
-                            preStartRec();
+                            Thread thread = new Thread(startRec);
+                            thread.setPriority(10);
+                            thread.start();
                         }
 
                     makeDotsAlive();
                     if (dequeLength == 2)
                         if (numberOfDot == dots.length-1){
                             stopRecording();
-//                            btnDisable();
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    currentBtn.setImage(R.drawable.stop_static);
+                                    currentBtn.btn.setAnimation("LottieBrecStopToPause.json");
+                                    currentBtn.btn.playAnimation();
+                                }
+                            });
                         }
+
+                    if (dequeLength == 2 && !flagPreSet){
+                        flagPreSet = true;
+                        Thread thread = new Thread(preSet);
+                        thread.start();
+                    }
 
                     if (numberOfDot == dots.length-1 && stopRecFlag){
                         stopRecording();
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                currentBtn.setImage(R.drawable.stop_static);
+                                currentBtn.btn.setAnimation("LottieBrecStopToPause.json");
+                                currentBtn.btn.playAnimation();
+                            }
+                        });
                     }
+
                     try {
                         TimeUnit.MILLISECONDS.sleep((long) 60000 / (bpm * bottomMeasureValue / 4));
-
+                        numberOfDot++;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-//                    if (numberOfDot == dots.length-1 && stopRecFlag){
-//                        stopRecording();
-//                    }
                 }
             }
         }
 
     };
+
+    private void btnDisable(){
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                if (dequeLength == 2)
+                    for (Rec button : recBtns) {
+                        if (button != arrPressedBtns.peekFirst() && button != arrPressedBtns.peekLast()) {
+                            button.btn.setClickable(false);
+                        }
+                    }
+                if (dequeLength == 1)
+                    for (Rec button : recBtns) {
+                        if (button != arrPressedBtns.peekFirst()) {
+                            button.btn.setClickable(true);
+                        }
+                    }
+            }
+        });
+    }
 
     public void makeDotsAlive() {
         final AnimationSet as = new AnimationSet(true);
@@ -1413,25 +1351,6 @@ public class Tab1 extends Fragment implements ExpandableListener{
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 dots[numberOfDot].startAnimation(as);
-            }
-        });
-    }
-
-    private void btnDisable(){
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                if (dequeLength == 2)
-                    for (Rec button : recBtns) {
-                        if (button != arrPressedBtns.peekFirst() && button != arrPressedBtns.peekLast()) {
-                            button.btn.setClickable(false);
-                        }
-                    }
-                if (dequeLength == 1)
-                    for (Rec button : recBtns) {
-                        if (button != arrPressedBtns.peekFirst()) {
-                            button.btn.setClickable(true);
-                        }
-                    }
             }
         });
     }
