@@ -190,12 +190,12 @@ public class RehearsalAudioRecorder
                 bufferSize = framePeriod * 2 * bSamples * nChannels / 8;
                 if (bufferSize < AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat))
                 { // Check to make sure buffer size is not smaller than the smallest allowed one
+                    Log.d("tagtest ", "yes");
                     bufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);
                     // Set frame period and timer interval accordingly
                     framePeriod = bufferSize / ( 2 * bSamples * nChannels / 8 );
                     Log.w(RehearsalAudioRecorder.class.getName(), "Increasing buffer size to " + Integer.toString(bufferSize));
                 }
-
                 aRecorder = new AudioRecord(audioSource, sampleRate, channelConfig, audioFormat, bufferSize);
                 if (aRecorder.getState() != AudioRecord.STATE_INITIALIZED)
                     throw new Exception("AudioRecord initialization failed");

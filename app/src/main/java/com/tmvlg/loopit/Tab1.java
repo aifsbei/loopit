@@ -9,6 +9,9 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioRecord;
+import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -61,8 +64,15 @@ import com.mr_sarsarabi.library.LockableViewPager;
 import com.sdsmdg.harjot.crollerTest.Croller;
 
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,7 +136,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private int elapsedMilliSeconds;
     private int tempBtn = 0;
     private boolean stopRecFlag = false;
-    private RehearsalAudioRecorder recorder;
+//    private RehearsalAudioRecorder recorder;
     private Rec currentBtn;
     private boolean flagPreSet = false;
     private int audioNumber = 0;
@@ -177,6 +187,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
     int bpm = 120;
     int min = 0;
     int sec = 0;
+//    int sec = 0;
     private int numberOfDot = 0;
     int DIALOG_CROLLER = 1;
     private int screen_width;
@@ -184,6 +195,21 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private static final int DEFAULT_TOOLBAR_HEIGHT = 56;
     private static int toolBarHeight = -1;
     private boolean panelsScrolled[] = {false, false, false};
+    private static final int RECORDER_SAMPLERATE = 44100;
+    private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
+    private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
+    private AudioRecord recorder = null;
+    private Thread recordingThread = null;
+    private boolean isRecording = false;
+    private int bufferSize;
+    private AudioTrack audioTrack1;
+    private AudioTrack audioTrack2;
+    private AudioTrack audioTrack3;
+    private AudioTrack audioTrack4;
+    private AudioTrack audioTrack5;
+    private AudioTrack audioTrack6;
+    private int BufferElements2Rec = 1024; // want to play 2048 (2K) since 2 bytes we use only 1024
+    private int BytesPerElement = 2; // 2 bytes in 16bit format
 
 
     // TODO: Rename and change types of parameters
@@ -321,6 +347,26 @@ public class Tab1 extends Fragment implements ExpandableListener{
         mediaPlayer4 = new MediaPlayer();
         mediaPlayer5 = new MediaPlayer();
         mediaPlayer6 = new MediaPlayer();
+//        mediaPlayer1.setOnCompletionListener(listener);
+
+
+//        int intSize = android.media.AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                AudioFormat.ENCODING_PCM_16BIT);
+//        audioTrack1 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                AudioFormat.ENCODING_PCM_16BIT, intSize, AudioTrack.MODE_STREAM);
+//        audioTrack2 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                AudioFormat.ENCODING_PCM_16BIT, intSize, AudioTrack.MODE_STREAM);
+//        audioTrack3 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                AudioFormat.ENCODING_PCM_16BIT, intSize, AudioTrack.MODE_STREAM);
+//        audioTrack4 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                AudioFormat.ENCODING_PCM_16BIT, intSize, AudioTrack.MODE_STREAM);
+//        audioTrack5 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                AudioFormat.ENCODING_PCM_16BIT, intSize, AudioTrack.MODE_STREAM);
+//        audioTrack6 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                AudioFormat.ENCODING_PCM_16BIT, intSize, AudioTrack.MODE_STREAM);
+
+        bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE,
+                RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING);
 
         isWork = hasPermissions(this.getActivity(), PERMISSIONS);
         if (!isWork) {
@@ -332,6 +378,14 @@ public class Tab1 extends Fragment implements ExpandableListener{
 //        recBtn6.btn.setVisibility(View.GONE);
         return view;
     }
+
+//    MediaPlayer.OnCompletionListener listener = new MediaPlayer.OnCompletionListener() {
+//        @Override
+//        public void onCompletion(MediaPlayer mp) {
+//            playList.add(mediaPlayer1);
+//        }
+//    };
+
 
     public static boolean hasPermissions(Context context, String... permissions) {
         if (context != null && permissions != null) {
@@ -413,27 +467,27 @@ public class Tab1 extends Fragment implements ExpandableListener{
             Log.d("crollerlist", "progress: " + volume);
             switch (tempBtn){
                 case 1:{
-                    mediaPlayer1.setVolume(volume, volume);
+                    mediaPlayer1.setVolume(volume,volume);
                     break;
                 }
                 case 2:{
-                    mediaPlayer2.setVolume(volume, volume);
+                    mediaPlayer2.setVolume(volume,volume);
                     break;
                 }
                 case 3:{
-                    mediaPlayer3.setVolume(volume, volume);
+                    mediaPlayer3.setVolume(volume,volume);
                     break;
                 }
                 case 4:{
-                    mediaPlayer4.setVolume(volume, volume);
+                    mediaPlayer4.setVolume(volume,volume);
                     break;
                 }
                 case 5:{
-                    mediaPlayer5.setVolume(volume, volume);
+                    mediaPlayer5.setVolume(volume,volume);
                     break;
                 }
                 case 6:{
-                    mediaPlayer6.setVolume(volume, volume);
+                    mediaPlayer6.setVolume(volume,volume);
                     break;
                 }
             }
@@ -689,6 +743,8 @@ public class Tab1 extends Fragment implements ExpandableListener{
                                 break;
                             }
                         }
+                        playList.add(tempMediaPlayer);
+                        Log.d("testt", "audio was added " + playList.size());
                         onPlayStart(tempMediaPlayer, temptAudioName, elapsedMilliSeconds);
                         button.setStatus("pause");
                         //button.btn.setImageResource(R.drawable.play_static);
@@ -714,9 +770,10 @@ public class Tab1 extends Fragment implements ExpandableListener{
 
 
     public void onPlayStart(final MediaPlayer mediaPlayer, final String audioName, final int msec) {
+//        Log.d("testt", String.valueOf(audioTrack));
         Runnable runnable = new Runnable() {
             public void run() {
-                playList.add(mediaPlayer);
+//                playList.add(audioTrack);
 //                playList.remove(mediaPlayer);
                 if (mediaPlayer != null) {
                     mediaPlayer.reset();
@@ -732,6 +789,32 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+//                byte[] byteData = null;
+//                File file = null;
+//                file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + audioName);
+//                byteData = new byte[(int) file.length()];
+//                FileInputStream in = null;
+//                try {
+//                    in = new FileInputStream( file );
+//                    in.read( byteData );
+//                    in.close();
+//
+//                } catch (FileNotFoundException e) {
+//// TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+// Set and push to audio track..
+//                int intSize = android.media.AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                        AudioFormat.ENCODING_PCM_16BIT);
+//                audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+//                        AudioFormat.ENCODING_PCM_16BIT, intSize, AudioTrack.MODE_STREAM);
+//                if (audioTrack!=null) {
+//                    audioTrack.play();
+//// Write the byte array to the track
+//                    audioTrack.write(byteData, 0, byteData.length);
+//                }
             }
         };
         Thread thread = new Thread(runnable);
@@ -746,11 +829,14 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     mediaPlayer.stop();
                     mediaPlayer.reset();
                 }
+//                audioTrack.stop();
+//                audioTrack.release();
                 Iterator<MediaPlayer> iterator = playList.iterator();
                 while(iterator.hasNext()) {
                     MediaPlayer setElement = iterator.next();
                     if(setElement==mediaPlayer) {
                         iterator.remove();
+                        Log.d("testt", "audio was removed " + playList.size());
                     }
                 }
             }
@@ -773,7 +859,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 }
                 case R.id.imageButton8: {
                     tempMediaPlayer = mediaPlayer2;
-                    temptAudioName = "/"+mediaPlayer2.hashCode()+".wav";
+                    temptAudioName = "/"+mediaPlayer3.hashCode()+".wav";
                     playList.add(mediaPlayer2);
                     break;
                 }
@@ -814,14 +900,117 @@ public class Tab1 extends Fragment implements ExpandableListener{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        recorder.stop();
-        recorder.release();
+//        recorder.stop();
+//        recorder.release();
         stopRecFlag = false;
         flagPreSet = false;
         dequeLength--;
         currentBtn.setStatus("pause");
         stopFlag = false;
-        recorder = null;
+//        recorder = null;
+        if (null != recorder) {
+            isRecording = false;
+            recorder.stop();
+            File f1 = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + "/tempAudio.pcm"); // The location of your PCM file
+            File f2 = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + audioName);
+
+            try {
+                rawToWave(f1, f2);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            recorder.release();
+            recorder = null;
+            recordingThread = null;
+        }
+    }
+
+    private void rawToWave(final File rawFile, final File waveFile) throws IOException {
+
+        byte[] rawData = new byte[(int) rawFile.length()];
+        DataInputStream input = null;
+        try {
+            input = new DataInputStream(new FileInputStream(rawFile));
+            input.read(rawData);
+        } finally {
+            if (input != null) {
+                input.close();
+            }
+        }
+
+        DataOutputStream output = null;
+        try {
+            output = new DataOutputStream(new FileOutputStream(waveFile));
+            // WAVE header
+            // see http://ccrma.stanford.edu/courses/422/projects/WaveFormat/
+            writeString(output, "RIFF"); // chunk id
+            writeInt(output, 36 + rawData.length); // chunk size
+            writeString(output, "WAVE"); // format
+            writeString(output, "fmt "); // subchunk 1 id
+            writeInt(output, 16); // subchunk 1 size
+            writeShort(output, (short) 1); // audio format (1 = PCM)
+            writeShort(output, (short) 1); // number of channels
+            writeInt(output, 44100); // sample rate
+            writeInt(output, RECORDER_SAMPLERATE * 2); // byte rate
+            writeShort(output, (short) 2); // block align
+            writeShort(output, (short) 16); // bits per sample
+            writeString(output, "data"); // subchunk 2 id
+            writeInt(output, rawData.length); // subchunk 2 size
+            // Audio data (conversion big endian -> little endian)
+            short[] shorts = new short[rawData.length / 2];
+            ByteBuffer.wrap(rawData).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shorts);
+            ByteBuffer bytes = ByteBuffer.allocate(shorts.length * 2);
+            for (short s : shorts) {
+                bytes.putShort(s);
+            }
+
+            output.write(fullyReadFileToBytes(rawFile));
+        } finally {
+            if (output != null) {
+                output.close();
+            }
+        }
+    }
+    byte[] fullyReadFileToBytes(File f) throws IOException {
+        int size = (int) f.length();
+        byte bytes[] = new byte[size];
+        byte tmpBuff[] = new byte[size];
+        FileInputStream fis= new FileInputStream(f);
+        try {
+
+            int read = fis.read(bytes, 0, size);
+            if (read < size) {
+                int remain = size - read;
+                while (remain > 0) {
+                    read = fis.read(tmpBuff, 0, remain);
+                    System.arraycopy(tmpBuff, 0, bytes, size - remain, read);
+                    remain -= read;
+                }
+            }
+        }  catch (IOException e){
+            throw e;
+        } finally {
+            fis.close();
+        }
+
+        return bytes;
+    }
+    private void writeInt(final DataOutputStream output, final int value) throws IOException {
+        output.write(value >> 0);
+        output.write(value >> 8);
+        output.write(value >> 16);
+        output.write(value >> 24);
+    }
+
+    private void writeShort(final DataOutputStream output, final short value) throws IOException {
+        output.write(value >> 0);
+        output.write(value >> 8);
+    }
+
+    private void writeString(final DataOutputStream output, final String value) throws IOException {
+        for (int i = 0; i < value.length(); i++) {
+            output.write(value.charAt(i));
+        }
     }
 
 
@@ -1234,10 +1423,22 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     currentBtn.btn.playAnimation();
                 }
             });
-            recorder = new RehearsalAudioRecorder(RehearsalAudioRecorder.RECORDING_UNCOMPRESSED, MediaRecorder.AudioSource.MIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_STEREO, 0);
-            recorder.setOutputFile(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + audioName);
-            recorder.prepare();
-            recorder.start();
+//            recorder = new RehearsalAudioRecorder(RehearsalAudioRecorder.RECORDING_UNCOMPRESSED, MediaRecorder.AudioSource.MIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_STEREO, AudioFormat.ENCODING_PCM_8BIT);
+//            recorder.setOutputFile(getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + audioName);
+//            recorder.prepare();
+//            recorder.start();
+            recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
+                    RECORDER_SAMPLERATE, RECORDER_CHANNELS,
+                    RECORDER_AUDIO_ENCODING, bufferSize);
+
+            recorder.startRecording();
+            isRecording = true;
+            recordingThread = new Thread(new Runnable() {
+                public void run() {
+                    writeAudioDataToFile();
+                }
+            }, "AudioRecorder Thread");
+            recordingThread.start();
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     Log.d("rec ", "recording button " + audioNumber);
@@ -1248,6 +1449,54 @@ public class Tab1 extends Fragment implements ExpandableListener{
         }
     };
 
+    private void writeAudioDataToFile() {
+        // Write the output audio in byte
+
+        String filePath = getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + "/tempAudio.pcm";
+        short sData[] = new short[BufferElements2Rec];
+
+        FileOutputStream os = null;
+        try {
+            os = new FileOutputStream(filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        while (isRecording) {
+            // gets the voice output from microphone to byte format
+
+            recorder.read(sData, 0, BufferElements2Rec);
+            System.out.println("Short wirting to file" + sData.toString());
+            try {
+                // // writes the data to file from buffer
+                // // stores the voice buffer
+                byte bData[] = short2byte(sData);
+                os.write(bData, 0, BufferElements2Rec * BytesPerElement);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //convert short to byte
+    private byte[] short2byte(short[] sData) {
+        int shortArrsize = sData.length;
+        byte[] bytes = new byte[shortArrsize * 2];
+        for (int i = 0; i < shortArrsize; i++) {
+            bytes[i * 2] = (byte) (sData[i] & 0x00FF);
+            bytes[(i * 2) + 1] = (byte) (sData[i] >> 8);
+            sData[i] = 0;
+        }
+        return bytes;
+
+    }
+
+
     Runnable metronomeRunnable = new Runnable() {
         @Override
         public void run() {
@@ -1256,12 +1505,16 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 for (numberOfDot = 0; numberOfDot < dots.length;) {
                     if (numberOfDot == 0) {
                         startTime = SystemClock.elapsedRealtime();
+                        Log.d("testt", "1) size " + playList.size());
                         if (playList.size() != 0) {
                             Iterator<MediaPlayer> iterator = playList.iterator();
                             while(iterator.hasNext()) {
                                 MediaPlayer setElement = iterator.next();
-                                if (setElement.getCurrentPosition() == 0 || setElement.getDuration()-setElement.getCurrentPosition()<200)
-                                    onPlayStart(setElement, "/"+setElement.hashCode()+".wav",0);
+                                Log.d("testt", "2) playing: " + setElement.isPlaying() + " " + (setElement.getDuration() - setElement.getCurrentPosition()));
+                                if (setElement.getDuration()-setElement.getCurrentPosition()<250 || !setElement.isPlaying()) {
+                                    Log.d("testt", "3) check2");
+                                    onPlayStart(setElement, "/" + setElement.hashCode() + ".wav", 0);
+                                }
                             }
                         }
 
