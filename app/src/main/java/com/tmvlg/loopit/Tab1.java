@@ -347,8 +347,6 @@ public class Tab1 extends Fragment implements ExpandableListener{
         mediaPlayer4 = new MediaPlayer();
         mediaPlayer5 = new MediaPlayer();
         mediaPlayer6 = new MediaPlayer();
-//        mediaPlayer1.setOnCompletionListener(listener);
-
 
 //        int intSize = android.media.AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
 //                AudioFormat.ENCODING_PCM_16BIT);
@@ -378,13 +376,6 @@ public class Tab1 extends Fragment implements ExpandableListener{
 //        recBtn6.btn.setVisibility(View.GONE);
         return view;
     }
-
-//    MediaPlayer.OnCompletionListener listener = new MediaPlayer.OnCompletionListener() {
-//        @Override
-//        public void onCompletion(MediaPlayer mp) {
-//            playList.add(mediaPlayer1);
-//        }
-//    };
 
 
     public static boolean hasPermissions(Context context, String... permissions) {
