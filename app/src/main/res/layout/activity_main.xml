@@ -24,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Loop It!"
-            android:textSize="20sp"/>
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -36,7 +37,8 @@
         android:elevation="8dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:tabSelectedTextColor="@color/colorAccent">
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabTextColor="#FFFFFF">
 
     </com.google.android.material.tabs.TabLayout>
 
