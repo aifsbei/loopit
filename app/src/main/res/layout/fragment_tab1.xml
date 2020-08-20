@@ -1,337 +1,301 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:expandablepanel="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/RelativeLayout"
-    android:layout_width="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent">
 
-
-    <ImageView
-        android:id="@+id/arrow_view"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="12dp"
-        android:elevation="4dp"
-        android:padding="4dp"
-        android:layout_marginEnd="15dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/arrow3" />
-
-
-
-    <com.jorgecastilloprz.expandablepanel.ExpandablePanelView
-        android:id="@+id/EPV"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:expandablepanel="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/RelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        expandablepanel:completionPercent="0.5"
-        expandablepanel:animableViewId="@+id/topll"
-        android:scaleType="centerCrop">
+        android:background="@color/colorPrimaryDark"
+        android:layout_height="match_parent">
 
-        <LinearLayout
+
+        <ImageView
+            android:id="@+id/arrow_view"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="12dp"
+            android:elevation="4dp"
+            android:padding="4dp"
+            android:layout_marginEnd="15dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/arrow3" />
+
+
+
+        <com.jorgecastilloprz.expandablepanel.ExpandablePanelView
+            android:id="@+id/EPV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/topll"
-            android:layout_alignParentTop="true"
-            android:background="@color/topllColor"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            expandablepanel:completionPercent="0.5"
+            expandablepanel:animableViewId="@+id/topll"
+            android:scaleType="centerCrop">
 
             <LinearLayout
-                android:id="@+id/dotsll"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/topll"
+                android:layout_alignParentTop="true"
                 android:background="@color/topllColor"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="25dp"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:background="@android:color/transparent"-->
-<!--                    android:scaleType="fitCenter"-->
-<!--                    android:layout_marginRight="15dp"-->
-<!--                    android:layout_marginLeft="65dp"-->
-<!--                    android:src="@drawable/oval_metronome_indicator" />-->
+                <LinearLayout
+                    android:id="@+id/dotsll"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/topllColor"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="15dp"-->
-<!--                    android:layout_height="15dp"-->
-<!--                    android:background="@android:color/transparent"-->
-<!--                    android:scaleType="fitCenter"-->
-<!--                    android:layout_marginRight="15dp"-->
-<!--                    android:layout_marginLeft="15dp"-->
-<!--                    android:src="@drawable/oval_metronome_indicator" />-->
+    <!--                <ImageView-->
+    <!--                    android:layout_width="25dp"-->
+    <!--                    android:layout_height="25dp"-->
+    <!--                    android:background="@android:color/transparent"-->
+    <!--                    android:scaleType="fitCenter"-->
+    <!--                    android:layout_marginRight="15dp"-->
+    <!--                    android:layout_marginLeft="65dp"-->
+    <!--                    android:src="@drawable/oval_metronome_indicator" />-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="15dp"-->
-<!--                    android:layout_height="15dp"-->
-<!--                    android:background="@android:color/transparent"-->
-<!--                    android:scaleType="fitCenter"-->
-<!--                    android:layout_marginRight="15dp"-->
-<!--                    android:layout_marginLeft="15dp"-->
-<!--                    android:src="@drawable/oval_metronome_indicator" />-->
-<!--                <ImageView-->
-<!--                    android:layout_width="15dp"-->
-<!--                    android:layout_height="15dp"-->
-<!--                    android:src="@drawable/oval_metronome_indicator"-->
-<!--                    android:scaleType="fitCenter"-->
-<!--                    android:layout_marginRight="15dp"-->
-<!--                    android:layout_marginLeft="15dp"-->
-<!--                    android:background="@android:color/transparent" />-->
+    <!--                <ImageView-->
+    <!--                    android:layout_width="15dp"-->
+    <!--                    android:layout_height="15dp"-->
+    <!--                    android:background="@android:color/transparent"-->
+    <!--                    android:scaleType="fitCenter"-->
+    <!--                    android:layout_marginRight="15dp"-->
+    <!--                    android:layout_marginLeft="15dp"-->
+    <!--                    android:src="@drawable/oval_metronome_indicator" />-->
+
+    <!--                <ImageView-->
+    <!--                    android:layout_width="15dp"-->
+    <!--                    android:layout_height="15dp"-->
+    <!--                    android:background="@android:color/transparent"-->
+    <!--                    android:scaleType="fitCenter"-->
+    <!--                    android:layout_marginRight="15dp"-->
+    <!--                    android:layout_marginLeft="15dp"-->
+    <!--                    android:src="@drawable/oval_metronome_indicator" />-->
+    <!--                <ImageView-->
+    <!--                    android:layout_width="15dp"-->
+    <!--                    android:layout_height="15dp"-->
+    <!--                    android:src="@drawable/oval_metronome_indicator"-->
+    <!--                    android:scaleType="fitCenter"-->
+    <!--                    android:layout_marginRight="15dp"-->
+    <!--                    android:layout_marginLeft="15dp"-->
+    <!--                    android:background="@android:color/transparent" />-->
 
 
 
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="35dp"
+                android:shrinkColumns="*"
+                android:stretchColumns="*"
+                android:id="@+id/tl"
+                android:layout_above="@id/bottomll"
+                android:layout_below="@+id/topll"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="35dp"
-            android:shrinkColumns="*"
-            android:stretchColumns="*"
-            android:id="@+id/tl"
-            android:layout_above="@id/bottomll"
-            android:layout_below="@+id/topll"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/tableRow1">
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/tableRow1">
+                    <FrameLayout
+                        android:id="@+id/frameLayout1">
 
-                <FrameLayout
-                    android:id="@+id/frameLayout1">
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/imageButton7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:elevation="6dp"
-                        android:padding="6dp"
-                        app:lottie_fileName="LottieBrecStartToStop.json"
-                        app:lottie_loop="false"
-                        app:lottie_autoPlay="false"
-                        android:background="@android:color/transparent"/>
-
-                    <ImageView
-                        android:id="@+id/staticImageButton7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/start_static" />
-
-
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/frameLayout2">
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/imageButton8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:elevation="6dp"
-                        android:padding="6dp"
-                        app:lottie_fileName="LottieBrecStartToStop.json"
-                        app:lottie_loop="false"
-                        app:lottie_autoPlay="false"
-                        android:background="@android:color/transparent"/>
-
-                    <ImageView
-                        android:id="@+id/staticImageButton8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/start_static" />
-
-
-                </FrameLayout>
-            </TableRow>
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <FrameLayout android:id="@+id/frameLayout3">
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/imageButton9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:elevation="6dp"
-                        android:padding="6dp"
-                        app:lottie_fileName="LottieBrecStartToStop.json"
-                        app:lottie_loop="false"
-                        app:lottie_autoPlay="false"
-                        android:background="@android:color/transparent"/>
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/imageButton7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
 
                         <ImageView
-                            android:id="@+id/staticImageButton9"
+                            android:id="@+id/staticImageButton7"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/start_static"/>
+                            android:src="@drawable/start_static" />
 
 
 
-                </FrameLayout>
+                    </FrameLayout>
 
-                <FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/frameLayout2">
 
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/imageButton10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:elevation="6dp"
-                        android:padding="6dp"
-                        app:lottie_fileName="LottieBrecStartToStop.json"
-                        app:lottie_loop="false"
-                        app:lottie_autoPlay="false"
-                        android:background="@android:color/transparent"/>
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/imageButton8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
 
                         <ImageView
-                            android:id="@+id/staticImageButton10"
+                            android:id="@+id/staticImageButton8"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/start_static"/>
+                            android:src="@drawable/start_static" />
 
 
+                    </FrameLayout>
+                </TableRow>
 
-                </FrameLayout>
-            </TableRow>
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                    <FrameLayout android:id="@+id/frameLayout3">
 
-                <FrameLayout>
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/imageButton11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:elevation="6dp"
-                        android:padding="6dp"
-                        app:lottie_fileName="LottieBrecStartToStop.json"
-                        app:lottie_loop="false"
-                        app:lottie_autoPlay="false"
-                        android:background="@android:color/transparent"/>
-
-                        <ImageView
-                            android:id="@+id/staticImageButton11"
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/imageButton9"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/start_static"/>
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
+                            <ImageView
+                                android:id="@+id/staticImageButton9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/start_static"/>
 
 
 
-                </FrameLayout>
+                    </FrameLayout>
 
-                <FrameLayout>
+                    <FrameLayout>
 
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/imageButton12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:elevation="6dp"
-                        android:padding="6dp"
-                        app:lottie_fileName="LottieBrecStartToStop.json"
-                        app:lottie_loop="false"
-                        app:lottie_autoPlay="false"
-                        android:background="@android:color/transparent"/>
-
-                        <ImageView
-                            android:id="@+id/staticImageButton12"
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/imageButton10"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/start_static"/>
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
+                            <ImageView
+                                android:id="@+id/staticImageButton10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/start_static"/>
 
 
 
-                </FrameLayout>
-            </TableRow>
+                    </FrameLayout>
+                </TableRow>
 
-        </TableLayout>
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-    </com.jorgecastilloprz.expandablepanel.ExpandablePanelView>
+                    <FrameLayout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true">
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/imageButton11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
 
-    <include layout="@layout/fragment_audio_list"/>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:id="@+id/bottomll">
-
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:scaleType="fitStart"
-            android:background="@drawable/ic_stop2" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitCenter"
-            android:background="@drawable/ic_play2" />
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/timeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:text="0:00"
-            android:textColor="#FAFAFA"
-            android:textSize="25sp" />
-
-    </LinearLayout>
+                            <ImageView
+                                android:id="@+id/staticImageButton11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/start_static"/>
 
 
-</RelativeLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout>
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/imageButton12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
+                            <ImageView
+                                android:id="@+id/staticImageButton12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/start_static"/>
+
+
+
+                    </FrameLayout>
+                </TableRow>
+
+            </TableLayout>
+
+        </com.jorgecastilloprz.expandablepanel.ExpandablePanelView>
+
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/player_sheet"></include>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
