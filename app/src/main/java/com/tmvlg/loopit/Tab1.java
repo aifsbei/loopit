@@ -31,6 +31,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -58,6 +59,7 @@ import android.widget.Toolbar;
 
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.jorgecastilloprz.expandablepanel.ExpandablePanelView;
 import com.jorgecastilloprz.expandablepanel.listeners.ExpandableListener;
 import com.mr_sarsarabi.library.LockableViewPager;
@@ -211,6 +213,13 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private int BufferElements2Rec = 1024; // want to play 2048 (2K) since 2 bytes we use only 1024
     private int BytesPerElement = 2; // 2 bytes in 16bit format
 
+    private Button startRecButton;
+    private Button stopAllButton;
+    private LinearLayout bottomll;
+
+    boolean recPressed = false;
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -347,7 +356,11 @@ public class Tab1 extends Fragment implements ExpandableListener{
         mediaPlayer4 = new MediaPlayer();
         mediaPlayer5 = new MediaPlayer();
         mediaPlayer6 = new MediaPlayer();
-
+        startRecButton = view.findViewById(R.id.start_rec_btn);
+        stopAllButton = view.findViewById(R.id.stop_all_button);
+        bottomll = view.findViewById(R.id.bottomll);
+        startRecButton.setOnClickListener(startRecButtonCL);
+        stopAllButton.setOnClickListener(stopAllButtonCL);
 //        int intSize = android.media.AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
 //                AudioFormat.ENCODING_PCM_16BIT);
 //        audioTrack1 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
@@ -482,6 +495,37 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     break;
                 }
             }
+        }
+    };
+
+    View.OnClickListener startRecButtonCL = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Button but = (Button) getActivity().findViewById(R.id.start_rec_btn);
+            if (!recPressed) {
+                v.setBackgroundResource(R.drawable.button_start_rec_outlined);
+                but.setTextColor(getResources().getColor(R.color.colorAccent));
+                recPressed = true;
+            }
+            else {
+                v.setBackgroundResource(R.drawable.button_start_rec);
+                but.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                recPressed = false;
+            }
+
+
+        }
+    };
+
+    View.OnClickListener stopAllButtonCL = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            BottomSheetBehavior<LinearLayout> behavior = BottomSheetBehavior.from(bottomll);
+            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            behavior.setHideable(false);
+//            animationDisappearCenter = AnimationUtils.loadAnimation(
+//                    v.getContext(), R.anim.disappearing);
+//            bottomll.startAnimation(animationDisappearCenter);
         }
     };
 
@@ -649,6 +693,12 @@ public class Tab1 extends Fragment implements ExpandableListener{
                 metronomeThread = new Thread(metronomeRunnable);
                 stopMetronome = false;
                 metronomeThread.start();
+                BottomSheetBehavior<LinearLayout> behavior = BottomSheetBehavior.from(bottomll);
+                behavior.setHideable(true);
+                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                animationAppearCenter = AnimationUtils.loadAnimation(
+//                        v.getContext(), R.anim.appearing);
+//                bottomll.startAnimation(animationAppearCenter);
 
             }
             for (final Rec button : recBtns){

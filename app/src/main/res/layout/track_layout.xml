@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/mp2"
+    android:background="@color/colorPrimary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <ImageView
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:scaleType="fitStart"
+        android:background="@drawable/round_audiotrack_24"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        android:text="Track name"
+        android:gravity="center"
+        android:textColor="#FAFAFA"
+        android:textSize="20dp"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:text="0:00"
+        android:gravity="center"
+        android:textColor="#FAFAFA"
+        android:textSize="20sp" />
+
+
+</LinearLayout>

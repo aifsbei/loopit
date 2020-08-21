@@ -286,6 +286,44 @@
 
         </com.jorgecastilloprz.expandablepanel.ExpandablePanelView>
 
+        <LinearLayout
+            android:id="@+id/buttonslayout"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="2dp"
+            android:layout_marginBottom="5dp"
+            >
+            <Button
+                android:id="@+id/start_rec_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:text="REC"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:background="@drawable/button_start_rec"
+                android:elevation="6dp"
+                android:padding="6dp"
+                android:layout_margin="10dp"
+                app:rippleColor="#FFFFFF"/>
+
+            <Button
+                android:id="@+id/stop_all_button"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:text="STOP ALL"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:elevation="6dp"
+                android:padding="6dp"
+                android:layout_margin="10dp"
+                app:strokeWidth="2dp"
+                app:rippleColor="#FFFFFF"/>
+        </LinearLayout>
 
 
 

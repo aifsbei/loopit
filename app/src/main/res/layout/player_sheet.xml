@@ -56,92 +56,10 @@
 
     </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/mp2"
-        android:background="@color/colorPrimary">
-
-
-        <ImageButton
-            android:id="@+id/imageButton22"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:scaleType="fitStart"
-            android:background="@drawable/ic_stop2" />
-
-        <ImageButton
-            android:id="@+id/imageButton222"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitCenter"
-            android:background="@drawable/ic_play2" />
-
-        <SeekBar
-            android:id="@+id/seekBar2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/timeTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:text="0:00"
-            android:textColor="#FAFAFA"
-            android:textSize="25sp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/mp3"
-        android:background="@color/colorPrimary">
-
-
-        <ImageButton
-            android:id="@+id/imageButton23"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:scaleType="fitStart"
-            android:background="@drawable/ic_stop2" />
-
-        <ImageButton
-            android:id="@+id/imageButton333"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitCenter"
-            android:background="@drawable/ic_play2" />
-
-        <SeekBar
-            android:id="@+id/seekBar3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/timeTextView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:text="0:00"
-            android:textColor="#FAFAFA"
-            android:textSize="25sp" />
-
-
-    </LinearLayout>
-
+    <include layout="@layout/track_layout"/>
+    <include layout="@layout/track_layout"/>
+    <include layout="@layout/track_layout"/>
+    <include layout="@layout/track_layout"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/audio_list_view"
