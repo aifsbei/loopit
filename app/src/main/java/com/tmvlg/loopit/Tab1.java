@@ -285,12 +285,12 @@ public class Tab1 extends Fragment implements ExpandableListener{
         frameLayout2 = view.findViewById(R.id.frameLayout2);
         linearLayout = view.findViewById(R.id.dotsll);
         tableLayout = view.findViewById(R.id.tl);
-        recBtn1 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton7));
-        recBtn2 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton8));
-        recBtn3 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton9));
-        recBtn4 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton10));
-        recBtn5 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton11));
-        recBtn6 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton12));
+        recBtn1 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton7), (LottieAnimationView) view.findViewById(R.id.timer1));
+        recBtn2 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton8), (LottieAnimationView) view.findViewById(R.id.timer2));
+        recBtn3 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton9), (LottieAnimationView) view.findViewById(R.id.timer3));
+        recBtn4 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton10), (LottieAnimationView) view.findViewById(R.id.timer4));
+        recBtn5 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton11), (LottieAnimationView) view.findViewById(R.id.timer5));
+        recBtn6 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton12), (LottieAnimationView) view.findViewById(R.id.timer6));
         recBtn1.image = view.findViewById(R.id.staticImageButton7);
         recBtn2.image = view.findViewById(R.id.staticImageButton8);
         recBtn3.image = view.findViewById(R.id.staticImageButton9);
@@ -703,7 +703,15 @@ public class Tab1 extends Fragment implements ExpandableListener{
             }
             for (final Rec button : recBtns){
                 if (button.btn.equals(v)){
+                    float timeLong = (float)(1 - ((60000.0 * (float) topMeasureValue / ((float) bpm * (float) bottomMeasureValue / 4.0))) / 12000);
+//                    Log.d("pr", "timeLong = " + timeLong);
+                    button.timerAnim.setAnimation("timer24.json");
                     if (button.getStatus().equals("start")) {
+                        long endTimeLottie = SystemClock.elapsedRealtime();
+                        float elapsed = (float) ((int)endTimeLottie - (int)startTime);
+                        float progress = ((timeLong) + (elapsed / 12000));
+                        button.timerAnim.setMinAndMaxProgress(progress, 1f);
+                        button.timerAnim.playAnimation();
                         arrPressedBtns.addLast(button);
                         dequeLength++;
                         button.setStatus("stop");
@@ -711,6 +719,15 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     }
                     else if (button.getStatus().equals("stop")){
                         button.setStatus("pause");
+                        long endTimeLottie = SystemClock.elapsedRealtime();
+                        float elapsed = (float) ((int)endTimeLottie - (int)startTime);
+//                        Log.d("pr", "elapsed = " + elapsedMilliSeconds);
+//                        Log.d("pr", "start = " + startTime);
+//                        Log.d("pr", "end = " + endTime);
+                        float progress = ((timeLong) + (elapsed / 12000));
+//                        Log.d("pr", "progress = " + timeLong);
+                        button.timerAnim.setMinAndMaxProgress(progress, 1f);
+                        button.timerAnim.playAnimation();
                         stopRecFlag = true;
                         Thread thread = new Thread(preSet);
                         thread.start();

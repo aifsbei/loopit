@@ -133,6 +133,18 @@
                             app:lottie_autoPlay="false"
                             android:background="@android:color/transparent"/>
 
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/timer1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
                         <ImageView
                             android:id="@+id/staticImageButton7"
                             android:layout_width="wrap_content"
@@ -149,6 +161,18 @@
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/imageButton8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/timer2"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -189,6 +213,18 @@
                             app:lottie_autoPlay="false"
                             android:background="@android:color/transparent"/>
 
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/timer3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
                             <ImageView
                                 android:id="@+id/staticImageButton9"
                                 android:layout_width="wrap_content"
@@ -204,6 +240,18 @@
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/imageButton10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/timer4"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -245,6 +293,18 @@
                             app:lottie_autoPlay="false"
                             android:background="@android:color/transparent"/>
 
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/timer5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
                             <ImageView
                                 android:id="@+id/staticImageButton11"
                                 android:layout_width="wrap_content"
@@ -260,6 +320,18 @@
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/imageButton12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:elevation="6dp"
+                            android:padding="6dp"
+                            app:lottie_fileName="LottieBrecStartToStop.json"
+                            app:lottie_loop="false"
+                            app:lottie_autoPlay="false"
+                            android:background="@android:color/transparent"/>
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/timer6"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"

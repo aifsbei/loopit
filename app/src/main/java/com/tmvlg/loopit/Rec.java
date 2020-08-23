@@ -10,11 +10,13 @@ import pl.droidsonroids.gif.GifImageButton;
 
 public class Rec {
     public LottieAnimationView btn;
+    public LottieAnimationView timerAnim;
     public ImageView image;
     private String status;
 
-    public Rec(LottieAnimationView button){
+    public Rec(LottieAnimationView button, LottieAnimationView timerAnim){
         this.btn = button;
+        this.timerAnim = timerAnim;
         status = "start";
     }
 
