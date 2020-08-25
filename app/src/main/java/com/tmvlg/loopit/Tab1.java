@@ -104,7 +104,7 @@ import static android.content.ContentValues.TAG;
  * Use the {@link Tab1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tab1 extends Fragment implements ExpandableListener{
+public class Tab1 extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -229,6 +229,14 @@ public class Tab1 extends Fragment implements ExpandableListener{
     private float oldXvalue;
     private float oldYvalue;
 
+    private RelativeLayout recBtnsBackdropLayout;
+
+    private boolean isBackdropExpanded = true;
+
+    private LinearLayout dmcPlace;
+
+    private BottomSheetBehavior<RelativeLayout> backdropBehavior;
+
 
 
 
@@ -346,7 +354,6 @@ public class Tab1 extends Fragment implements ExpandableListener{
 //        frameLayout5.setOnTouchListener(new recBtnTL());
 //        frameLayout6.setOnTouchListener(new recBtnTL());
 
-        expandablePanelView = view.findViewById(R.id.EPV);
         timeTextView = view.findViewById(R.id.timeTextView);
         recBtns = new Rec[6];
         recBtns[0] = recBtn1;
@@ -361,7 +368,6 @@ public class Tab1 extends Fragment implements ExpandableListener{
         registerForContextMenu(recBtn4.btn);
         registerForContextMenu(recBtn5.btn);
         registerForContextMenu(recBtn6.btn);
-        expandablePanelView.attachExpandableListener(this);
         small = new LinearLayout.LayoutParams(screen_width/54, screen_width/54);
         large = new LinearLayout.LayoutParams(screen_width/36, screen_width/36);
         small.leftMargin=screen_width/72;
@@ -382,6 +388,19 @@ public class Tab1 extends Fragment implements ExpandableListener{
         bottomll = view.findViewById(R.id.bottomll);
         startRecButton.setOnClickListener(startRecButtonCL);
         stopAllButton.setOnClickListener(stopAllButtonCL);
+
+        arrow_view.setOnClickListener(arrowCL);
+
+        recBtnsBackdropLayout = view.findViewById(R.id.rec_btns_backdrop);
+
+        backdropBehavior = BottomSheetBehavior.from(recBtnsBackdropLayout);
+        backdropBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        backdropBehavior.setBottomSheetCallback(backdropCallback);
+
+        dmcPlace = view.findViewById(R.id.dmc_place);
+
+        set_dmc();
+
 //        int intSize = android.media.AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
 //                AudioFormat.ENCODING_PCM_16BIT);
 //        audioTrack1 = new AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_CONFIGURATION_MONO,
@@ -516,6 +535,75 @@ public class Tab1 extends Fragment implements ExpandableListener{
                     break;
                 }
             }
+        }
+    };
+
+    BottomSheetBehavior.BottomSheetCallback backdropCallback = new BottomSheetBehavior.BottomSheetCallback() {
+        @Override
+        public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                if (isBackdropExpanded)
+                    backdropBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                else
+                    backdropBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+            }
+        }
+
+        @Override
+        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+        }
+    };
+
+    View.OnClickListener arrowCL = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (!isBackdropExpanded){
+                reverse_rotate_arrow();
+                backdropBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//                dmcPlace.removeView(dmcll);
+//
+//                if (!panelsScrolled[0])
+//                {
+//                    topMeasureValue = 2;
+//                }
+//                if (!panelsScrolled[1])
+//                {
+//                    bottomMeasureValue = 2;
+//                }
+//                if (!panelsScrolled[2])
+//                {
+//                    bpm = 60;
+//                }
+
+
+                Toast.makeText(getActivity(), "tmv " + topMeasureValue + " bmv " + bottomMeasureValue + " bpm " + bpm, Toast.LENGTH_SHORT).show();
+                if (topMeasureValue == 2) {
+                    dots = createDots(small, large, topMeasureValue, "1");
+                }
+                if (topMeasureValue == 3) {
+                    dots = createDots(small, large, topMeasureValue, "1");
+                }
+                if (topMeasureValue == 4) {
+                    dots = createDots(small, large, topMeasureValue, "13");
+                }
+                if (topMeasureValue == 6) {
+                    dots = createDots(small, large, topMeasureValue, "14");
+                }
+                if (topMeasureValue == 9) {
+                    dots = createDots(small, large, topMeasureValue, "147");
+                }
+                if (topMeasureValue == 12) {
+                    dots = createDots(small, large, topMeasureValue, "14710");
+                }
+
+            }
+            else {
+                rotate_arrow();
+                backdropBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+
+            isBackdropExpanded = !isBackdropExpanded;
         }
     };
 
@@ -1079,8 +1167,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
     }
 
 
-    @Override
-    public void onExpandingStarted() {
+    public void rotate_arrow() {
         animationRotateCenter = AnimationUtils.loadAnimation(
                 this.getContext(), R.anim.myrotate);
         arrow_view.startAnimation(animationRotateCenter);
@@ -1088,8 +1175,15 @@ public class Tab1 extends Fragment implements ExpandableListener{
         Log.d("tagn1", "why not works yet?");
     }
 
-    @Override
-    public void onExpandingFinished() {
+    public void reverse_rotate_arrow() {
+        animationRotateCenter = AnimationUtils.loadAnimation(
+                this.getContext(), R.anim.myreverserotate);
+        arrow_view.startAnimation(animationRotateCenter);
+
+        Log.d("tagn1", "why not works yet?");
+    }
+
+    public void set_dmc() {
         ViewGroup.LayoutParams llparams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //        topll.addView(vert, llparams);
 
@@ -1097,7 +1191,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
         View promptsView = li.inflate(R.layout.dialog_measure_carousel, null);
 
         dmcll = promptsView.findViewById(R.id.dmc_ll);
-        topll.addView(dmcll, llparams);
+        dmcPlace.addView(dmcll, llparams);
 
         LayoutInflater li2 = LayoutInflater.from(getActivity());
         View promptsView2 = li.inflate(R.layout.activity_main, null);
@@ -1261,58 +1355,7 @@ public class Tab1 extends Fragment implements ExpandableListener{
 
     }
 
-    @Override
-    public void onShrinkStarted() {
 
-    }
-
-    @Override
-    public void onShrinkFinished() {
-        topll.removeView(dmcll);
-        animationRotateCenter = AnimationUtils.loadAnimation(
-                this.getContext(), R.anim.myreverserotate);
-        arrow_view.startAnimation(animationRotateCenter);
-
-        if (!panelsScrolled[0])
-        {
-            topMeasureValue = 2;
-        }
-        if (!panelsScrolled[1])
-        {
-            bottomMeasureValue = 2;
-        }
-        if (!panelsScrolled[2])
-        {
-            bpm = 60;
-        }
-
-
-        Toast.makeText(getActivity(), "tmv " + topMeasureValue + " bmv " + bottomMeasureValue + " bpm " + bpm, Toast.LENGTH_SHORT).show();
-        if (topMeasureValue == 2) {
-            dots = createDots(small, large, topMeasureValue, "1");
-        }
-        if (topMeasureValue == 3) {
-            dots = createDots(small, large, topMeasureValue, "1");
-        }
-        if (topMeasureValue == 4) {
-            dots = createDots(small, large, topMeasureValue, "13");
-        }
-        if (topMeasureValue == 6) {
-            dots = createDots(small, large, topMeasureValue, "14");
-        }
-        if (topMeasureValue == 9) {
-            dots = createDots(small, large, topMeasureValue, "147");
-        }
-        if (topMeasureValue == 12) {
-            dots = createDots(small, large, topMeasureValue, "14710");
-        }
-
-    }
-
-    @Override
-    public void onExpandingTouchEvent(MotionEvent motionEvent) {
-
-    }
 
 
 
