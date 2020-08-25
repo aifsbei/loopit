@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    app:behavior_hideable = "false"
+    app:behavior_peekHeight = "50dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/topll"
+        android:layout_alignParentTop="true"
+        android:background="@color/topllColor"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/dotsll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/topllColor"
+            android:gravity="center"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="55dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:id="@+id/tl"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/topll"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingBottom="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/tableRow1">
+
+            <FrameLayout
+                android:id="@+id/frameLayout1">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/imageButton7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/timer1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <ImageView
+                    android:id="@+id/staticImageButton7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/start_static" />
+
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout2">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/imageButton8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/timer2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <ImageView
+                    android:id="@+id/staticImageButton8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/start_static" />
+
+
+            </FrameLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <FrameLayout android:id="@+id/frameLayout3">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/imageButton9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/timer3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <ImageView
+                    android:id="@+id/staticImageButton9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/start_static"/>
+
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout4">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/imageButton10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/timer4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <ImageView
+                    android:id="@+id/staticImageButton10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/start_static"/>
+
+
+
+            </FrameLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/frameLayout5">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/imageButton11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/timer5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <ImageView
+                    android:id="@+id/staticImageButton11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/start_static"/>
+
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout6">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/imageButton12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/timer6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
+                    android:padding="6dp"
+                    app:lottie_fileName="LottieBrecStartToStop.json"
+                    app:lottie_loop="false"
+                    app:lottie_autoPlay="false"
+                    android:background="@android:color/transparent"/>
+
+                <ImageView
+                    android:id="@+id/staticImageButton12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/start_static"/>
+
+
+
+            </FrameLayout>
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

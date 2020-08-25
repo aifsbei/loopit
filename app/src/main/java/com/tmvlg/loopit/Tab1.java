@@ -3,6 +3,7 @@ package com.tmvlg.loopit;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -33,6 +34,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
+import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -47,6 +49,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -145,6 +148,10 @@ public class Tab1 extends Fragment implements ExpandableListener{
 
     private FrameLayout frameLayout1;
     private FrameLayout frameLayout2;
+    private FrameLayout frameLayout3;
+    private FrameLayout frameLayout4;
+    private FrameLayout frameLayout5;
+    private FrameLayout frameLayout6;
     private LinearLayout linearLayout;
     private TableLayout tableLayout;
     private String[] PERMISSIONS = {
@@ -219,6 +226,10 @@ public class Tab1 extends Fragment implements ExpandableListener{
 
     boolean recPressed = false;
 
+    private float oldXvalue;
+    private float oldYvalue;
+
+
 
 
     // TODO: Rename and change types of parameters
@@ -283,6 +294,10 @@ public class Tab1 extends Fragment implements ExpandableListener{
 
         frameLayout1 = view.findViewById(R.id.frameLayout1);
         frameLayout2 = view.findViewById(R.id.frameLayout2);
+        frameLayout3 = view.findViewById(R.id.frameLayout3);
+        frameLayout4 = view.findViewById(R.id.frameLayout4);
+        frameLayout5 = view.findViewById(R.id.frameLayout5);
+        frameLayout6 = view.findViewById(R.id.frameLayout6);
         linearLayout = view.findViewById(R.id.dotsll);
         tableLayout = view.findViewById(R.id.tl);
         recBtn1 = new Rec((LottieAnimationView) view.findViewById(R.id.imageButton7), (LottieAnimationView) view.findViewById(R.id.timer1));
@@ -306,24 +321,30 @@ public class Tab1 extends Fragment implements ExpandableListener{
         arrow_view = view.findViewById(R.id.arrow_view);
         topll = view.findViewById(R.id.topll);
         dotsll = view.findViewById(R.id.dotsll);
-        recBtn1.btn.setOnLongClickListener(recBtnLCL);
-        recBtn2.btn.setOnLongClickListener(recBtnLCL);
-        recBtn3.btn.setOnLongClickListener(recBtnLCL);
-        recBtn4.btn.setOnLongClickListener(recBtnLCL);
-        recBtn5.btn.setOnLongClickListener(recBtnLCL);
-        recBtn6.btn.setOnLongClickListener(recBtnLCL);
-        recBtn1.btn.setOnClickListener(recBtnCL);
-        recBtn2.btn.setOnClickListener(recBtnCL);
-        recBtn3.btn.setOnClickListener(recBtnCL);
-        recBtn4.btn.setOnClickListener(recBtnCL);
-        recBtn5.btn.setOnClickListener(recBtnCL);
-        recBtn6.btn.setOnClickListener(recBtnCL);
-        /*recBtn1.btn.setOnTouchListener(new recBtnTL());
+//        recBtn1.btn.setOnLongClickListener(recBtnLCL);
+//        recBtn2.btn.setOnLongClickListener(recBtnLCL);
+//        recBtn3.btn.setOnLongClickListener(recBtnLCL);
+//        recBtn4.btn.setOnLongClickListener(recBtnLCL);
+//        recBtn5.btn.setOnLongClickListener(recBtnLCL);
+//        recBtn6.btn.setOnLongClickListener(recBtnLCL);
+//        recBtn1.btn.setOnClickListener(recBtnCL);
+//        recBtn2.btn.setOnClickListener(recBtnCL);
+//        recBtn3.btn.setOnClickListener(recBtnCL);
+//        recBtn4.btn.setOnClickListener(recBtnCL);
+//        recBtn5.btn.setOnClickListener(recBtnCL);
+//        recBtn6.btn.setOnClickListener(recBtnCL);
+        recBtn1.btn.setOnTouchListener(new recBtnTL());
         recBtn2.btn.setOnTouchListener(new recBtnTL());
         recBtn3.btn.setOnTouchListener(new recBtnTL());
         recBtn4.btn.setOnTouchListener(new recBtnTL());
         recBtn5.btn.setOnTouchListener(new recBtnTL());
-        recBtn6.btn.setOnTouchListener(new recBtnTL());*/
+        recBtn6.btn.setOnTouchListener(new recBtnTL());
+//        frameLayout1.setOnTouchListener(new recBtnTL());
+//        frameLayout2.setOnTouchListener(new recBtnTL());
+//        frameLayout3.setOnTouchListener(new recBtnTL());
+//        frameLayout4.setOnTouchListener(new recBtnTL());
+//        frameLayout5.setOnTouchListener(new recBtnTL());
+//        frameLayout6.setOnTouchListener(new recBtnTL());
 
         expandablePanelView = view.findViewById(R.id.EPV);
         timeTextView = view.findViewById(R.id.timeTextView);
@@ -639,40 +660,26 @@ public class Tab1 extends Fragment implements ExpandableListener{
     };
 
 
+
+
     private final class recBtnTL implements OnTouchListener {
 
         float mPreviousX = 0;
         float mPreviousY = 0;
         boolean mIsDown = false;
 
-        public boolean onTouch(View v, MotionEvent e) {
-            // MotionEvent reports input details from the touch screen
-            // and other input controls. In this case, you are only
-            // interested in events where the touch position changed.
-
-            float x = e.getX();
-            float y = e.getY();
-
-            switch (e.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    mIsDown = true;
-                    break;
-                case MotionEvent.ACTION_MOVE:
-
-                    float dx = x - mPreviousX;
-                    float dy = y - mPreviousY;
-
-                    // Here you can try to detect the swipe. It will be necessary to
-                    // store more than the previous value to check that the user move constantly in the same direction
-
-                case MotionEvent.ACTION_UP:
-                    mIsDown = false;
-                    break;
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            Log.d("pr", "TOUCH!!1!!");
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                        view);
+                view.startDrag(data, shadowBuilder, view, 0);
+                view.setVisibility(View.INVISIBLE);
+                return true;
+            } else {
+                return false;
             }
-
-            mPreviousX = x;
-            mPreviousY = y;
-            return true;
         }
     };
 

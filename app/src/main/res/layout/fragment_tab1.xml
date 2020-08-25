@@ -236,7 +236,8 @@
 
                     </FrameLayout>
 
-                    <FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/frameLayout4">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/imageButton10"
@@ -279,7 +280,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/frameLayout5">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/imageButton11"
@@ -316,7 +318,8 @@
 
                     </FrameLayout>
 
-                    <FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/frameLayout6">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/imageButton12"
