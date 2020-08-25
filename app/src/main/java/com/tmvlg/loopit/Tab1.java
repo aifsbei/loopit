@@ -56,9 +56,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
+import com.google.android.material.tabs.TabLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+//import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
+
 
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -154,6 +157,7 @@ public class Tab1 extends Fragment {
     private FrameLayout frameLayout6;
     private LinearLayout linearLayout;
     private TableLayout tableLayout;
+    private TabLayout tbl;
     private String[] PERMISSIONS = {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.RECORD_AUDIO
@@ -286,7 +290,10 @@ public class Tab1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab1, container, false);
         rLayout = view.findViewById(R.id.RelativeLayout);
-        tb = view.findViewById(R.id.toolbar);
+
+        View view_acivity_main = getLayoutInflater().inflate(R.layout.activity_main,null);
+        tb = view_acivity_main.findViewById(R.id.toolbar);
+        tbl = view_acivity_main.findViewById(R.id.tablayout);
 
 
 //        croller.setOnProgressChangedListener(crollListener);
@@ -670,7 +677,7 @@ public class Tab1 extends Fragment {
                     recBtn1.btn.setVisibility(v.GONE);
                     recBtn1.btn.setVisibility(v.VISIBLE);
                     layoutParams.x = lp.leftMargin;
-                    layoutParams.y = linearLayout.getHeight() + frameLayout1.getHeight() - 100;
+                    layoutParams.y = tb.getMinimumHeight() + tbl.getMinimumHeight() + linearLayout.getHeight();
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -683,7 +690,7 @@ public class Tab1 extends Fragment {
                     recBtn2.btn.setVisibility(v.GONE);
                     recBtn2.btn.setVisibility(v.VISIBLE);
                     layoutParams.x = lp.leftMargin + (int) frameLayout2.getX();
-                    layoutParams.y = linearLayout.getHeight() + frameLayout1.getHeight() - 100;;
+                    layoutParams.y = tb.getMinimumHeight() + tbl.getMinimumHeight() + linearLayout.getHeight();
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -696,7 +703,7 @@ public class Tab1 extends Fragment {
                     recBtn3.btn.setVisibility(v.GONE);
                     recBtn3.btn.setVisibility(v.VISIBLE);
                     layoutParams.x = lp.leftMargin;
-                    layoutParams.y = linearLayout.getHeight() + 2*frameLayout1.getHeight() - 100;
+                    layoutParams.y = tb.getMinimumHeight() + tbl.getMinimumHeight() + linearLayout.getHeight() + frameLayout1.getHeight();
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -709,7 +716,7 @@ public class Tab1 extends Fragment {
                     recBtn4.btn.setVisibility(v.GONE);
                     recBtn4.btn.setVisibility(v.VISIBLE);
                     layoutParams.x = lp.leftMargin + (int) frameLayout2.getX();
-                    layoutParams.y = linearLayout.getHeight() + 2*frameLayout1.getHeight() - 100;
+                    layoutParams.y = tb.getMinimumHeight() + tbl.getMinimumHeight() + linearLayout.getHeight() + frameLayout1.getHeight();
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -722,7 +729,7 @@ public class Tab1 extends Fragment {
                     recBtn5.btn.setVisibility(v.GONE);
                     recBtn5.btn.setVisibility(v.VISIBLE);
                     layoutParams.x = lp.leftMargin;
-                    layoutParams.y = linearLayout.getHeight() + 3*frameLayout1.getHeight() - 100;
+                    layoutParams.y = tb.getMinimumHeight() + tbl.getMinimumHeight() + linearLayout.getHeight() + 2*frameLayout1.getHeight();
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
@@ -735,7 +742,7 @@ public class Tab1 extends Fragment {
                     recBtn6.btn.setVisibility(v.GONE);
                     recBtn6.btn.setVisibility(v.VISIBLE);
                     layoutParams.x = lp.leftMargin + (int) frameLayout2.getX();
-                    layoutParams.y = linearLayout.getHeight() + 3*frameLayout1.getHeight() - 100;
+                    layoutParams.y = tb.getMinimumHeight() + tbl.getMinimumHeight() + linearLayout.getHeight() + 2*frameLayout1.getHeight();
                     d.getWindow().setLayout(width, height);
                     d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     d.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND); //hz
